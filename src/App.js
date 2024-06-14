@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import FAQ from "./pages/FAQ";
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import AuthNav from "./components/AuthNav/AuthNav";
+import Breadcrumb from "./components/Breadcrumb/Breadcrumb";
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<>
+			<Router>
+				<AuthNav />
+				<Header />
+				<Breadcrumb />
+				<Routes>
+					<Route path="/faq" element={<FAQ />} />
+				</Routes>
+				<Footer />
+			</Router>
+		</>
+	);
 }
 
 export default App;
