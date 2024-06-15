@@ -29,8 +29,10 @@
 .header__list__item a {
 	display: inline-block;
 	color: #191919;
+	font-weight: 600;
 	padding: 10px 20px;
 	border-radius: 10px;
+	transition: all 0.25s ease;
 }
 
 .header__list__item a:hover {
@@ -42,6 +44,23 @@
 	display: flex;
 	align-items: center;
 	gap: 30px;
+}
+
+.header__action .cart__icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.header__action .cart__icon svg {
+	width: 30px;
+	height: 30px;
+	color: #191919;
+	transition: all 0.25s ease;
+}
+
+.header__action .cart__icon:hover svg {
+	color: #0f83b2;
 }
 
 .header__search {
