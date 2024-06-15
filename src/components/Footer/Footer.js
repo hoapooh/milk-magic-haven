@@ -55,7 +55,7 @@ export default function Footer() {
 									<Link to={"/faq"}>FAQ'S</Link>
 								</li>
 								<li>
-									<Link to={"/faq"}>Blog</Link>
+									<Link to={"/blog"}>Blog</Link>
 								</li>
 								<li>
 									<Link to={"/contact"}>Contact</Link>
