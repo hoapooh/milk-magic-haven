@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Blog.css";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import { Container, Grid } from "@mui/material";
@@ -8,12 +8,87 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
+const blog__item = [
+	{
+		id: "1",
+		image: "/assets/images/blog__item.jpg",
+		title: "Enhancing motor skills through play",
+		content:
+			"Motor skills are divided into two categories: fine motor skills and gross motor skills. Toys play a vital role in the development of both.",
+	},
+	{
+		id: "2",
+		image: "/assets/images/blog__item.jpg",
+		title: "Enhancing motor skills through play",
+		content:
+			"Motor skills are divided into two categories: fine motor skills and gross motor skills. Toys play a vital role in the development of both.",
+	},
+	{
+		id: "3",
+		image: "/assets/images/blog__item.jpg",
+		title: "Enhancing motor skills through play",
+		content:
+			"Motor skills are divided into two categories: fine motor skills and gross motor skills. Toys play a vital role in the development of both.",
+	},
+	{
+		id: "4",
+		image: "/assets/images/blog__item-1.jpg",
+		title: "Fostering problem solving skills",
+		content:
+			"Problem-solving is a critical skill that children begin to develop from a very young age through interactive and engaging play. Toys that challenge children to think and strategize encourage this development.",
+	},
+	{
+		id: "5",
+		image: "/assets/images/blog__item.jpg",
+		title: "Enhancing motor skills through play",
+		content:
+			"Motor skills are divided into two categories: fine motor skills and gross motor skills. Toys play a vital role in the development of both.",
+	},
+	{
+		id: "6",
+		image: "/assets/images/blog__item.jpg",
+		title: "Enhancing motor skills through play",
+		content:
+			"Motor skills are divided into two categories: fine motor skills and gross motor skills. Toys play a vital role in the development of both.",
+	},
+];
+
 export default function Blog() {
 	// const [category, setCategory] = useState("Education and Development");
 
 	function handleSubmit(e) {
 		e.preventDefault();
 	}
+
+	const [page, setPage] = useState(1);
+
+	const blogPostsPerPage = 3;
+	const pagesVisited = (page - 1) * blogPostsPerPage;
+
+	const displayBlogPosts = blog__item
+		.slice(pagesVisited, pagesVisited + blogPostsPerPage)
+		.map((post) => (
+			<div className="blog__post__item" key={post.id}>
+				<img
+					src={post.image}
+					alt="post item"
+					className="blog__post__item__image"
+				/>
+				<div className="blog__post__item__info">
+					<div className="blog__post__item__calendar">
+						<CalendarTodayIcon /> March 24, 2024
+					</div>
+					<h2 className="blog__post__item__title">{post.title}</h2>
+					<p className="blog__post__item__content">{post.content}</p>
+				</div>
+			</div>
+		));
+
+	const pageCount = Math.ceil(blog__item.length / blogPostsPerPage);
+
+	const handleChange = (event, value) => {
+		setPage(value);
+	};
 
 	return (
 		<>
@@ -129,8 +204,9 @@ export default function Blog() {
 						{/* ======== BLOG POST ======== */}
 						<Grid item xs={12} md={9}>
 							<div className="blog__post">
+								{displayBlogPosts}
 								{/* ======== BLOG POST ITEM ======== */}
-								<div className="blog__post__item">
+								{/* <div className="blog__post__item">
 									<img
 										src="/assets/images/blog__item.jpg"
 										alt="post item"
@@ -149,10 +225,10 @@ export default function Blog() {
 											the development of both.
 										</p>
 									</div>
-								</div>
+								</div> */}
 
 								{/* ======== BLOG POST ITEM ======== */}
-								<div className="blog__post__item">
+								{/* <div className="blog__post__item">
 									<img
 										src="/assets/images/blog__item.jpg"
 										alt="post item"
@@ -171,10 +247,10 @@ export default function Blog() {
 											the development of both.
 										</p>
 									</div>
-								</div>
+								</div> */}
 
 								{/* ======== BLOG POST ITEM ======== */}
-								<div className="blog__post__item">
+								{/* <div className="blog__post__item">
 									<img
 										src="/assets/images/blog__item.jpg"
 										alt="post item"
@@ -193,15 +269,17 @@ export default function Blog() {
 											the development of both.
 										</p>
 									</div>
-								</div>
+								</div> */}
 
 								<Stack spacing={2}>
 									<Pagination
-										count={10}
+										className="pagination"
+										count={pageCount}
 										variant="outlined"
 										color="primary"
 										size="large"
-										sx={{ fontSize: 40, m: 1 }}
+										page={page}
+										onChange={handleChange}
 									/>
 								</Stack>
 							</div>

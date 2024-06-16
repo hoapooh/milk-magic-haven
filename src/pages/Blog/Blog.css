@@ -147,6 +147,7 @@
 
 .blog__post__item__image {
 	width: 100%;
+	border-radius: 10px;
 	object-fit: cover;
 }
 
@@ -190,4 +191,11 @@
 	font-size: 1.6rem;
 	font-weight: 400;
 	line-height: 140%; /* 22.4px */
+}
+
+/* ======== PAGINATION ======== */
+.pagination button.Mui-selected {
+	background: #0f83b2;
+	color: #fff;
+	font-size: 1.6rem;
 }
