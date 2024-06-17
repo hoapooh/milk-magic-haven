@@ -1,0 +1,31 @@
+.car {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-25%, -295%);
+    font-family: Comfortaa;
+}
+
+.cube {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-25%, -275%);
+    font-family: Comfortaa;
+}
+
+.horse {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-25%, -250%);
+    font-family: Comfortaa;
+}
+
+.bear {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-20%, -320%);
+    font-family: Comfortaa;
+}

@@ -1,0 +1,5 @@
+.product_detail img{
+    width: 250px;
+    border: 1px solid rgb(157, 153, 153);
+    border-radius: 20px;
+}
