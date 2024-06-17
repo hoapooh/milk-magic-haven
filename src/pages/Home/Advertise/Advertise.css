@@ -1,0 +1,9 @@
+.adv img{
+    width: 100%;
+    max-height: 590px;
+    flex-shrink: 0;
+}
+
+.adv {
+    margin-top: 50px;
+}
