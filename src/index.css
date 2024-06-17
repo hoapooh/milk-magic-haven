@@ -12,6 +12,7 @@ html {
 body {
 	font-family: "Roboto", sans-serif;
 	font-size: 1.6rem;
+	scroll-behavior: smooth;
 }
 
 ul {
@@ -20,4 +21,16 @@ ul {
 
 a {
 	text-decoration: none;
+}
+
+body::-webkit-scrollbar {
+	width: 6px;
+	display: block;
+	background: #d3d3d3;
+	border-radius: 6px;
+}
+
+body::-webkit-scrollbar-thumb {
+	background: #0f83b2;
+	border-radius: 6px;
 }

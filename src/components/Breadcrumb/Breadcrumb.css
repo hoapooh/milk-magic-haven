@@ -1,0 +1,29 @@
+.breadcrumb__container {
+	margin-top: 60px;
+}
+
+.breadcrumb {
+	width: 1280px;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 2.2rem;
+	font-weight: 600;
+	line-height: 140%; /* 30.8px */
+}
+
+.breadcrumb .link__nav {
+	color: #171717;
+	transition: all 0.25s ease;
+}
+
+.breadcrumb .link__nav.home:hover {
+	color: #0f749d;
+}
+
+.breadcrumb .link__nav.active {
+	color: #0f749d;
+	font-weight: 600;
+	cursor: not-allowed;
+}

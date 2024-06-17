@@ -7,7 +7,7 @@ export default function AuthNav() {
 	return (
 		<>
 			<CssBaseline />
-			<Container className="authnav" maxWidth="xl">
+			<Container className="authnav" maxWidth="false">
 				<nav className="authnav__navbar">
 					<div className="authnav__shipping">
 						<i className="fa-solid fa-truck"></i> Free shipping with over $150

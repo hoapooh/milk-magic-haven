@@ -1,0 +1,39 @@
+.faq__container {
+	margin-top: 60px;
+}
+
+.faq {
+	width: 1280px;
+	margin: 0 auto;
+}
+
+.faq__title {
+	font-size: 3rem;
+	margin-bottom: 40px;
+}
+
+.faq__accordion {
+	padding: 30px;
+	border-radius: 15px;
+	border: 2px solid #d4d4d4;
+}
+
+/* .faq__accordion__style.first__panel,
+.faq__accordion__style .first {
+	border-radius: 15px 15px 0 0;
+}
+
+.faq__accordion__style.last__panel,
+.faq__accordion__style .last {
+	border-radius: 0 0 15px 15px;
+} */
+
+.faq__accordion__style .summary {
+	border-bottom: 2px solid #0f83b2;
+	background: transparent;
+	transition: all 0.25s ease;
+}
+
+.faq__accordion__style .summary:hover {
+	border-bottom: 2px solid #43bff1;
+}
