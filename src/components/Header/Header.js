@@ -15,31 +15,27 @@ export default function Header() {
         <header className="header">
           {/* ====== LOGO ====== */}
           <Link to="/faq">
-            <img
-              src="/assets/images/logo-big-2.webp"
-              alt="logo"
-              className="header__logo"
-            />
+            <img src="/assets/images/logo-big-2.webp" alt="logo" className="header__logo" />
           </Link>
 
-					{/* ====== LIST NAVIGATION ====== */}
-					<ul className="header__list">
-						<li className="header__list__item">
-							<Link to="/">Home</Link>
-						</li>
-						<li className="header__list__item">
-							<Link to="/faq">Shop</Link>
-						</li>
-						<li className="header__list__item">
-							<Link to="/faq">Page</Link>
-						</li>
-						<li className="header__list__item">
-							<Link to="/blog">Blog</Link>
-						</li>
-						<li className="header__list__item">
-							<Link to="/faq">Contact</Link>
-						</li>
-					</ul>
+          {/* ====== LIST NAVIGATION ====== */}
+          <ul className="header__list">
+            <li className="header__list__item">
+              <Link to="/">Home</Link>
+            </li>
+            <li className="header__list__item">
+              <Link to="/shop">Shop</Link>
+            </li>
+            <li className="header__list__item">
+              <Link to="/faq">Page</Link>
+            </li>
+            <li className="header__list__item">
+              <Link to="/blog">Blog</Link>
+            </li>
+            <li className="header__list__item">
+              <Link to="/contact">Contact</Link>
+            </li>
+          </ul>
 
           {/* ====== ACTION ====== */}
           <div className="header__action">
@@ -50,23 +46,9 @@ export default function Header() {
 
             {/* ====== SEARCH BAR ====== */}
             <form className="header__search">
-              <input
-                className="header__search__input"
-                type="search"
-                placeholder="Search..."
-              />
-              <button
-                onClick={handleSubmit}
-                type="submit"
-                className="header__search__submit"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="15"
-                  height="16"
-                  viewBox="0 0 15 16"
-                  fill="none"
-                >
+              <input className="header__search__input" type="search" placeholder="Search..." />
+              <button onClick={handleSubmit} type="submit" className="header__search__submit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 15 16" fill="none">
                   <path
                     fillRule="evenodd"
                     clipRule="evenodd"
