@@ -25,7 +25,7 @@ export default function Header() {
 					{/* ====== LIST NAVIGATION ====== */}
 					<ul className="header__list">
 						<li className="header__list__item">
-							<Link to="/faq">Home</Link>
+							<Link to="/">Home</Link>
 						</li>
 						<li className="header__list__item">
 							<Link to="/faq">Shop</Link>
