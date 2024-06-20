@@ -22,24 +22,24 @@ export default function Header() {
             />
           </Link>
 
-          {/* ====== LIST NAVIGATION ====== */}
-          <ul className="header__list">
-            <li className="header__list__item">
-              <Link to="/faq">Home</Link>
-            </li>
-            <li className="header__list__item">
-              <Link to="/shop">Shop</Link>
-            </li>
-            <li className="header__list__item">
-              <Link to="/faq">Page</Link>
-            </li>
-            <li className="header__list__item">
-              <Link to="/blog">Blog</Link>
-            </li>
-            <li className="header__list__item">
-              <Link to="/faq">Contact</Link>
-            </li>
-          </ul>
+					{/* ====== LIST NAVIGATION ====== */}
+					<ul className="header__list">
+						<li className="header__list__item">
+							<Link to="/">Home</Link>
+						</li>
+						<li className="header__list__item">
+							<Link to="/faq">Shop</Link>
+						</li>
+						<li className="header__list__item">
+							<Link to="/faq">Page</Link>
+						</li>
+						<li className="header__list__item">
+							<Link to="/blog">Blog</Link>
+						</li>
+						<li className="header__list__item">
+							<Link to="/faq">Contact</Link>
+						</li>
+					</ul>
 
           {/* ====== ACTION ====== */}
           <div className="header__action">

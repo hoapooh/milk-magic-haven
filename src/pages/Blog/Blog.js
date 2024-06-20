@@ -204,72 +204,8 @@ export default function Blog() {
 						{/* ======== BLOG POST ======== */}
 						<Grid item xs={12} md={9}>
 							<div className="blog__post">
+								{/* ======== BLOG POST ITEM ======== */}
 								{displayBlogPosts}
-								{/* ======== BLOG POST ITEM ======== */}
-								{/* <div className="blog__post__item">
-									<img
-										src="/assets/images/blog__item.jpg"
-										alt="post item"
-										className="blog__post__item__image"
-									/>
-									<div className="blog__post__item__info">
-										<div className="blog__post__item__calendar">
-											<CalendarTodayIcon /> March 24, 2024
-										</div>
-										<h2 className="blog__post__item__title">
-											Enhancing motor skills through play
-										</h2>
-										<p className="blog__post__item__content">
-											Motor skills are divided into two categories: fine motor
-											skills and gross motor skills. Toys play a vital role in
-											the development of both.
-										</p>
-									</div>
-								</div> */}
-
-								{/* ======== BLOG POST ITEM ======== */}
-								{/* <div className="blog__post__item">
-									<img
-										src="/assets/images/blog__item.jpg"
-										alt="post item"
-										className="blog__post__item__image"
-									/>
-									<div className="blog__post__item__info">
-										<div className="blog__post__item__calendar">
-											<CalendarTodayIcon /> March 24, 2024
-										</div>
-										<h2 className="blog__post__item__title">
-											Enhancing motor skills through play
-										</h2>
-										<p className="blog__post__item__content">
-											Motor skills are divided into two categories: fine motor
-											skills and gross motor skills. Toys play a vital role in
-											the development of both.
-										</p>
-									</div>
-								</div> */}
-
-								{/* ======== BLOG POST ITEM ======== */}
-								{/* <div className="blog__post__item">
-									<img
-										src="/assets/images/blog__item.jpg"
-										alt="post item"
-										className="blog__post__item__image"
-									/>
-									<div className="blog__post__item__info">
-										<div className="blog__post__item__calendar">
-											<CalendarTodayIcon /> March 24, 2024
-										</div>
-										<h2 className="blog__post__item__title">
-											Enhancing motor skills through play
-										</h2>
-										<p className="blog__post__item__content">
-											Motor skills are divided into two categories: fine motor
-											skills and gross motor skills. Toys play a vital role in
-											the development of both.
-										</p>
-									</div>
-								</div> */}
 
 								<Stack spacing={2}>
 									<Pagination
