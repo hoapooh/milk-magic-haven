@@ -1,71 +1,55 @@
 import React from "react";
+import Button from "react-bootstrap/Button";
+
 import "./ProductPage.css";
 
-const ProductPage = () => {
-  const imageUrl = "https://m.media-amazon.com/images/I/51C5TrSt-GL.jpg";
-
+export default function ProductPage() {
   return (
-    <div className="product-page">
-      <div className="product-detail">
-        <div className="product-images">
-          <img src={imageUrl} alt="Product" className="main-image" />
-          <div className="thumbnails">
-            <img src={imageUrl} alt="Thumbnail" />
-            <img src={imageUrl} alt="Thumbnail" />
-            <img src={imageUrl} alt="Thumbnail" />
-            <img src={imageUrl} alt="Thumbnail" />
-          </div>
+    <div className="ProductPage">
+      <div className="content">
+        <div className="content__left">
+          <img src="https://m.media-amazon.com/images/I/51C5TrSt-GL.jpg" alt="toy" width={400} />
         </div>
-        <div className="product-info">
-          <h1>Blocks shape-sorting Toy</h1>
-          <p className="price">$39.00</p>
-          <p className="rating">⭐⭐⭐⭐⭐ (14 Reviews)</p>
-          <p className="description">
-            Duis ultricies lacus sed turpis tincidunt id aliquet risus feugiat in ante. Mattis tincidunt nunc,
-            ullamcorper scelerisque.
-          </p>
-          <div className="short-description">
-            <p>
-              <strong>SKU:</strong> DS-1568
-            </p>
-            <p>
-              <strong>Category:</strong> Educational Toy
-            </p>
-            <p>
-              <strong>Tags:</strong> 2 - 5 years
-            </p>
-            <p>
-              <strong>EXP:</strong> 04/08/2026
-            </p>
+        <div className="content__right">
+          <div className="content__right__name">Block shape-sorting toy</div>
+          <div className="content__right__price">39.00$</div>
+          <div className="content__right__text">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.
           </div>
-          <div className="add-to-cart">
-            <div className="quantity">
-              <button className="quantity-btn">-</button>
-              <input type="text" value="1" readOnly />
-              <button className="quantity-btn">+</button>
+          <div className="content__right__button">
+            <button>Add to cart</button>
+          </div>
+          <div className="short__description">
+            <h1>Short description</h1>
+            <div className="short">
+              <div className="description__category">Category: toy</div>
+              <div className="EXP">EXP: 01/01/2024</div>
+              <div className="EXP">EXP: 01/01/2024</div>
             </div>
-            <button className="add-btn">Add to cart</button>
-            <button className="wishlist-btn">❤️</button>
-          </div>
-          <div className="guarantee">
-            <p>Guaranteed Safe Checkout</p>
           </div>
         </div>
       </div>
-      <div className="product-tabs">
-        <button>Description</button>
-        <button>Reviews (14)</button>
-      </div>
-      <div className="tab-content">
-        <div className="description">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+      <div className="content__under">
+        <div className="under_title">
+          <div className="under_title_description">
+            <h1>Description</h1>
+          </div>
+          <div className="under_title_review">
+            <h1>Reviews</h1>
+          </div>
         </div>
-        <div className="reviews">
-          <p>Reviews content here...</p>
+        <div className="under_content">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore
+          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+          est laborum.
         </div>
       </div>
     </div>
   );
-};
-
-export default ProductPage;
+}
