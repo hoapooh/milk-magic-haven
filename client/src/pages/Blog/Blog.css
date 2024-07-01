@@ -1,5 +1,6 @@
 .blog__container {
 	margin-top: 60px;
+	padding-bottom: 50px;
 }
 
 .blog {
@@ -10,7 +11,7 @@
 /* ======= TITLE ======= */
 .blog__title {
 	color: #191919;
-	font-size: 3.8rem;
+	font-size: 3.5rem;
 	font-weight: 700;
 	line-height: 120%; /* 45.6px */
 }

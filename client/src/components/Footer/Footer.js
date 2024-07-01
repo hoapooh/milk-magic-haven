@@ -12,17 +12,10 @@ import { amber } from "@mui/material/colors";
 export default function Footer() {
 	return (
 		<>
-			{/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-				<path
-					fill="#cbdad5"
-					fill-opacity="1"
-					d="M0,128L48,128C96,128,192,128,288,144C384,160,480,192,576,208C672,224,768,224,864,192C960,160,1056,96,1152,80C1248,64,1344,96,1392,112L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-				></path>
-			</svg> */}
 			<Container className="footer__container" maxWidth={"false"}>
 				<footer className="footer">
 					<Grid container spacing={4}>
-						<Grid item xs={12} md={4}>
+						<Grid item xs={12} md={5}>
 							<Link to="/faq">
 								<img
 									src="/assets/images/logo-big-2.webp"
@@ -30,8 +23,12 @@ export default function Footer() {
 									className="footer__logo"
 								/>
 							</Link>
+							<p className="footer__small__desc" style={{ fontWeight: "bold" }}>
+								Công ty cổ phần Milk Magic Haven
+							</p>
 							<p className="footer__small__desc">
-								Nunc consequat interdum varius sit amet mattis.
+								<span style={{ fontWeight: "bold" }}>Địa chỉ:</span> Lô E2a-7,
+								Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh
 							</p>
 							<div className="footer__social">
 								<Link to={"/faq"}>
@@ -48,7 +45,7 @@ export default function Footer() {
 								</Link>
 							</div>
 						</Grid>
-						<Grid item xs={12} md={4}>
+						<Grid item xs={12} md={3}>
 							<p className="sub-title">About us</p>
 							<ul className="list__item">
 								<li>

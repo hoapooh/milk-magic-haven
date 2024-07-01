@@ -92,12 +92,12 @@ export default function Blog() {
 
 	return (
 		<>
-			<Breadcrumb>Blog</Breadcrumb>
+			<Breadcrumb>Bài viết</Breadcrumb>
 			<Container className="blog__container" maxWidth="xl">
 				<div className="blog">
 					<Grid container spacing={3} className="blog__navbar">
 						<Grid item xs={12} md={3}>
-							<h1 className="blog__title">Blog standard</h1>
+							<h1 className="blog__title">Bài viết tiêu chuẩn</h1>
 
 							{/* ======== SEARCH ======== */}
 							<form className="blog__search">
@@ -130,7 +130,7 @@ export default function Blog() {
 
 							{/* ======== CATEGORY ======== */}
 							<div className="blog__category">
-								<div className="blog__category__title">Categories</div>
+								<div className="blog__category__title">Danh mục</div>
 								<ul className="blog__category__list">
 									<li className="blog__category__list__item">
 										<Link
@@ -177,7 +177,9 @@ export default function Blog() {
 
 							{/* ======== RECENT POST ======== */}
 							<div className="blog__recent__posts">
-								<div className="blog__recent__posts__title">Recent Posts</div>
+								<div className="blog__recent__posts__title">
+									Bài viết gần đây
+								</div>
 								<div className="blog__recent__posts__thumb">
 									<Link to={"/blog"} className="thumb__item">
 										<img src="/assets/images/post.png" alt="thumbnail" />

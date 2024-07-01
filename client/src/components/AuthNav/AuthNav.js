@@ -14,10 +14,10 @@ export default function AuthNav() {
 					</div>
 					<div className="authnav__auth">
 						<Link to="/login" className="authnav__auth__link">
-							Login
+							Đăng nhập
 						</Link>
 						<Link to="/register" className="authnav__auth__link">
-							Register
+							Đăng ký
 						</Link>
 					</div>
 				</nav>
