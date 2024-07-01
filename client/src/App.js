@@ -16,28 +16,28 @@ import Product from "./pages/Home/Product/Product";
 import ProductAdmin from "./pages/admin/product/ProductAdmin";
 
 function App() {
-  return (
-    <>
-      <Router>
-        <AuthNav />
-        <Header />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/shop" element={<Products />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/detail" element={<ProductPage />} />
-          <Route path="/sidebar" element={<Sidebar />} />
-          <Route path="/admin" element={<AdminPage />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/revenue" element={<Revenue />} />
-          <Route path="/product" element={<ProductAdmin />} />
-        </Routes>
-        <Footer />
-      </Router>
-    </>
-  );
+	return (
+		<>
+			<Router>
+				<AuthNav />
+				<Header />
+				<Routes>
+					<Route path="/" element={<HomePage />} />
+					<Route path="/faq" element={<FAQ />} />
+					<Route path="/blog" element={<Blog />} />
+					<Route path="/shop" element={<Products />} />
+					<Route path="/contact" element={<Contact />} />
+					<Route path="/detail" element={<ProductPage />} />
+					<Route path="/sidebar" element={<Sidebar />} />
+					<Route path="/admin" element={<AdminPage />} />
+					<Route path="/account" element={<Account />} />
+					<Route path="/revenue" element={<Revenue />} />
+					<Route path="/product" element={<ProductAdmin />} />
+				</Routes>
+				<Footer />
+			</Router>
+		</>
+	);
 }
 
 export default App;
