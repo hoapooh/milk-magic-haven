@@ -8,6 +8,12 @@ import HomePage from "./pages/Home/HomePage";
 import Products from "./pages/Shop/Products/Products";
 import Contact from "./pages/contact/Contact";
 import ProductPage from "./pages/product_page/ProductPage";
+import Sidebar from "./pages/admin/sidebar/Sidebar";
+import AdminPage from "./pages/admin/admin_page/AdminPage";
+import Account from "./pages/admin/account/Account";
+import Revenue from "./pages/admin/statistic/Revenue";
+import Product from "./pages/Home/Product/Product";
+import ProductAdmin from "./pages/admin/product/ProductAdmin";
 
 function App() {
   return (
@@ -22,6 +28,11 @@ function App() {
           <Route path="/shop" element={<Products />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/detail" element={<ProductPage />} />
+          <Route path="/sidebar" element={<Sidebar />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/revenue" element={<Revenue />} />
+          <Route path="/product" element={<ProductAdmin />} />
         </Routes>
         <Footer />
       </Router>
