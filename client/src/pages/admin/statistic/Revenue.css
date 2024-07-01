@@ -1,0 +1,19 @@
+.Revenue {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  height: 100dvh;
+}
+.revenue_left {
+  width: 25%;
+  height: 100%;
+}
+.revenue_right {
+  width: 75%;
+  height: 100%;
+  padding: 20px;
+  background-color: #f0f2f5;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
