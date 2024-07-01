@@ -12,9 +12,9 @@ import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 function Contact() {
 	return (
 		<>
-			<Breadcrumb>Contact</Breadcrumb>
+			<Breadcrumb>Liên hệ</Breadcrumb>
 			<div className="contact">
-				<div className="contact_title">Contact</div>
+				<div className="contact_title">Thông tin liên hệ</div>
 				<div className="contact_info">
 					<div className="contact_card">
 						<PhoneOutlined className="icon" />
@@ -56,20 +56,22 @@ function Contact() {
 						></iframe>
 					</div>
 					<div className="contact_content_right">
-						<div className="contact_content_right_header">Contact us</div>
+						<div className="contact_content_right_header">
+							Liên hệ với chúng tôi
+						</div>
 						<div className="contact_content_right_body">
 							<Form className="contact_content_right_body_form">
 								<Form.Item className="content_input">
-									<Input placeholder="Your name" />
+									<Input placeholder="Tên của bạn" />
 								</Form.Item>
 								<Form.Item>
-									<Input placeholder="Phone number" />
+									<Input placeholder="Số điện thoại" />
 								</Form.Item>
 								<Form.Item>
-									<Input placeholder="Email address" />
+									<Input placeholder="Email" />
 								</Form.Item>
 								<Form.Item>
-									<TextArea rows={4} placeholder="Write your comment here" />
+									<TextArea rows={4} placeholder="Thêm ghi chú ở đây" />
 								</Form.Item>
 								<Form.Item>
 									<Button type="primary">Send</Button>

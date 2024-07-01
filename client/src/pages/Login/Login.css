@@ -1,0 +1,35 @@
+.login__container {
+	width: 900px;
+	margin: 0 auto;
+	background: #fff;
+	box-shadow: 0 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
+	-moz-box-shadow: 0 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
+	-webkit-box-shadow: 0 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
+	-o-box-shadow: 0 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
+	-ms-box-shadow: 0 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
+	border-radius: 20px;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	-o-border-radius: 20px;
+	-ms-border-radius: 20px;
+}
+.loginForm label,
+.loginForm input,
+.loginForm fieldset span {
+	font-size: 2rem;
+}
+
+.form-textField {
+	margin-bottom: 20px;
+}
+
+.login__content {
+	padding: 60px 0;
+}
+
+.login__image figure {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
