@@ -1,55 +1,55 @@
-.Sidebar {
-  width: 100%;
-  height: 100vh;
-  background-color: #0f83b2;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
+.sidebar {
+	width: 100%;
+	height: 100vh;
+	background-color: #0f83b2;
+	color: #fff;
+	display: flex;
+	flex-direction: column;
+	padding: 20px;
 }
 
 .user,
 .statistic,
 .product,
 .logout {
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  transition: all 0.3s ease;
+	margin-bottom: 20px;
+	display: flex;
+	align-items: center;
+	transition: all 0.3s ease;
 }
 
 .user:hover,
 .statistic:hover,
 .product:hover,
 .logout:hover {
-  color: #40a9ff;
+	color: #40a9ff;
 }
 
 .user .anticon,
 .statistic .anticon,
 .product .anticon,
 .logout .anticon {
-  margin-right: 10px;
-  font-size: 20px;
+	margin-right: 10px;
+	font-size: 20px;
 }
 
-a {
-  text-decoration: none;
-  color: #fff;
-  font-size: 18px;
+.sidebar a {
+	text-decoration: none;
+	color: #fff;
+	font-size: 18px;
 }
 
-button {
-  width: 100%;
-  padding: 10px;
-  font-size: 18px;
-  background-color: #fff;
-  color: #000;
-  border: none;
-  cursor: pointer;
+.sidebar button {
+	width: 100%;
+	padding: 10px;
+	font-size: 18px;
+	background-color: #fff;
+	color: #000;
+	border: none;
+	cursor: pointer;
 }
 
-button:hover {
-  background-color: #ccc;
-  color: #000;
+.sidebar button:hover {
+	background-color: #ccc;
+	color: #000;
 }
