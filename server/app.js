@@ -1,19 +1,22 @@
 const express = require("express");
 const cors = require("cors");
 const { poolPromise } = require("./database.services");
+const userRouter = require("./src/routes/users.routes");
+const productRouter = require("./src/routes/product.routes");
+const staffRouter = require("./src/routes/staff.routes");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.use("/user", userRouter);
+
+app.use("/product", productRouter);
+
+app.use("/staff", staffRouter);
+
 app.get("/", (req, res) => {
   return res.json("Hello World!");
-});
-
-app.get("/products", async (req, res) => {
-  const pool = await poolPromise;
-  const result = await pool.request().query("SELECT * FROM Products");
-  return res.json(result.recordsets[0]);
 });
 
 app.listen(8000, () => {
