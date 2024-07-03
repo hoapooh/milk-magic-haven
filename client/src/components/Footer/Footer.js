@@ -1,5 +1,5 @@
 import React from "react";
-import "./Footer.css";
+import "./Footer.scss";
 import { Container } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
@@ -23,12 +23,18 @@ export default function Footer() {
 									className="footer__logo"
 								/>
 							</Link>
-							<p className="footer__small__desc" style={{ fontWeight: "bold" }}>
+							<p
+								className="footer__small__desc"
+								style={{ fontWeight: "bold" }}
+							>
 								Công ty cổ phần Milk Magic Haven
 							</p>
 							<p className="footer__small__desc">
-								<span style={{ fontWeight: "bold" }}>Địa chỉ:</span> Lô E2a-7,
-								Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh
+								<span style={{ fontWeight: "bold" }}>
+									Địa chỉ:
+								</span>{" "}
+								Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ, Thành
+								Phố Thủ Đức, Hồ Chí Minh
 							</p>
 							<div className="footer__social">
 								<Link to={"/faq"}>
@@ -37,7 +43,9 @@ export default function Footer() {
 								<Link to={"/faq"}>
 									<InstagramIcon />
 								</Link>
-								<Link to={"https://www.youtube.com/@hoapooh0306"}>
+								<Link
+									to={"https://www.youtube.com/@hoapooh0306"}
+								>
 									<YouTubeIcon />
 								</Link>
 								<Link to={"/faq"}>

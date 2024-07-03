@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./ProductList.css";
+import "./ProductList.scss";
 import { Box, IconButton, Typography } from "@mui/material";
 
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";

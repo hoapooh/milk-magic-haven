@@ -13,14 +13,16 @@ import {
 import React from "react";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import "./ListCard.css";
+import "./ListCard.scss";
 
 export default function ListCard({ products }) {
 	return (
 		<>
 			{products.map((product) => {
 				return (
-					<Card sx={{ display: "flex", margin: 2, boxShadow: "none" }}>
+					<Card
+						sx={{ display: "flex", margin: 2, boxShadow: "none" }}
+					>
 						<Grid container spacing={2}>
 							<Grid item md={3} xs={12}>
 								<Box
@@ -82,14 +84,22 @@ export default function ListCard({ products }) {
 										</Box>
 									)} */}
 									<Typography gutterBottom component="div">
-										<Rating name="read-only" value={5} readOnly />
+										<Rating
+											name="read-only"
+											value={5}
+											readOnly
+										/>
 									</Typography>
 									<Box>
 										<Button
 											variant="contained"
-											style={{ backgroundColor: "#0f83b2", marginRight: 20 }}
+											style={{
+												backgroundColor: "#0f83b2",
+												marginRight: 20,
+											}}
 										>
-											<ShoppingCartOutlinedIcon /> Add to cart
+											<ShoppingCartOutlinedIcon /> Add to
+											cart
 										</Button>
 										<IconButton aria-label="add to favorites">
 											<FavoriteBorderIcon />

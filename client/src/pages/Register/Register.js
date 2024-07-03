@@ -12,7 +12,7 @@ import {
 	Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import "./Register.css";
+import "./Register.scss";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import AccountCircle from "@mui/icons-material/AccountCircle";
@@ -106,14 +106,25 @@ export default function Register() {
 										<OutlinedInput
 											style={{ borderRadius: "10px" }}
 											id="outlined-adornment-password"
-											type={showPassword ? "text" : "password"}
+											type={
+												showPassword
+													? "text"
+													: "password"
+											}
 											endAdornment={
 												<InputAdornment position="end">
 													<IconButton
-														style={{ paddingRight: "12px" }}
+														style={{
+															paddingRight:
+																"12px",
+														}}
 														aria-label="toggle password visibility"
-														onClick={handleClickShowPassword}
-														onMouseDown={handleMouseDownPassword}
+														onClick={
+															handleClickShowPassword
+														}
+														onMouseDown={
+															handleMouseDownPassword
+														}
 														edge="end"
 													>
 														{showPassword ? (
@@ -136,14 +147,25 @@ export default function Register() {
 										<OutlinedInput
 											style={{ borderRadius: "10px" }}
 											id="outlined-adornment-password"
-											type={showPassword1 ? "text" : "password"}
+											type={
+												showPassword1
+													? "text"
+													: "password"
+											}
 											endAdornment={
 												<InputAdornment position="end">
 													<IconButton
-														style={{ paddingRight: "12px" }}
+														style={{
+															paddingRight:
+																"12px",
+														}}
 														aria-label="toggle password visibility"
-														onClick={handleClickShowPassword1}
-														onMouseDown={handleMouseDownPassword}
+														onClick={
+															handleClickShowPassword1
+														}
+														onMouseDown={
+															handleMouseDownPassword
+														}
 														edge="end"
 													>
 														{showPassword1 ? (
@@ -166,12 +188,22 @@ export default function Register() {
 										marginBottom: "10px",
 									}}
 								>
-									<label style={{ display: "flex", alignItems: "center" }}>
+									<label
+										style={{
+											display: "flex",
+											alignItems: "center",
+										}}
+									>
 										<Checkbox
-											sx={{ "& .MuiSvgIcon-root": { fontSize: "2.4rem" } }}
+											sx={{
+												"& .MuiSvgIcon-root": {
+													fontSize: "2.4rem",
+												},
+											}}
 										/>
 										<span style={{ fontSize: "2rem" }}>
-											Tôi đã đọc và đồng ý với các điều khoản sử dụng
+											Tôi đã đọc và đồng ý với các điều
+											khoản sử dụng
 										</span>
 									</label>
 								</Box>
@@ -201,7 +233,8 @@ export default function Register() {
 												color: "#0f83b2",
 											}}
 										>
-											Bạn đã là thành viên ? Đăng nhập tại đây
+											Bạn đã là thành viên ? Đăng nhập tại
+											đây
 										</Button>
 									</Link>
 								</Box>

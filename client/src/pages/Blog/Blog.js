@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Blog.css";
+import "./Blog.scss";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import { Container, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
@@ -103,7 +103,9 @@ export default function Blog() {
 					<div className="blog">
 						<Grid container spacing={3} className="blog__navbar">
 							<Grid item xs={12} md={3}>
-								<h1 className="blog__title">Bài viết tiêu chuẩn</h1>
+								<h1 className="blog__title">
+									Bài viết tiêu chuẩn
+								</h1>
 
 								{/* ======== SEARCH ======== */}
 								<form className="blog__search">
@@ -136,7 +138,9 @@ export default function Blog() {
 
 								{/* ======== CATEGORY ======== */}
 								<div className="blog__category">
-									<div className="blog__category__title">Danh mục</div>
+									<div className="blog__category__title">
+										Danh mục
+									</div>
 									<ul className="blog__category__list">
 										<li className="blog__category__list__item">
 											<Link
@@ -187,22 +191,43 @@ export default function Blog() {
 										Bài viết gần đây
 									</div>
 									<div className="blog__recent__posts__thumb">
-										<Link to={"/blog"} className="thumb__item">
-											<img src="/assets/images/post.png" alt="thumbnail" />
+										<Link
+											to={"/blog"}
+											className="thumb__item"
+										>
+											<img
+												src="/assets/images/post.png"
+												alt="thumbnail"
+											/>
 											<div className="thumb__item__title">
-												Enhancing motor skills through play
+												Enhancing motor skills through
+												play
 											</div>
 										</Link>
-										<Link to={"/blog"} className="thumb__item">
-											<img src="/assets/images/post.png" alt="thumbnail" />
+										<Link
+											to={"/blog"}
+											className="thumb__item"
+										>
+											<img
+												src="/assets/images/post.png"
+												alt="thumbnail"
+											/>
 											<div className="thumb__item__title">
-												Enhancing motor skills through play
+												Enhancing motor skills through
+												play
 											</div>
 										</Link>
-										<Link to={"/blog"} className="thumb__item">
-											<img src="/assets/images/post.png" alt="thumbnail" />
+										<Link
+											to={"/blog"}
+											className="thumb__item"
+										>
+											<img
+												src="/assets/images/post.png"
+												alt="thumbnail"
+											/>
 											<div className="thumb__item__title">
-												Enhancing motor skills through play
+												Enhancing motor skills through
+												play
 											</div>
 										</Link>
 									</div>
