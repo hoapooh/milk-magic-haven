@@ -1,8 +1,17 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
+import {
+	Chart as ChartJS,
+	CategoryScale,
+	LinearScale,
+	BarElement,
+	Title,
+	Tooltip,
+	Legend,
+} from "chart.js";
 import Sidebar from "../sidebar/Sidebar";
 import "./Revenue.css";
+import { Grid } from "@mui/material";
 
 // ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -35,14 +44,18 @@ import "./Revenue.css";
 // };
 
 export default function Revenue() {
-  return (
-    <div className="Revenue">
-      <div className="revenue_left">
-        <Sidebar />
-      </div>
-      <div className="revenue_right">
-        {/* <Bar data={data} options={options} /> */}
-      </div>
-    </div>
-  );
+	return (
+		<div className="Revenue">
+			<Grid container spacing={2}>
+				<Grid item md={2}>
+					<Sidebar />
+				</Grid>
+				<Grid item md={10}>
+					<div className="admin__content">
+						<h1 className="admin__title">Thống kê doanh thu</h1>
+					</div>
+				</Grid>
+			</Grid>
+		</div>
+	);
 }
