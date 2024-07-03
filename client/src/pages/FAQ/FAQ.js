@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./FAQ.css";
+import "./FAQ.scss";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import { Container } from "@mui/material";
 
@@ -83,11 +83,13 @@ export default function FAQ() {
 								</AccordionSummary>
 								<AccordionDetails>
 									<Typography sx={{ fontSize: "2.4rem" }}>
-										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-										Suspendisse malesuada lacus ex, sit amet blandit leo
-										lobortis eget. Lorem ipsum dolor sit amet, consectetur
-										adipiscing elit. Suspendisse malesuada lacus ex, sit amet
-										blandit leo lobortis eget.
+										Lorem ipsum dolor sit amet, consectetur
+										adipiscing elit. Suspendisse malesuada
+										lacus ex, sit amet blandit leo lobortis
+										eget. Lorem ipsum dolor sit amet,
+										consectetur adipiscing elit. Suspendisse
+										malesuada lacus ex, sit amet blandit leo
+										lobortis eget.
 									</Typography>
 								</AccordionDetails>
 							</Accordion>
@@ -108,11 +110,13 @@ export default function FAQ() {
 								</AccordionSummary>
 								<AccordionDetails>
 									<Typography sx={{ fontSize: "2.4rem" }}>
-										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-										Suspendisse malesuada lacus ex, sit amet blandit leo
-										lobortis eget. Lorem ipsum dolor sit amet, consectetur
-										adipiscing elit. Suspendisse malesuada lacus ex, sit amet
-										blandit leo lobortis eget.
+										Lorem ipsum dolor sit amet, consectetur
+										adipiscing elit. Suspendisse malesuada
+										lacus ex, sit amet blandit leo lobortis
+										eget. Lorem ipsum dolor sit amet,
+										consectetur adipiscing elit. Suspendisse
+										malesuada lacus ex, sit amet blandit leo
+										lobortis eget.
 									</Typography>
 								</AccordionDetails>
 							</Accordion>
@@ -128,16 +132,19 @@ export default function FAQ() {
 									id="panel2d-header"
 								>
 									<Typography sx={{ fontSize: "2.4rem" }}>
-										How will I know if order is placed successfully?
+										How will I know if order is placed
+										successfully?
 									</Typography>
 								</AccordionSummary>
 								<AccordionDetails>
 									<Typography sx={{ fontSize: "2.4rem" }}>
-										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-										Suspendisse malesuada lacus ex, sit amet blandit leo
-										lobortis eget. Lorem ipsum dolor sit amet, consectetur
-										adipiscing elit. Suspendisse malesuada lacus ex, sit amet
-										blandit leo lobortis eget.
+										Lorem ipsum dolor sit amet, consectetur
+										adipiscing elit. Suspendisse malesuada
+										lacus ex, sit amet blandit leo lobortis
+										eget. Lorem ipsum dolor sit amet,
+										consectetur adipiscing elit. Suspendisse
+										malesuada lacus ex, sit amet blandit leo
+										lobortis eget.
 									</Typography>
 								</AccordionDetails>
 							</Accordion>
@@ -158,11 +165,13 @@ export default function FAQ() {
 								</AccordionSummary>
 								<AccordionDetails>
 									<Typography sx={{ fontSize: "2.4rem" }}>
-										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-										Suspendisse malesuada lacus ex, sit amet blandit leo
-										lobortis eget. Lorem ipsum dolor sit amet, consectetur
-										adipiscing elit. Suspendisse malesuada lacus ex, sit amet
-										blandit leo lobortis eget.
+										Lorem ipsum dolor sit amet, consectetur
+										adipiscing elit. Suspendisse malesuada
+										lacus ex, sit amet blandit leo lobortis
+										eget. Lorem ipsum dolor sit amet,
+										consectetur adipiscing elit. Suspendisse
+										malesuada lacus ex, sit amet blandit leo
+										lobortis eget.
 									</Typography>
 								</AccordionDetails>
 							</Accordion>
@@ -183,11 +192,13 @@ export default function FAQ() {
 								</AccordionSummary>
 								<AccordionDetails>
 									<Typography sx={{ fontSize: "2.4rem" }}>
-										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-										Suspendisse malesuada lacus ex, sit amet blandit leo
-										lobortis eget. Lorem ipsum dolor sit amet, consectetur
-										adipiscing elit. Suspendisse malesuada lacus ex, sit amet
-										blandit leo lobortis eget.
+										Lorem ipsum dolor sit amet, consectetur
+										adipiscing elit. Suspendisse malesuada
+										lacus ex, sit amet blandit leo lobortis
+										eget. Lorem ipsum dolor sit amet,
+										consectetur adipiscing elit. Suspendisse
+										malesuada lacus ex, sit amet blandit leo
+										lobortis eget.
 									</Typography>
 								</AccordionDetails>
 							</Accordion>

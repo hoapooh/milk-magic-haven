@@ -4,7 +4,7 @@ import {
 	MailOutlined,
 	EnvironmentOutlined,
 } from "@ant-design/icons";
-import "./Contact.css";
+import "./Contact.scss";
 import { Button, Form, Input } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
@@ -77,7 +77,10 @@ function Contact() {
 										<Input placeholder="Email" />
 									</Form.Item>
 									<Form.Item>
-										<TextArea rows={4} placeholder="Thêm ghi chú ở đây" />
+										<TextArea
+											rows={4}
+											placeholder="Thêm ghi chú ở đây"
+										/>
 									</Form.Item>
 									<Form.Item>
 										<Button type="primary">Send</Button>

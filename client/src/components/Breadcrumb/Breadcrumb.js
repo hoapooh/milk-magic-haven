@@ -1,5 +1,5 @@
 import React from "react";
-import "./Breadcrumb.css";
+import "./Breadcrumb.scss";
 import { Container } from "@mui/material";
 import { Link } from "react-router-dom";
 

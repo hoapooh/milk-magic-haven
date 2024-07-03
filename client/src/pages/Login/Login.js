@@ -11,7 +11,7 @@ import {
 	Typography,
 } from "@mui/material";
 import React from "react";
-import "./Login.css";
+import "./Login.scss";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import AccountCircle from "@mui/icons-material/AccountCircle";
@@ -91,14 +91,25 @@ export default function Login() {
 										<OutlinedInput
 											style={{ borderRadius: "10px" }}
 											id="outlined-adornment-password"
-											type={showPassword ? "text" : "password"}
+											type={
+												showPassword
+													? "text"
+													: "password"
+											}
 											endAdornment={
 												<InputAdornment position="end">
 													<IconButton
-														style={{ paddingRight: "12px" }}
+														style={{
+															paddingRight:
+																"12px",
+														}}
 														aria-label="toggle password visibility"
-														onClick={handleClickShowPassword}
-														onMouseDown={handleMouseDownPassword}
+														onClick={
+															handleClickShowPassword
+														}
+														onMouseDown={
+															handleMouseDownPassword
+														}
 														edge="end"
 													>
 														{showPassword ? (

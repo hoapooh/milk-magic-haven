@@ -1,5 +1,5 @@
 import React from "react";
-import "./Products.css";
+import "./Products.scss";
 import { Container, Grid } from "@mui/material";
 import ProductCategory from "../ProductCategory/ProductCategory";
 import ProductList from "../ProductList/ProductList";
