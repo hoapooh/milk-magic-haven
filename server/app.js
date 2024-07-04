@@ -10,19 +10,23 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// USER ROUTES
 app.use("/user", userRouter);
 
+// PRODUCT ROUTES
 app.use("/product", productRouter);
 
+// STAFF ROUTES
 app.use("/staff", staffRouter);
 
+// ADMIN ROUTES
 app.use("/admin", adminRouter);
 
 app.get("/", (req, res) => {
-  return res.json("Hello World!");
+	return res.json("Hello World!");
 });
 
 app.listen(8000, () => {
-  console.log(`Server running at http://localhost:8000/`);
-  console.log("Server is running on port 8000");
+	console.log(`Server running at http://localhost:8000/`);
+	console.log("Server is running on port 8000");
 });
