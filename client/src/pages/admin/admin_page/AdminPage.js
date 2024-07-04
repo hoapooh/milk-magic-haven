@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./AdminPage.css";
 import Sidebar from "../sidebar/Sidebar";
 import {
@@ -16,6 +16,16 @@ import { FaTrashAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 export default function AdminPage() {
+	const baseURL = "http://localhost:8000/user/get-all-user";
+	const [usersAPI, setUsersAPI] = useState([]);
+
+	useEffect(() => {
+		fetch(baseURL)
+			.then((response) => response.json())
+			.then((data) => setUsersAPI(data.data))
+			.catch((error) => console.log(error));
+	}, []);
+
 	return (
 		<div className="AdminPage">
 			<Grid container spacing={2}>
@@ -43,42 +53,37 @@ export default function AdminPage() {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									<TableRow>
-										<TableCell>admin_user</TableCell>
-										<TableCell>password123</TableCell>
-										<TableCell>admin@example.com</TableCell>
-										<TableCell>admin</TableCell>
-										<TableCell className="call-to-action">
-											<Link to={"/##"}>
-												<button className="action-btn edit">
-													<MdEdit />
-												</button>
-											</Link>
-											<Link to={"/##"}>
-												<button className="action-btn trash">
-													<FaTrashAlt />
-												</button>
-											</Link>
-										</TableCell>
-									</TableRow>
-									<TableRow>
-										<TableCell>admin_user</TableCell>
-										<TableCell>password123</TableCell>
-										<TableCell>admin@example.com</TableCell>
-										<TableCell>admin</TableCell>
-										<TableCell className="call-to-action">
-											<Link to={"/##"}>
-												<button className="action-btn edit">
-													<MdEdit />
-												</button>
-											</Link>
-											<Link to={"/##"}>
-												<button className="action-btn trash">
-													<FaTrashAlt />
-												</button>
-											</Link>
-										</TableCell>
-									</TableRow>
+									{usersAPI.map(
+										(user) =>
+											user.status && (
+												<TableRow>
+													<TableCell>
+														{user.username}
+													</TableCell>
+													<TableCell>
+														{user.password}
+													</TableCell>
+													<TableCell>
+														{user.email}
+													</TableCell>
+													<TableCell>
+														{user.role_id}
+													</TableCell>
+													<TableCell className="call-to-action">
+														<Link to={"/##"}>
+															<button className="action-btn edit">
+																<MdEdit />
+															</button>
+														</Link>
+														<Link to={"/##"}>
+															<button className="action-btn trash">
+																<FaTrashAlt />
+															</button>
+														</Link>
+													</TableCell>
+												</TableRow>
+											)
+									)}
 								</TableBody>
 							</Table>
 						</TableContainer>
