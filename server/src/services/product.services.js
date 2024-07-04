@@ -3,7 +3,9 @@ const { poolPromise, sql } = require("../../database.services");
 async function getAllProduct() {
   try {
     const pool = await poolPromise;
-    const result = await pool.request().query("SELECT * FROM Products");
+    const result = await pool
+      .request()
+      .query("SELECT * FROM Products AND status = 1");
     return { products: result.recordsets[0] };
   } catch (error) {
     console.log(error);
@@ -16,9 +18,12 @@ async function getProductById(id) {
     const result = await pool
       .request()
       .input("id", id)
-      .query("SELECT * FROM Products WHERE product_id = @id");
+      .query("SELECT * FROM Products WHERE product_id = @id AND status = 1");
 
     const product = result.recordset[0];
+    if (result.recordset.length === 0)
+      return { message: "Product not found", status: 404 };
+
     return { product };
   } catch (error) {
     console.log(error);
@@ -106,7 +111,7 @@ async function deleteProduct(id) {
     const result = await pool
       .request()
       .input("product_id", sql.Int, id)
-      .query("DELETE FROM Products WHERE product_id = @product_id");
+      .query("UPDATE Products SET status = 0 WHERE product_id = @product_id");
 
     if (result.rowsAffected[0] !== 1) {
       return { message: "Failed to delete product", status: 400 };
