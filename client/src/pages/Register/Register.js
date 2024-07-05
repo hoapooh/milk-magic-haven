@@ -24,16 +24,13 @@ import Footer from "../../components/Footer/Footer";
 import { MainAPI } from "../../API";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import * as Yup from "yup";
+import { useFormik } from "formik";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-    repeatPassword: "",
-  });
+
   const nav = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -43,19 +40,39 @@ export default function Register() {
     event.preventDefault();
   };
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+      repeatPassword: "",
+    },
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
+    onSubmit: (values) => {
+      handleRegister(values);
+      console.log(values);
+    },
+
+    validationSchema: Yup.object({
+      name: Yup.string().required("Required."),
+      email: Yup.string().email("Invalid email address").required("Required."),
+      password: Yup.string()
+        .required("Required.")
+        .min(8, "Must be 2 characters or more"),
+      repeatPassword: Yup.string()
+        .required("Required.")
+        .min(8, "Must be 2 characters or more"),
+    }),
+  });
+
+  const handleRegister = async (values) => {
     try {
       const data = await fetch(`${MainAPI}/user/register`, {
         method: "POST",
         headers: {
           "Content-type": "application/json; charset=UTF-8",
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify(values),
       }).then((res) => res.json());
 
       if (data.status === 200) {
@@ -93,7 +110,7 @@ export default function Register() {
               </Typography>
 
               {/* ================ LOGIN FORM ================ */}
-              <form className="loginForm" onSubmit={handleRegister}>
+              <form className="loginForm" onSubmit={formik.handleSubmit}>
                 <div className="form-textField">
                   <FormControl fullWidth="100%">
                     <InputLabel htmlFor="outlined-adornment-username">
@@ -109,10 +126,16 @@ export default function Register() {
                       }
                       label="Username"
                       name="name"
-                      onChange={handleChange}
+                      value={formik.values.name}
+                      onChange={formik.handleChange}
                       fullWidth="100%"
                     />
                   </FormControl>
+                  {formik.touched.name && formik.errors.name && (
+                    <Typography color="error" variant="h4">
+                      {formik.errors.name}
+                    </Typography>
+                  )}
                 </div>
                 <div className="form-textField">
                   <FormControl fullWidth="100%">
@@ -129,10 +152,16 @@ export default function Register() {
                       }
                       label="Email"
                       name="email"
-                      onChange={handleChange}
+                      value={formik.values.email}
+                      onChange={formik.handleChange}
                       fullWidth="100%"
                     />
                   </FormControl>
+                  {formik.touched.email && formik.errors.email && (
+                    <Typography color="error" variant="h4">
+                      {formik.errors.email}
+                    </Typography>
+                  )}
                 </div>
                 <div className="form-textField">
                   <FormControl fullWidth="100%">
@@ -164,9 +193,15 @@ export default function Register() {
                       }
                       label="Password"
                       name="password"
-                      onChange={handleChange}
+                      value={formik.values.password}
+                      onChange={formik.handleChange}
                     />
                   </FormControl>
+                  {formik.touched.password && formik.errors.password && (
+                    <Typography color="error" variant="h4">
+                      {formik.errors.password}
+                    </Typography>
+                  )}
                 </div>
                 <div className="form-textField">
                   <FormControl fullWidth="100%">
@@ -198,9 +233,16 @@ export default function Register() {
                       }
                       label="Repeat Password"
                       name="repeatPassword"
-                      onChange={handleChange}
+                      value={formik.values.repeatPassword}
+                      onChange={formik.handleChange}
                     />
                   </FormControl>
+                  {formik.touched.repeatPassword &&
+                    formik.errors.repeatPassword && (
+                      <Typography color="error" variant="h4">
+                        {formik.errors.repeatPassword}
+                      </Typography>
+                    )}
                 </div>
                 <Box
                   sx={{
