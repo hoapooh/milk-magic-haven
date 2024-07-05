@@ -22,11 +22,11 @@ import Footer from "../../components/Footer/Footer";
 import { MainAPI } from "../../API";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import * as Yup from "yup";
+import { useFormik } from "formik";
 
 export default function Login() {
   const [showPassword, setShowPassword] = React.useState(false);
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
   const nav = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -35,15 +35,36 @@ export default function Login() {
     event.preventDefault();
   };
 
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+
+    onSubmit: (values) => {
+      handleLogin();
+      console.log(values);
+    },
+
+    validationSchema: Yup.object({
+      email: Yup.string().email("Invalid email address").required("Required."),
+      password: Yup.string()
+        .required("Required.")
+        .min(8, "Must be 2 characters or more"),
+    }),
+  });
+
   const handleLogin = async (e) => {
-    e.preventDefault();
     try {
       const data = await fetch(`${MainAPI}/user/login`, {
         method: "POST",
         headers: {
           "Content-type": "application/json; charset=UTF-8",
         },
-        body: JSON.stringify({ email: email, password: password }),
+        body: JSON.stringify({
+          email: formik.values.email,
+          password: formik.values.password,
+        }),
       }).then((res) => res.json());
 
       if (data.status === 200) {
@@ -88,7 +109,11 @@ export default function Login() {
               </Typography>
 
               {/* ================ LOGIN FORM ================ */}
-              <form className="loginForm" id="loginForm" onSubmit={handleLogin}>
+              <form
+                className="loginForm"
+                id="loginForm"
+                onSubmit={formik.handleSubmit}
+              >
                 <div className="form-textField">
                   <FormControl fullWidth="100%">
                     <InputLabel htmlFor="outlined-adornment-username">
@@ -104,10 +129,16 @@ export default function Login() {
                       }
                       name="email"
                       label="Email"
-                      onChange={(e) => setEmail(e.target.value)}
+                      value={formik.values.email}
+                      onChange={formik.handleChange}
                       fullWidth="100%"
                     />
                   </FormControl>
+                  {formik.touched.email && formik.errors.email && (
+                    <Typography color="error" variant="h4">
+                      {formik.errors.email}
+                    </Typography>
+                  )}
                 </div>
                 <div className="form-textField">
                   <FormControl fullWidth="100%">
@@ -139,9 +170,15 @@ export default function Login() {
                       }
                       name="password"
                       label="Password"
-                      onChange={(e) => setPassword(e.target.value)}
+                      value={formik.values.password}
+                      onChange={formik.handleChange}
                     />
                   </FormControl>
+                  {formik.touched.password && formik.errors.password && (
+                    <Typography color="error" variant="h4">
+                      {formik.errors.password}
+                    </Typography>
+                  )}
                 </div>
                 <Box sx={{ display: "flex", gap: "10px" }}>
                   <Button
