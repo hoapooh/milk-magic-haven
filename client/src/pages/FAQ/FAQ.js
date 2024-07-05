@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./FAQ.css";
+import "./FAQ.scss";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import { Container } from "@mui/material";
 
@@ -9,6 +9,9 @@ import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ApiIcon from "@mui/icons-material/Api";
+import AuthNav from "../../components/AuthNav/AuthNav";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 
 const Accordion = styled((props) => (
 	<MuiAccordion disableGutters elevation={0} square {...props} />
@@ -55,139 +58,155 @@ export default function FAQ() {
 
 	return (
 		<>
-			<Breadcrumb>FAQ's</Breadcrumb>
-			<Container className="faq__container" maxWidth={"xl"}>
-				<div className="faq">
-					<h1 className="faq__title">FAQ'S</h1>
-					<div className="faq__accordion">
-						<Accordion
-							className="faq__accordion__style first__panel"
-							style={{ border: "none" }}
-							expanded={expanded === "panel1"}
-							onChange={handleChange("panel1")}
-						>
-							<AccordionSummary
-								className="summary first"
-								aria-controls="panel1d-content"
-								id="panel1d-header"
+			<AuthNav />
+			<Header />
+			<div>
+				<Breadcrumb>FAQ's</Breadcrumb>
+				<Container className="faq__container" maxWidth={"xl"}>
+					<div className="faq">
+						<h1 className="faq__title">FAQ'S</h1>
+						<div className="faq__accordion">
+							<Accordion
+								className="faq__accordion__style first__panel"
+								style={{ border: "none" }}
+								expanded={expanded === "panel1"}
+								onChange={handleChange("panel1")}
 							>
-								<Typography sx={{ fontSize: "2.4rem" }}>
-									How will my order be delivered to me?
-								</Typography>
-							</AccordionSummary>
-							<AccordionDetails>
-								<Typography sx={{ fontSize: "2.4rem" }}>
-									Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-									eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-									eget.
-								</Typography>
-							</AccordionDetails>
-						</Accordion>
-						<Accordion
-							className="faq__accordion__style"
-							style={{ border: "none" }}
-							expanded={expanded === "panel2"}
-							onChange={handleChange("panel2")}
-						>
-							<AccordionSummary
-								className="summary"
-								aria-controls="panel2d-content"
-								id="panel2d-header"
+								<AccordionSummary
+									className="summary first"
+									aria-controls="panel1d-content"
+									id="panel1d-header"
+								>
+									<Typography sx={{ fontSize: "2.4rem" }}>
+										How will my order be delivered to me?
+									</Typography>
+								</AccordionSummary>
+								<AccordionDetails>
+									<Typography sx={{ fontSize: "2.4rem" }}>
+										Lorem ipsum dolor sit amet, consectetur
+										adipiscing elit. Suspendisse malesuada
+										lacus ex, sit amet blandit leo lobortis
+										eget. Lorem ipsum dolor sit amet,
+										consectetur adipiscing elit. Suspendisse
+										malesuada lacus ex, sit amet blandit leo
+										lobortis eget.
+									</Typography>
+								</AccordionDetails>
+							</Accordion>
+							<Accordion
+								className="faq__accordion__style"
+								style={{ border: "none" }}
+								expanded={expanded === "panel2"}
+								onChange={handleChange("panel2")}
 							>
-								<Typography sx={{ fontSize: "2.4rem" }}>
-									What do I need to know?
-								</Typography>
-							</AccordionSummary>
-							<AccordionDetails>
-								<Typography sx={{ fontSize: "2.4rem" }}>
-									Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-									eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-									eget.
-								</Typography>
-							</AccordionDetails>
-						</Accordion>
-						<Accordion
-							className="faq__accordion__style"
-							style={{ border: "none" }}
-							expanded={expanded === "panel3"}
-							onChange={handleChange("panel3")}
-						>
-							<AccordionSummary
-								className="summary"
-								aria-controls="panel2d-content"
-								id="panel2d-header"
+								<AccordionSummary
+									className="summary"
+									aria-controls="panel2d-content"
+									id="panel2d-header"
+								>
+									<Typography sx={{ fontSize: "2.4rem" }}>
+										What do I need to know?
+									</Typography>
+								</AccordionSummary>
+								<AccordionDetails>
+									<Typography sx={{ fontSize: "2.4rem" }}>
+										Lorem ipsum dolor sit amet, consectetur
+										adipiscing elit. Suspendisse malesuada
+										lacus ex, sit amet blandit leo lobortis
+										eget. Lorem ipsum dolor sit amet,
+										consectetur adipiscing elit. Suspendisse
+										malesuada lacus ex, sit amet blandit leo
+										lobortis eget.
+									</Typography>
+								</AccordionDetails>
+							</Accordion>
+							<Accordion
+								className="faq__accordion__style"
+								style={{ border: "none" }}
+								expanded={expanded === "panel3"}
+								onChange={handleChange("panel3")}
 							>
-								<Typography sx={{ fontSize: "2.4rem" }}>
-									How will I know if order is placed successfully?
-								</Typography>
-							</AccordionSummary>
-							<AccordionDetails>
-								<Typography sx={{ fontSize: "2.4rem" }}>
-									Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-									eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-									eget.
-								</Typography>
-							</AccordionDetails>
-						</Accordion>
-						<Accordion
-							className="faq__accordion__style"
-							style={{ border: "none" }}
-							expanded={expanded === "panel4"}
-							onChange={handleChange("panel4")}
-						>
-							<AccordionSummary
-								className="summary"
-								aria-controls="panel2d-content"
-								id="panel2d-header"
+								<AccordionSummary
+									className="summary"
+									aria-controls="panel2d-content"
+									id="panel2d-header"
+								>
+									<Typography sx={{ fontSize: "2.4rem" }}>
+										How will I know if order is placed
+										successfully?
+									</Typography>
+								</AccordionSummary>
+								<AccordionDetails>
+									<Typography sx={{ fontSize: "2.4rem" }}>
+										Lorem ipsum dolor sit amet, consectetur
+										adipiscing elit. Suspendisse malesuada
+										lacus ex, sit amet blandit leo lobortis
+										eget. Lorem ipsum dolor sit amet,
+										consectetur adipiscing elit. Suspendisse
+										malesuada lacus ex, sit amet blandit leo
+										lobortis eget.
+									</Typography>
+								</AccordionDetails>
+							</Accordion>
+							<Accordion
+								className="faq__accordion__style"
+								style={{ border: "none" }}
+								expanded={expanded === "panel4"}
+								onChange={handleChange("panel4")}
 							>
-								<Typography sx={{ fontSize: "2.4rem" }}>
-									How do I check the status of my order?
-								</Typography>
-							</AccordionSummary>
-							<AccordionDetails>
-								<Typography sx={{ fontSize: "2.4rem" }}>
-									Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-									eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-									eget.
-								</Typography>
-							</AccordionDetails>
-						</Accordion>
-						<Accordion
-							className="faq__accordion__style last__panel"
-							style={{ border: "none" }}
-							expanded={expanded === "panel5"}
-							onChange={handleChange("panel5")}
-						>
-							<AccordionSummary
-								className="summary last"
-								aria-controls="panel3d-content"
-								id="panel3d-header"
+								<AccordionSummary
+									className="summary"
+									aria-controls="panel2d-content"
+									id="panel2d-header"
+								>
+									<Typography sx={{ fontSize: "2.4rem" }}>
+										How do I check the status of my order?
+									</Typography>
+								</AccordionSummary>
+								<AccordionDetails>
+									<Typography sx={{ fontSize: "2.4rem" }}>
+										Lorem ipsum dolor sit amet, consectetur
+										adipiscing elit. Suspendisse malesuada
+										lacus ex, sit amet blandit leo lobortis
+										eget. Lorem ipsum dolor sit amet,
+										consectetur adipiscing elit. Suspendisse
+										malesuada lacus ex, sit amet blandit leo
+										lobortis eget.
+									</Typography>
+								</AccordionDetails>
+							</Accordion>
+							<Accordion
+								className="faq__accordion__style last__panel"
+								style={{ border: "none" }}
+								expanded={expanded === "panel5"}
+								onChange={handleChange("panel5")}
 							>
-								<Typography sx={{ fontSize: "2.4rem" }}>
-									Can I cancel my order?
-								</Typography>
-							</AccordionSummary>
-							<AccordionDetails>
-								<Typography sx={{ fontSize: "2.4rem" }}>
-									Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-									eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-									eget.
-								</Typography>
-							</AccordionDetails>
-						</Accordion>
+								<AccordionSummary
+									className="summary last"
+									aria-controls="panel3d-content"
+									id="panel3d-header"
+								>
+									<Typography sx={{ fontSize: "2.4rem" }}>
+										Can I cancel my order?
+									</Typography>
+								</AccordionSummary>
+								<AccordionDetails>
+									<Typography sx={{ fontSize: "2.4rem" }}>
+										Lorem ipsum dolor sit amet, consectetur
+										adipiscing elit. Suspendisse malesuada
+										lacus ex, sit amet blandit leo lobortis
+										eget. Lorem ipsum dolor sit amet,
+										consectetur adipiscing elit. Suspendisse
+										malesuada lacus ex, sit amet blandit leo
+										lobortis eget.
+									</Typography>
+								</AccordionDetails>
+							</Accordion>
+						</div>
 					</div>
-				</div>
-			</Container>
+				</Container>
+			</div>
+			<Footer />
 		</>
 	);
 }
