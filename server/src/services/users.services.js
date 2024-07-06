@@ -1,17 +1,5 @@
 const { poolPromise, sql } = require("../../database.services");
 
-async function getAllUser() {
-  try {
-    const pool = await poolPromise;
-    const result = await pool
-      .request()
-      .query("SELECT * FROM Users WHERE status = 1");
-    return { users: result.recordsets[0] };
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 async function login(email, password) {
   try {
     const pool = await poolPromise;
@@ -137,7 +125,6 @@ async function reviewProduct({
 }
 
 module.exports = {
-  getAllUser,
   login,
   registerUser,
   getVoucher,
