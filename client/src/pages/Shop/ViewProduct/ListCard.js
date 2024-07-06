@@ -12,7 +12,7 @@ import {
 import React from "react";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import "./ListCard.scss";
+import "./GridListCard.scss";
 import { Link } from "react-router-dom";
 
 export default function ListCard({ products }) {
