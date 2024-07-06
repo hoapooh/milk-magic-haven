@@ -99,6 +99,8 @@ export default function ManageProduct() {
         fetchData();
     }, []);
 
+    console.log(productList)
+
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - productList.length) : 0;
 
     const handleChangePage = (event, newPage) => {
@@ -168,14 +170,14 @@ export default function ManageProduct() {
                                 count={productList.length}
                                 rowsPerPage={rowsPerPage}
                                 page={page}
-                                // slotProps={{
-                                //     select: {
-                                //         inputProps: {
-                                //             'aria-label': 'rows per page',
-                                //         },
-                                //         native: true,
-                                //     },
-                                // }}
+                                slotProps={{
+                                    select: {
+                                        inputProps: {
+                                            'aria-label': 'rows per page',
+                                        },
+                                        native: true,
+                                    },
+                                }}
                                 onPageChange={handleChangePage}
                                 onRowsPerPageChange={handleChangeRowsPerPage}
                                 ActionsComponent={TablePaginationActions}
