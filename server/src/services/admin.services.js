@@ -109,18 +109,17 @@ ORDER BY
 SELECT 
     B.brand_id,
     B.brand_name,
-    SUM(OI.quantity) AS total_quantity_sold
+    SUM(P.stock) AS total_stock
 FROM 
-    Order_Items OI
+    Brands B
 JOIN 
-    Products P ON OI.product_id = P.product_id
-JOIN 
-    Brands B ON P.brand_id = B.brand_id
+    Products P ON B.brand_id = P.brand_id
 GROUP BY 
     B.brand_id,
     B.brand_name
 ORDER BY 
-    total_quantity_sold DESC;`);
+    total_stock DESC;
+`);
 
     return {
       topProduct: topProduct.recordset,
