@@ -1,0 +1,53 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font-family: "Baloo Paaji 2", sans-serif;
+	font-size: 1.6rem;
+	scroll-behavior: smooth;
+}
+
+#root {
+	min-height: 100vh;
+	display: grid;
+	grid-template-rows: auto auto 1fr auto;
+}
+
+ul {
+	list-style: none;
+	padding-left: 0;
+	margin-bottom: 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	margin-bottom: 0;
+}
+
+body::-webkit-scrollbar {
+	width: 6px;
+	display: block;
+	background: #d3d3d3;
+	border-radius: 6px;
+}
+
+body::-webkit-scrollbar-thumb {
+	background: #0f83b2;
+	border-radius: 6px;
+}

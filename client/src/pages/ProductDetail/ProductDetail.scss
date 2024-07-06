@@ -1,0 +1,96 @@
+.ProductPage {
+  font-family: Arial, sans-serif;
+}
+
+.content {
+  display: flex;
+  padding: 20px 130px;
+  gap: 50px;
+}
+
+.content__left img {
+  border-radius: 10px;
+}
+
+.content__right {
+  max-width: 600px;
+}
+
+.content__right__name {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.content__right__price {
+  font-size: 20px;
+  color: #b12704;
+  margin-bottom: 20px;
+}
+
+.content__right__text {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.content__right__button button {
+  background-color: #4caef0;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.content__right__button button:hover {
+  background-color: #3a94d6;
+}
+
+.short__description {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.description__category,
+.EXP {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.short {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.content__under {
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px auto;
+  max-width: 80%;
+  background-color: #f9f9f9;
+}
+
+.under_title {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-bottom: 20px;
+}
+
+.under_title_description h1,
+.under_title_review h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+.under_content {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #555;
+}

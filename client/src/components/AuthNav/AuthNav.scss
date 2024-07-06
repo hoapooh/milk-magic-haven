@@ -1,0 +1,56 @@
+.authnav {
+	--mask: radial-gradient(
+				9.33px at 50% calc(100% - 12.8px),
+				#000 99%,
+				#0000 101%
+			)
+			calc(50% - 16px) 0/32px 100%,
+		radial-gradient(9.33px at 50% calc(100% + 4.8px), #0000 99%, #000 101%)
+			50% calc(100% - 8px) / 32px 100% repeat-x;
+	-webkit-mask: var(--mask);
+	mask: var(--mask);
+	padding-top: 5px;
+	padding-bottom: 18px;
+	color: #f7f7f6;
+	background: #0f83b2;
+}
+
+.authnav__navbar {
+	font-size: 1.6rem;
+	width: 1280px;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.authnav__shipping {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.authnav__auth__link {
+	display: inline-block;
+	padding: 5px 15px;
+	border-radius: 10px;
+	color: #f7f7f6;
+	text-decoration: none;
+	transition: all 0.25s ease;
+}
+
+.authnav__auth__link.logout {
+	cursor: pointer;
+}
+
+.authnav__auth__link.logout i {
+	margin-left: 10px;
+}
+
+.authnav__auth__link:hover {
+	background: rgba(255, 255, 255, 0.1);
+}
+
+.authnav__auth__link:last-child {
+	margin-left: 10px;
+}

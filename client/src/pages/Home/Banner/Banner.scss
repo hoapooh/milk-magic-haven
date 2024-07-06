@@ -1,0 +1,13 @@
+.banner img {
+    width: 550px;
+    height: 338px;
+    flex-shrink: 0;
+}
+
+.banner svg {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -145%);
+}
+
