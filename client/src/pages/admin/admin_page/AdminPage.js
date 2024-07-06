@@ -6,6 +6,8 @@ import { MdEdit } from "react-icons/md";
 import { FaTrashAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Button } from "antd";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function AdminPage() {
   const baseURL = "http://localhost:8000/user/get-all-user";
@@ -39,7 +41,7 @@ export default function AdminPage() {
           if (!response.ok) {
             throw new Error(`HTTP Status: ${response.status}`);
           }
-          alert("Delete successful");
+          toast.success("Xóa người dùng thành công");
           fetchAccount();
         })
         .catch((error) => console.log("Delete failed: ", error));
@@ -48,6 +50,7 @@ export default function AdminPage() {
 
   return (
     <div className="AdminPage">
+      <ToastContainer />
       <Grid container spacing={2}>
         <Grid item md={2}>
           <Sidebar />

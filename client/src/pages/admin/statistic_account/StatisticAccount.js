@@ -24,9 +24,9 @@ export default function StatisticAccount() {
 
   const roleCounts = usersAPI.reduce(
     (acc, user) => {
-      if (user.role_id == "admin") acc.admin += 1;
-      else if (user.role_id == "customer") acc.customer += 1;
-      else if (user.role_id == "staff") acc.staff += 1;
+      if (user.role_id === "admin") acc.admin += 1;
+      else if (user.role_id === "customer") acc.customer += 1;
+      else if (user.role_id === "staff") acc.staff += 1;
       return acc;
     },
     { admin: 0, customer: 0, staff: 0 }

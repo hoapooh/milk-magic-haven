@@ -3,11 +3,11 @@ import { Grid } from "@mui/material";
 import Sidebar from "../sidebar/Sidebar";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 import "./AddAccount.scss";
-import { notification } from "antd";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function AddAccount() {
   const baseURL = `http://localhost:8000/admin/create-user`;
@@ -35,9 +35,10 @@ export default function AddAccount() {
           return response.json();
         })
         .then(() => {
-          notification.success({
-            message: "Successfully",
-            description: "Add new account successfully",
+          toast.success("Thêm mới người dùng thành công", {
+            onClose: () => {
+              navigate("/admin");
+            },
           });
           setTimeout(() => {
             navigate("/admin");
@@ -54,6 +55,7 @@ export default function AddAccount() {
 
   return (
     <div className="AddAccount">
+      <ToastContainer />
       <Grid container spacing={2}>
         <Grid item md={2}>
           <Sidebar />
