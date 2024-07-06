@@ -1,17 +1,5 @@
 const { poolPromise, sql } = require("../../database.services");
 
-async function getAllUser() {
-  try {
-    const pool = await poolPromise;
-    const result = await pool
-      .request()
-      .query("SELECT * FROM Users WHERE status = 1");
-    return { users: result.recordsets[0] };
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 async function login(email, password) {
   try {
     const pool = await poolPromise;
@@ -39,9 +27,14 @@ async function login(email, password) {
   }
 }
 
-async function registerUser(email, password, name) {
+async function registerUser(email, password, name, repeatPassword) {
   try {
     const pool = await poolPromise;
+
+    if (password !== repeatPassword) {
+      return { message: "Passwords do not match", status: 400 };
+    }
+
     const result = await pool
       .request()
       .input("email", sql.VarChar, email)
@@ -132,7 +125,6 @@ async function reviewProduct({
 }
 
 module.exports = {
-  getAllUser,
   login,
   registerUser,
   getVoucher,

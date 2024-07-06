@@ -13,8 +13,13 @@ export default function ProductList() {
 	const [view, setView] = useState(false);
 	return (
 		<Box className={"product-list-container"}>
-			<Typography variant="h3" gutterBottom fontWeight={"bold"}>
-				Educational Toys
+			<Typography
+				variant="h3"
+				gutterBottom
+				fontWeight={"bold"}
+				fontSize={40}
+			>
+				Các loại sữa
 			</Typography>
 			<Box mb={2}>
 				<IconButton

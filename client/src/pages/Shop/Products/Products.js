@@ -13,15 +13,17 @@ export default function Products() {
 			<AuthNav />
 			<Header />
 			<div>
-				<Container>
-					<Grid container columnSpacing={20} marginTop={2}>
-						<Grid item md={3} xs={12}>
-							<ProductCategory />
+				<Container maxWidth="xl" className="product__container">
+					<div className="product">
+						<Grid container spacing={2}>
+							<Grid item md={3} xs={12}>
+								<ProductCategory />
+							</Grid>
+							<Grid item md={9} xs={12}>
+								<ProductList />
+							</Grid>
 						</Grid>
-						<Grid item md={9} xs={12}>
-							<ProductList />
-						</Grid>
-					</Grid>
+					</div>
 				</Container>
 			</div>
 			<Footer />
