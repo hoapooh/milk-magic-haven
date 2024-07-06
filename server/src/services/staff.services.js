@@ -88,7 +88,7 @@ async function deletePost({ id }) {
   }
 }
 
-async function getAllUser() {
+async function getCustomerUser() {
   try {
     const pool = await poolPromise;
     const result = await pool
@@ -115,6 +115,6 @@ module.exports = {
   createPost,
   updatePost,
   deletePost,
-  getAllUser,
+  getCustomerUser,
   getAllOrder,
 };
