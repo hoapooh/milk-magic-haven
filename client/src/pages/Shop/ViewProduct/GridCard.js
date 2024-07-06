@@ -2,7 +2,6 @@ import {
 	Box,
 	Button,
 	Card,
-	CardActionArea,
 	CardActions,
 	CardContent,
 	CardMedia,
@@ -14,6 +13,7 @@ import {
 import React from "react";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import "./GridListCard.scss";
 
 export default function GridCard({ products }) {
 	return (
