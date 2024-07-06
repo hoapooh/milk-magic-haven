@@ -21,28 +21,45 @@ export default function GridCard({ products }) {
 			<Grid container spacing={2}>
 				{products.map((product) => {
 					return (
-						<Grid item xs={6} md={4} key={product.id}>
-							<Card sx={{ maxWidth: 345 }}>
-								<Box justifyContent={"end"} display={"flex"}>
-									{product.sale && (
-										<Box
-											display={"flex"}
-											justifyContent={"center"}
-											alignItems={"center"}
+						<Grid item xs={6} md={4} key={product.product_id}>
+							<Card
+								sx={{
+									maxWidth: 345,
+									minHeight: 330,
+									position: "relative",
+									borderRadius: "15px",
+								}}
+							>
+								<Box
+									justifyContent={"space-between"}
+									display={"flex"}
+									sx={{
+										position: "absolute",
+										top: "0",
+										right: "0",
+										width: "100%",
+										padding: "0 0 0 8px",
+									}}
+								>
+									<Box
+										display={"flex"}
+										justifyContent={"center"}
+										alignItems={"center"}
+									>
+										<Button
+											style={{
+												padding: "2px 10px",
+												backgroundColor: "#F27373",
+												color: "white",
+												borderRadius: 15,
+												fontSize: 12,
+											}}
+											size="small"
+											variant="contained"
 										>
-											<Button
-												style={{
-													height: 25,
-													backgroundColor: "#F27373",
-													color: "white",
-												}}
-												size="small"
-												variant="contained"
-											>
-												Sale
-											</Button>
-										</Box>
-									)}
+											Sale
+										</Button>
+									</Box>
 									<CardActions>
 										<IconButton aria-label="add to favorites">
 											<FavoriteBorderIcon />
@@ -52,26 +69,56 @@ export default function GridCard({ products }) {
 										</IconButton>
 									</CardActions>
 								</Box>
-								<CardActionArea>
-									<CardMedia
-										component="img"
-										height="200"
-										image={product.image}
-										alt="green iguana"
-									/>
+								<Box>
+									<Box className="productGrid__image">
+										<CardMedia
+											component="img"
+											image={product.image_url}
+											alt="green iguana"
+											style={{
+												display: "flex",
+												alignItems: "center",
+												justifyContent: "center",
+												width: "auto",
+												height: "100%",
+											}}
+										/>
+									</Box>
 									<CardContent>
 										<Typography
 											gutterBottom
 											component="div"
+											variant="h4"
+											sx={{
+												fontWeight: "700",
+												fontSize: "1.8rem",
+												color: "#191919",
+											}}
 										>
-											{product.name}
+											{product.product_name}
 										</Typography>
-										{!product.sale ? (
+										<Typography
+											gutterBottom
+											component="div"
+											sx={{
+												fontWeight: "600",
+												fontSize: "1.6rem",
+												color: "#171717",
+											}}
+										>
+											{`${product.price.toLocaleString(
+												"vi-VN"
+											)} VND`}
+										</Typography>
+										{/* == DÙNG ĐỂ HIỂN THỊ GIÁ TIỀN GIẢM GIÁ HOCWJ KO == */}
+										{/* {!product.sale ? (
 											<Typography
 												gutterBottom
 												component="div"
 											>
-												{product.originPrice}
+												{`${product.price.toLocaleString(
+													"vi-VN"
+												)} VND`}
 											</Typography>
 										) : (
 											<Box display={"flex"}>
@@ -96,19 +143,19 @@ export default function GridCard({ products }) {
 													{product.originPrice}
 												</Typography>
 											</Box>
-										)}
+										)} */}
 										<Typography
 											gutterBottom
 											component="div"
 										>
 											<Rating
 												name="read-only"
-												value={product.rate}
+												value={5}
 												readOnly
 											/>
 										</Typography>
 									</CardContent>
-								</CardActionArea>
+								</Box>
 							</Card>
 						</Grid>
 					);
