@@ -6,6 +6,7 @@ import ProductList from "../ProductList/ProductList";
 import Header from "../../../components/Header/Header";
 import AuthNav from "../../../components/AuthNav/AuthNav";
 import Footer from "../../../components/Footer/Footer";
+import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb";
 
 export default function Products() {
 	return (
@@ -13,6 +14,7 @@ export default function Products() {
 			<AuthNav />
 			<Header />
 			<div>
+				<Breadcrumb>Cửa hàng</Breadcrumb>
 				<Container maxWidth="xl" className="product__container">
 					<div className="product">
 						<Grid container spacing={2}>
