@@ -3,8 +3,8 @@ const {
   createPost,
   updatePost,
   deletePost,
-  getAllUser,
   getAllOrder,
+  getCustomerUser,
 } = require("../services/staff.services");
 
 const createVoucherController = async (req, res) => {
@@ -70,8 +70,8 @@ const deletePostController = async (req, res) => {
   }
 };
 
-const getAllUsersController = async (req, res) => {
-  const result = await getAllUser();
+const getAllCustomerController = async (req, res) => {
+  const result = await getCustomerUser();
 
   res.json({ message: "Success", data: result.users, status: 200 });
 };
@@ -87,6 +87,6 @@ module.exports = {
   createPostController,
   updatePostController,
   deletePostController,
-  getAllUsersController,
+  getAllCustomerController,
   getAllOrderController,
 };

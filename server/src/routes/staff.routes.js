@@ -4,8 +4,8 @@ const {
   createPostController,
   updatePostController,
   deletePostController,
-  getAllUsersController,
   getAllOrderController,
+  getAllCustomerController,
 } = require("../controller/staff.controller");
 
 const staffRouter = express.Router();
@@ -18,7 +18,7 @@ staffRouter.put("/update-post/:id", updatePostController);
 
 staffRouter.delete("/delete-post/:id", deletePostController);
 
-staffRouter.get("/get-all-user", getAllUsersController);
+staffRouter.get("/get-all-customer", getAllCustomerController);
 
 staffRouter.get("/get-all-order", getAllOrderController);
 
