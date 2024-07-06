@@ -1,14 +1,14 @@
 import {
-	Box,
-	Button,
-	Container,
-	FormControl,
-	Grid,
-	IconButton,
-	InputAdornment,
-	InputLabel,
-	OutlinedInput,
-	Typography,
+  Box,
+  Button,
+  Container,
+  FormControl,
+  Grid,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  Typography,
 } from "@mui/material";
 import React from "react";
 import "./Login.scss";
@@ -29,7 +29,7 @@ export default function Login() {
 	const [showPassword, setShowPassword] = React.useState(false);
 	const nav = useNavigate();
 
-	const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
 	const handleMouseDownPassword = (event) => {
 		event.preventDefault();
