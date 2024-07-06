@@ -1,9 +1,17 @@
 import React from "react";
 import "./AuthNav.scss";
 import { Container, CssBaseline } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function AuthNav() {
+	const username = localStorage.getItem("username");
+	const nav = useNavigate();
+
+	const handleLogOut = () => {
+		localStorage.removeItem("username");
+		nav("/");
+	};
+
 	return (
 		<>
 			<CssBaseline />
@@ -14,12 +22,30 @@ export default function AuthNav() {
 						over $150
 					</div>
 					<div className="authnav__auth">
-						<Link to="/login" className="authnav__auth__link">
-							Đăng nhập
-						</Link>
-						<Link to="/register" className="authnav__auth__link">
-							Đăng ký
-						</Link>
+						{username ? (
+							<p
+								onClick={handleLogOut}
+								className="authnav__auth__link logout"
+							>
+								Hello, {username}
+								<i class="fa-solid fa-right-from-bracket"></i>
+							</p>
+						) : (
+							<>
+								<Link
+									to="/login"
+									className="authnav__auth__link"
+								>
+									Đăng nhập
+								</Link>
+								<Link
+									to="/register"
+									className="authnav__auth__link"
+								>
+									Đăng ký
+								</Link>
+							</>
+						)}
 					</div>
 				</nav>
 			</Container>

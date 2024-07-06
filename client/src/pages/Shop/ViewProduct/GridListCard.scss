@@ -1,0 +1,31 @@
+@media screen and (max-width: 600px) {
+	.listCard-container {
+		display: block;
+	}
+
+	.listCard-container img {
+		width: 100%;
+	}
+}
+
+.productList__image,
+.productGrid__image {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 10px 20px;
+	border-radius: 20px;
+	border: 1px solid #d4d4d4;
+}
+
+.productGrid__image {
+	height: 208px;
+}
+
+.productList__title {
+	transition: all 0.3s ease-in-out;
+}
+
+.productList__title:hover {
+	color: #ff6b6b;
+}
