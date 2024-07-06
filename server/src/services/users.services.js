@@ -39,9 +39,14 @@ async function login(email, password) {
   }
 }
 
-async function registerUser(email, password, name) {
+async function registerUser(email, password, name, repeatPassword) {
   try {
     const pool = await poolPromise;
+
+    if (password !== repeatPassword) {
+      return { message: "Passwords do not match", status: 400 };
+    }
+
     const result = await pool
       .request()
       .input("email", sql.VarChar, email)

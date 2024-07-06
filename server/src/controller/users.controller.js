@@ -27,8 +27,8 @@ const loginController = async (req, res) => {
 };
 
 const registerController = async (req, res) => {
-  const { email, password, name } = req.body;
-  const result = await registerUser(email, password, name);
+  const { email, password, name, repeatPassword } = req.body;
+  const result = await registerUser(email, password, name, repeatPassword);
 
   res.status(result.status).json({
     message: result.message,
