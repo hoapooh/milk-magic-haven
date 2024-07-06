@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { UserOutlined, BarChartOutlined, LogoutOutlined } from "@ant-design/icons";
-import "./Sidebar.css";
+import "./Sidebar.scss";
 
 export default function Sidebar() {
   return (
@@ -15,13 +15,8 @@ export default function Sidebar() {
         </Link>
       </div>
       <div className="sidebar__link">
-        <Link to={"/revenue"}>
-          <BarChartOutlined /> Thống kê doanh thu
-        </Link>
-      </div>
-      <div className="sidebar__link">
-        <Link to={"/admin/statistic/account"}>
-          <BarChartOutlined /> Thống kê tài khoản
+        <Link to={"/admin/statistic"}>
+          <BarChartOutlined /> Thống kê số liệu
         </Link>
       </div>
       <div className="sidebar__link logout">

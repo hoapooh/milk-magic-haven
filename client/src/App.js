@@ -8,11 +8,10 @@ import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import AdminPage from "./pages/admin/admin_page/AdminPage";
-import Revenue from "./pages/admin/statistic/Revenue";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import AddAccount from "./pages/admin/addAccount/AddAccount";
 import UpdateAccount from "./pages/admin/updateAccount/UpdateAccount";
-import StatisticAccount from "./pages/admin/statistic_account/StatisticAccount";
+import Statistic from "./pages/admin/statistic/Statistic";
 
 const THEME = createTheme({
   typography: {
@@ -38,10 +37,9 @@ function App() {
 
             {/* ============ ADMIN VIEW ============ */}
             <Route path="/admin" element={<AdminPage />} />
-            <Route path="/revenue" element={<Revenue />} />
             <Route path="/addAccount" element={<AddAccount />} />
             <Route path="/update/:id" element={<UpdateAccount />} />
-            <Route path="/admin/statistic/account" element={<StatisticAccount />} />
+            <Route path="/admin/statistic" element={<Statistic />} />
           </Routes>
         </Router>
       </ThemeProvider>

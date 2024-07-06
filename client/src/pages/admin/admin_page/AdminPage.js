@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./AdminPage.css";
+import "./AdminPage.scss";
 import Sidebar from "../sidebar/Sidebar";
 import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { MdEdit } from "react-icons/md";
@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function AdminPage() {
-  const baseURL = "http://localhost:8000/user/get-all-user";
+  const baseURL = "http://localhost:8000/staff/get-all-user";
   const [usersAPI, setUsersAPI] = useState([]);
 
   useEffect(() => {
