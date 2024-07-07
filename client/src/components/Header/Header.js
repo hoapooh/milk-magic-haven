@@ -41,7 +41,7 @@ export default function Header() {
 					{/* ====== ACTION ====== */}
 					<div className="header__action">
 						{/* ====== CART ====== */}
-						<Link className="cart__icon" to={"/faq"}>
+						<Link className="cart__icon" to={"/cart"}>
 							<ShoppingCartIcon />
 						</Link>
 

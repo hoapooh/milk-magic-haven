@@ -12,6 +12,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import AddAccount from "./pages/admin/addAccount/AddAccount";
 import UpdateAccount from "./pages/admin/updateAccount/UpdateAccount";
 import Statistic from "./pages/admin/statistic/Statistic";
+import Staff from "./pages/Staff/Staff";
 
 const THEME = createTheme({
 	typography: {
@@ -32,13 +33,16 @@ function App() {
 					<Route path="/blog" element={<Blog />} />
 					<Route path="/shop" element={<Products />} />
 					<Route path="/contact" element={<Contact />} />
-					<Route path="/detail/:id" element={<ProductDetail />} />
+					<Route path="/detail" element={<ProductDetail />} />
 
 					{/* ============ ADMIN VIEW ============ */}
 					<Route path="/admin" element={<AdminPage />} />
 					<Route path="/addAccount" element={<AddAccount />} />
 					<Route path="/update/:id" element={<UpdateAccount />} />
 					<Route path="/admin/statistic" element={<Statistic />} />
+
+					{/* ================== STAFF VIEW ============== */}
+					<Route path="/staff/*" element={<Staff />} />
 				</Routes>
 			</ThemeProvider>
 		</>
