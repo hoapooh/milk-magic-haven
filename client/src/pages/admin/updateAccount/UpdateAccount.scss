@@ -1,0 +1,76 @@
+.UpdateAccount {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f8f9fa;
+
+  .UpdateAccount__content {
+    padding: 40px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 98%;
+  }
+
+  .UpdateAccount__title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .ToastContainer {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1050;
+  }
+
+  .container {
+    max-width: 100%;
+    margin-top: 20px;
+  }
+
+  .form-control {
+    font-size: 1.6rem;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .form-select {
+    font-size: 1.6rem;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .alert-warning {
+    font-size: 1.4rem;
+  }
+
+  button[type="submit"],
+  .button {
+    background-color: #007bff;
+    border: none;
+    font-size: 1.6rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    width: 50%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  button[type="submit"]:hover,
+  .button:hover {
+    background-color: #0056b3;
+  }
+}

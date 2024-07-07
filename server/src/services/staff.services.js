@@ -88,9 +88,33 @@ async function deletePost({ id }) {
   }
 }
 
+async function getCustomerUser() {
+  try {
+    const pool = await poolPromise;
+    const result = await pool
+      .request()
+      .query("SELECT * FROM Users WHERE status = 1 AND role_id = 'customer'");
+    return { users: result.recordsets[0] };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getAllOrder() {
+  try {
+    const pool = await poolPromise;
+    const result = await pool.request().query("SELECT * FROM Orders");
+    return { orders: result.recordsets[0] };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = {
   createVoucher,
   createPost,
   updatePost,
   deletePost,
+  getCustomerUser,
+  getAllOrder,
 };

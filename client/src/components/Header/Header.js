@@ -31,9 +31,6 @@ export default function Header() {
 							<Link to="/shop">Cửa hàng</Link>
 						</li>
 						<li className="header__list__item">
-							<Link to="/faq">Page</Link>
-						</li>
-						<li className="header__list__item">
 							<Link to="/blog">Bài viết</Link>
 						</li>
 						<li className="header__list__item">
@@ -44,7 +41,7 @@ export default function Header() {
 					{/* ====== ACTION ====== */}
 					<div className="header__action">
 						{/* ====== CART ====== */}
-						<Link className="cart__icon" to={"/faq"}>
+						<Link className="cart__icon" to={"/cart"}>
 							<ShoppingCartIcon />
 						</Link>
 

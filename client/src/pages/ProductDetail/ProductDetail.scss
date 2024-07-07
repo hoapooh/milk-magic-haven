@@ -1,96 +1,49 @@
-.ProductPage {
-  font-family: Arial, sans-serif;
+.productDetail__container {
+	margin-top: 60px;
+	padding-bottom: 50px;
 }
 
-.content {
-  display: flex;
-  padding: 20px 130px;
-  gap: 50px;
+.productDetail {
+	width: 1280px;
+	margin: 0 auto;
 }
 
-.content__left img {
-  border-radius: 10px;
+/* ======= TITLE ======= */
+.productDetail__title {
+	color: #191919;
+	font-size: 3.5rem;
+	font-weight: 700;
+	line-height: 120%; /* 45.6px */
 }
 
-.content__right {
-  max-width: 600px;
+// ======= INFO ======= //
+.productDetail__image img {
+	height: 100%;
+	width: auto;
 }
 
-.content__right__name {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 10px;
+.productDetail__cartButton svg {
+	margin-right: 5px;
 }
 
-.content__right__price {
-  font-size: 20px;
-  color: #b12704;
-  margin-bottom: 20px;
+.productDetail__shortInfo fieldset {
+	border-radius: 15px;
+	padding: 10px 20px;
+	border: 1px solid #d4d4d4;
 }
 
-.content__right__text {
-  font-size: 16px;
-  line-height: 1.5;
-  margin-bottom: 20px;
+.productDetail__shortInfo legend {
+	font-size: 2.4rem;
+	font-weight: 700;
 }
 
-.content__right__button button {
-  background-color: #4caef0;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+.productDetail__description {
+	margin-top: 30px;
+	border-radius: 15px;
+	border: 1px solid #d4d4d4;
+	padding: 50px 100px;
 }
 
-.content__right__button button:hover {
-  background-color: #3a94d6;
-}
-
-.short__description {
-  border: 1px solid #ddd;
-  padding: 15px;
-  border-radius: 5px;
-  margin-top: 20px;
-}
-
-.description__category,
-.EXP {
-  font-size: 14px;
-  margin-bottom: 5px;
-}
-
-.short {
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.content__under {
-  border: 1px solid #ddd;
-  padding: 20px;
-  border-radius: 10px;
-  margin: 20px auto;
-  max-width: 80%;
-  background-color: #f9f9f9;
-}
-
-.under_title {
-  display: flex;
-  justify-content: center;
-  gap: 50px;
-  margin-bottom: 20px;
-}
-
-.under_title_description h1,
-.under_title_review h1 {
-  font-size: 24px;
-  color: #333;
-}
-
-.under_content {
-  font-size: 16px;
-  line-height: 1.5;
-  color: #555;
+.productDetail__description a {
+	cursor: pointer;
 }

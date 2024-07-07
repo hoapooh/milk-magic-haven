@@ -11,7 +11,6 @@ import {
 	Typography,
 } from "@mui/material";
 import React from "react";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import "./GridListCard.scss";
 
@@ -61,9 +60,6 @@ export default function GridCard({ products }) {
 										</Button>
 									</Box>
 									<CardActions>
-										<IconButton aria-label="add to favorites">
-											<FavoriteBorderIcon />
-										</IconButton>
 										<IconButton aria-label="share">
 											<ShoppingCartOutlinedIcon />
 										</IconButton>
