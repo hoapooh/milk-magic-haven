@@ -51,30 +51,6 @@ export default function ProductPage() {
 		);
 	};
 
-	// CÁI NÀY DÙNG CHO CART
-
-	// const [quantity, setQuantity] = useState({});
-
-	// const handleIncrease = (id) => {
-	// 	setQuantity((prevQuantities) => ({
-	// 		...prevQuantities,
-	// 		[id]: (prevQuantities[id] || 0) + 1,
-	// 	}));
-	// };
-
-	// const handleDecrease = (id) => {
-	// 	setQuantity((prevQuantities) => ({
-	// 		...prevQuantities,
-	// 		[id]: Math.max((prevQuantities[id] || 0) - 1, 0), // Đảm bảo số lượng không âm
-	// 	}));
-	// };
-
-	// <ButtonGroup variant="outlined" aria-label="Basic button group">
-	//   <Button onClick={() => handleDecrease(product.id)}>-</Button>
-	//   <Button disableRipple>{quantities[product.id] || 0}</Button>
-	//   <Button onClick={() => handleIncrease(product.id)}>+</Button>
-	// </ButtonGroup>
-
 	// Hàm xử lý khi click vào "Mô tả sản phẩm"
 	const handleDescriptionClick = () => {
 		setActiveSection(

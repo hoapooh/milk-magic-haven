@@ -1,14 +1,14 @@
 import {
-  Box,
-  Button,
-  Container,
-  FormControl,
-  Grid,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  Typography,
+	Box,
+	Button,
+	Container,
+	FormControl,
+	Grid,
+	IconButton,
+	InputAdornment,
+	InputLabel,
+	OutlinedInput,
+	Typography,
 } from "@mui/material";
 import React from "react";
 import "./Login.scss";
@@ -29,7 +29,7 @@ export default function Login() {
 	const [showPassword, setShowPassword] = React.useState(false);
 	const nav = useNavigate();
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
+	const handleClickShowPassword = () => setShowPassword((show) => !show);
 
 	const handleMouseDownPassword = (event) => {
 		event.preventDefault();
@@ -119,19 +119,19 @@ export default function Login() {
 							>
 								<div className="form-textField">
 									<FormControl fullWidth="100%">
-										<InputLabel htmlFor="outlined-adornment-username">
+										<InputLabel htmlFor="outlined-adornment-Tên_đăng_nhập">
 											Tên đăng nhập
 										</InputLabel>
 										<OutlinedInput
 											style={{ borderRadius: "10px" }}
-											id="outlined-adornment-username"
+											id="outlined-adornment-Tên_đăng_nhập"
 											endAdornment={
 												<InputAdornment position="end">
 													<AccountCircle fontSize="large" />
 												</InputAdornment>
 											}
-											name="email"
-											label="Email"
+											name="Tên_đăng_nhập"
+											label="Tên_đăng_nhập"
 											value={formik.values.email}
 											onChange={formik.handleChange}
 											fullWidth="100%"
