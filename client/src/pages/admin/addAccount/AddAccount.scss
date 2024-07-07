@@ -1,0 +1,82 @@
+.AddAccount {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100dvh;
+  background-color: #f8f9fa;
+
+  .AddAccount__content {
+    padding: 40px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 98%;
+  }
+
+  .AddAccount__title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .ToastContainer {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1050;
+  }
+
+  .container {
+    max-width: 100%;
+    margin-top: 20px;
+  }
+
+  .form-control {
+    font-size: 1.6rem;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .form-select {
+    font-size: 1.6rem;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .alert-warning {
+    font-size: 1.8rem;
+    background-color: #ff9800;
+    border-color: #e65100;
+    color: #fff;
+  }
+
+  button[type="submit"] {
+    background-color: #007bff;
+    border: none;
+    font-size: 1.6rem;
+    padding: 15px 80px;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    width: 50%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+
+  .add_button {
+    display: flex;
+    justify-content: center;
+  }
+}

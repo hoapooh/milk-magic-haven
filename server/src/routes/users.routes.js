@@ -15,9 +15,7 @@ userRouter.post("/login", loginController);
 
 userRouter.post("/register", registerController);
 
-userRouter.get("/get-all-user", getAllUsersController);
-
-userRouter.get("/get-voucher", getVoucherController);
+userRouter.get("/get-all-voucher", getVoucherController);
 
 userRouter.get("/get-all-post", getAllPostController);
 

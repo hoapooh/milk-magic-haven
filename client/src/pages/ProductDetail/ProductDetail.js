@@ -5,7 +5,7 @@ import AuthNav from "../../components/AuthNav/AuthNav";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 
-export default function ProductPage() {
+export default function ProductDetail() {
 	return (
 		<>
 			<AuthNav />

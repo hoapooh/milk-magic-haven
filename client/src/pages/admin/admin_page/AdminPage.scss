@@ -1,0 +1,111 @@
+.AdminPage {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  height: 100dvh;
+}
+
+.admin__content {
+  padding: 40px;
+}
+
+.admin__table {
+  width: 100%;
+  border-radius: 10px;
+  border-collapse: collapse;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.admin__table th {
+  font-size: 2.4rem;
+  font-weight: bold;
+  background-color: #fff;
+}
+
+.admin__table td {
+  font-size: 2rem;
+}
+
+.admin__table th:nth-last-child(2),
+.admin__table th:last-child,
+.admin__table td:nth-last-child(2) {
+  text-align: center;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.admin__table tr:nth-of-type(odd) {
+  background-color: #f2f2f2;
+}
+
+.admin__table tr:hover {
+  background-color: #f5f5f5;
+}
+
+.admin__table .call-to-action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.admin__table .action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1376f8;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 2rem;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.admin__table .action-btn:hover {
+  background: #0e5aa7;
+}
+
+.admin__table .action-btn.trash {
+  background: #f44336;
+}
+
+.admin__table .action-btn.trash:hover {
+  background: #d32f2f;
+}
+
+.admin__table .action-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.admin__title {
+  font-size: 4.8rem;
+}
+
+.button-container {
+  margin-top: 20px;
+}
+
+.button-container a {
+  text-decoration: none;
+}
+
+.button-container a button {
+  font-size: 1.6rem;
+  padding: 10px 20px;
+}
+
+.addNewAccount {
+  margin-bottom: 25px;
+}
+
+.pie-chart-container {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.pie-chart-container h2 {
+  margin-bottom: 20px;
+}

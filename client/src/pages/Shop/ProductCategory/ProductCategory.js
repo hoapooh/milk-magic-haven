@@ -5,15 +5,13 @@ import {
 	CardContent,
 	CardMedia,
 	Checkbox,
-	Container,
 	FormControlLabel,
 	FormGroup,
-	IconButton,
 	Rating,
 	Slider,
 	Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import listOfProductCategory from "./Category";
 import listOfPopularProduct from "./ListOfPopularProduct";
 import "./ProductCategory.scss";
@@ -32,7 +30,7 @@ const marks = [
 ];
 
 export default function ProductCategory() {
-	const [val, setVal] = React.useState(MIN);
+	const [val, setVal] = useState(MIN);
 	const handleChange = (_, newValue) => {
 		setVal(newValue);
 	};
@@ -45,6 +43,7 @@ export default function ProductCategory() {
 					{listOfProductCategory.map((category) => {
 						return (
 							<FormControlLabel
+								key={category}
 								control={<Checkbox />}
 								label={category}
 							/>
@@ -55,54 +54,55 @@ export default function ProductCategory() {
 			<Box className="filter">
 				<h3>Filter by price</h3>
 				<Box className="price-range">
-					<Box sx={{ width: 250 }}>
-						<Slider
-							marks={marks}
-							step={10}
-							value={val}
-							valueLabelDisplay="auto"
-							min={MIN}
-							max={MAX}
-							onChange={handleChange}
-							style={{ color: "#0f83b2" }}
-						/>
-						<Box
-							sx={{
-								display: "flex",
-								justifyContent: "space-between",
-							}}
+					<Slider
+						marks={marks}
+						step={10}
+						value={val}
+						valueLabelDisplay="auto"
+						min={MIN}
+						max={MAX}
+						onChange={handleChange}
+						style={{ color: "#0f83b2", height: 6 }}
+					/>
+					<Box
+						sx={{
+							display: "flex",
+							justifyContent: "space-between",
+						}}
+					>
+						<Typography
+							variant="body2"
+							onClick={() => setVal(MIN)}
+							sx={{ cursor: "pointer" }}
 						>
-							<Typography
-								variant="body2"
-								onClick={() => setVal(MIN)}
-								sx={{ cursor: "pointer" }}
-							>
-								${MIN}.00
-							</Typography>
-							<Typography
-								variant="body2"
-								onClick={() => setVal(MAX)}
-								sx={{ cursor: "pointer" }}
-							>
-								${MAX}.00
-							</Typography>
-						</Box>
-					</Box>
-					<Box className="btn">
-						<Button
-							variant="contained"
-							style={{ backgroundColor: "#0f83b2" }}
+							${MIN}.00
+						</Typography>
+						<Typography
+							variant="body2"
+							onClick={() => setVal(MAX)}
+							sx={{ cursor: "pointer" }}
 						>
-							Apply
-						</Button>
+							${MAX}.00
+						</Typography>
 					</Box>
+				</Box>
+				<Box className="btn">
+					<Button
+						variant="contained"
+						style={{ backgroundColor: "#0f83b2" }}
+					>
+						Apply
+					</Button>
 				</Box>
 			</Box>
 			<Box className="popular-product">
 				<h3>Popular products</h3>
 				{listOfPopularProduct.map((product) => {
 					return (
-						<Card sx={{ display: "flex", boxShadow: "none" }}>
+						<Card
+							key={product.id}
+							sx={{ display: "flex", boxShadow: "none" }}
+						>
 							<Box sx={{ display: "flex", flexDirection: "row" }}>
 								<CardMedia
 									component="img"

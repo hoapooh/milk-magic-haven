@@ -73,8 +73,80 @@ async function deleteUser(id) {
   }
 }
 
+async function getUserById(id) {
+  try {
+    const pool = await poolPromise;
+    const result = await pool
+      .request()
+      .input("user_id", sql.Int, id)
+      .query("SELECT * FROM Users WHERE user_id = @user_id");
+
+    console.log(result.recordset[0]);
+    return { user: result.recordset[0], status: 200 };
+  } catch (error) {
+    console.log("error", error);
+  }
+}
+
+async function getDataDashboard() {
+  try {
+    const pool = await poolPromise;
+    const topProduct = await pool.request().query(`SELECT TOP 10
+    P.product_id,
+    P.product_name,
+    SUM(OI.quantity) AS total_quantity_sold
+FROM 
+    Order_Items OI
+JOIN 
+    Products P ON OI.product_id = P.product_id
+GROUP BY 
+    P.product_id,
+    P.product_name
+ORDER BY 
+    total_quantity_sold DESC `);
+
+    const productByBrand = await pool.request().query(`
+SELECT 
+    B.brand_id,
+    B.brand_name,
+    SUM(P.stock) AS total_stock
+FROM 
+    Brands B
+JOIN 
+    Products P ON B.brand_id = P.brand_id
+GROUP BY 
+    B.brand_id,
+    B.brand_name
+ORDER BY 
+    total_stock DESC;
+`);
+
+    return {
+      topProduct: topProduct.recordset,
+      productByBrand: productByBrand.recordset,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getAllUser() {
+  try {
+    const pool = await poolPromise;
+    const result = await pool
+      .request()
+      .query("SELECT * FROM Users WHERE status = 1 ");
+    return { users: result.recordsets[0] };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = {
   createUser,
   updateUser,
   deleteUser,
+  getUserById,
+  getDataDashboard,
+  getAllUser,
 };

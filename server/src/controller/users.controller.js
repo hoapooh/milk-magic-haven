@@ -1,6 +1,5 @@
 const { poolPromise } = require("../../database.services");
 const {
-  getAllUser,
   login,
   registerUser,
   getVoucher,
@@ -8,12 +7,6 @@ const {
   getPostById,
   reviewProduct,
 } = require("../services/users.services");
-
-const getAllUsersController = async (req, res) => {
-  const result = await getAllUser();
-
-  res.json({ message: "Success", data: result.users, status: 200 });
-};
 
 const loginController = async (req, res) => {
   const { email, password } = req.body;
@@ -76,7 +69,6 @@ const reviewProductController = async (req, res) => {
 };
 
 module.exports = {
-  getAllUsersController,
   loginController,
   registerController,
   getVoucherController,
