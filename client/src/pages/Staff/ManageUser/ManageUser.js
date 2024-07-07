@@ -86,12 +86,12 @@ export default function ManageUser() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:8000/products');
+                const response = await fetch('http://localhost:8000/staff/get-all-customer');
                 if (!response.ok) {
                     throw new Error("Failed to fetch data");
                 }
                 const data = await response.json();
-                setProductList(data);
+                setProductList(data.data);
             } catch (error) {
                 console.log(error)
             }
@@ -113,18 +113,14 @@ export default function ManageUser() {
     };
 
     return (
-        <Box display="flex" justifyContent="center" mt={5} ml={-30} mr={15}>
+        <Box display="flex" justifyContent="center" mt={20} ml={-30} mr={15}>
             <TableContainer component={Paper} sx={{ width: '100%', mx: 'auto', mt: 0.5 }}>
                 <Table sx={{ minWidth: 1000, fontSize: '1.2rem' }} aria-label="custom pagination table">
                     <TableHead>
                         <TableRow>
-                            <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Product Name</TableCell>
-                            <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Description</TableCell>
-                            <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Price</TableCell>
-                            <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Stock</TableCell>
-                            <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Brand ID</TableCell>
-                            <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Country ID</TableCell>
-                            <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Age Range</TableCell>
+                            <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Customer ID</TableCell>
+                            <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Customer Name</TableCell>
+                            <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Email</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -134,25 +130,13 @@ export default function ManageUser() {
                         ).map((product) => (
                             <TableRow key={product.product_id}>
                                 <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                    {product.product_name}
+                                    {product.user_id}
                                 </TableCell>
                                 <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                    {product.description}
+                                    {product.username}
                                 </TableCell>
                                 <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                    {product.price}
-                                </TableCell>
-                                <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                    {product.stock}
-                                </TableCell>
-                                <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                    {product.brand_id}
-                                </TableCell>
-                                <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                    {product.country_id}
-                                </TableCell>
-                                <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                    {product.age_range}
+                                    {product.email}
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -165,7 +149,7 @@ export default function ManageUser() {
                     <TableFooter>
                         <TableRow>
                             <TablePagination
-                                rowsPerPageOptions={[4]}
+                                rowsPerPageOptions={[4, 7]}
                                 colSpan={7}
                                 count={productList.length}
                                 rowsPerPage={rowsPerPage}

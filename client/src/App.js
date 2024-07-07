@@ -17,7 +17,6 @@ import UpdateAccount from "./pages/admin/updateAccount/UpdateAccount";
 import Statistic from "./pages/admin/statistic/Statistic";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import Staff from "./pages/Staff/Staff";
-import CartItem from "./pages/Cart/CartItem";
 
 const THEME = createTheme({
 	typography: {
@@ -40,7 +39,6 @@ function App() {
 					<Route path="/shop" element={<Products />} />
 					<Route path="/contact" element={<Contact />} />
 					<Route path="/detail" element={<ProductDetail />} />
-					<Route path="/cart" element={<CartItem />} />
 
 					{/* ============ ADMIN VIEW ============ */}
 					<Route path="/admin" element={<AdminPage />} />

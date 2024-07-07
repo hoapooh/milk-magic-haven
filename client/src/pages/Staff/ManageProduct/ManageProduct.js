@@ -16,6 +16,10 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
+import { MainAPI } from '../../../API';
+import { Button, Card, CardContent, TextField, Typography } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -81,21 +85,32 @@ TablePaginationActions.propTypes = {
 export default function ManageProduct() {
     const [productList, setProductList] = useState([]);
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(3);
+    const [show, setshow] = useState(null)
+    const [showEditProduct, setShowEditProduct] = useState(false);
+    const [proName, setProName] = useState('');
+    const [prodes, setProdes] = useState('')
+    const [price, setPrice] = useState('');
+    const [stock, setStock] = useState('');
+    const [brandID, setbrandID] = useState('');
+    const [country, setcountry] = useState('');
+    const [range, setRange] = useState('');
+    const [img, setImg] = useState('');
+    const [editProductId, setEditProductId] = useState(null);
+
+    const fetchData = () => {
+        fetch(`${MainAPI}/product/get-all-product`, {
+            method: "GET",
+        })
+            .then(res => {
+                if (!res.ok) throw new Error("Failed to fetch data get product");
+                return res.json();
+            })
+            .then(data => setProductList(data.data))
+            .catch(error => console.error("Error fetching data product:", error));
+    };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('http://localhost:8000/products');
-                if (!response.ok) {
-                    throw new Error("Failed to fetch data");
-                }
-                const data = await response.json();
-                setProductList(data);
-            } catch (error) {
-                console.log(error)
-            }
-        };
         fetchData();
     }, []);
 
@@ -112,80 +127,343 @@ export default function ManageProduct() {
         setPage(0);
     };
 
+    const handleShow = (index) => {
+        setshow(show === index ? null : index)
+    }
+
+    const handleDelete = (productId) => {
+        console.log(`Delete product with ID: ${productId}`);
+        fetch(`${MainAPI}/product/delete-product/${productId}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then(response => {
+                if (!response.ok) throw new Error("Failed to delete product");
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                fetchData();
+            })
+            .catch(error => console.error("Error deleting product:", error));
+    };
+
+    const handleEditProductClick = (product) => {
+        setEditProductId(product.product_id);
+        setProName(product.product_name);
+        setPrice(product.price);
+        setImg(product.image_url)
+        setStock(product.stock);
+        setProdes(product.description)
+        setbrandID(product.brand_id)
+        setcountry(product.country_id)
+        setRange(product.age_range)
+        setShowEditProduct(true);
+    };
+
+    const handleUpdateProduct = () => {
+        if (!editProductId) return;
+
+        console.log(editProductId)
+
+        fetch(`${MainAPI}/product/update-product/${editProductId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                product_name: proName,
+                product_price: price,
+                product_description: prodes,
+                image_url: img,
+                stock: stock,
+                brand_id: brandID,
+                country_id: country,
+                age_range: range,
+            }),
+        })
+            .then(res => {
+                if (!res.ok) throw new Error("Failed to update product");
+                return res.json();
+            })
+            .then(data => {
+                console.log(data);
+                fetchData();
+                setShowEditProduct(false);;
+                setEditProductId(null);
+            })
+            .catch(error => console.error("Error updating product:", error));
+    };
+
     return (
-        <Box display="flex" justifyContent="center" mt={5} ml={-30} mr={15}>
-            <TableContainer component={Paper} sx={{ width: '100%', mx: 'auto', mt: 0.5 }}>
-                <Table sx={{ minWidth: 1000, fontSize: '1.2rem' }} aria-label="custom pagination table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Product Name</TableCell>
-                            <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Description</TableCell>
-                            <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Price</TableCell>
-                            <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Stock</TableCell>
-                            <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Brand ID</TableCell>
-                            <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Country ID</TableCell>
-                            <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Age Range</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {(rowsPerPage > 0
-                            ? productList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            : productList
-                        ).map((product) => (
-                            <TableRow key={product.product_id}>
-                                <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                    {product.product_name}
-                                </TableCell>
-                                <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                    {product.description}
-                                </TableCell>
-                                <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                    {product.price}
-                                </TableCell>
-                                <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                    {product.stock}
-                                </TableCell>
-                                <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                    {product.brand_id}
-                                </TableCell>
-                                <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                    {product.country_id}
-                                </TableCell>
-                                <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                    {product.age_range}
-                                </TableCell>
+        <Box>
+            <Box ml={-30} mr={15} mb={-5}>
+                {showEditProduct && (
+                    <div style={{ marginLeft: '10px' }}>
+                        <Card className="edit-voucher" variant="outlined">
+                            <CardContent>
+                                <Typography variant="h4" component="div" gutterBottom>
+                                    Edit Product
+                                </Typography>
+                                <TextField
+                                    fullWidth
+                                    label="Product Name"
+                                    value={proName}
+                                    onChange={(event) => setProName(event.target.value)}
+                                    margin="normal"
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Description"
+                                    value={prodes}
+                                    onChange={(event) => setStock(event.target.value)}
+                                    margin="normal"
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Price"
+                                    type="number"
+                                    value={price}
+                                    onChange={(event) => setPrice(event.target.value)}
+                                    margin="normal"
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Stock"
+                                    type="number"
+                                    value={stock}
+                                    onChange={(event) => setStock(event.target.value)}
+                                    margin="normal"
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Brand ID"
+                                    value={brandID}
+                                    onChange={(event) => setbrandID(event.target.value)}
+                                    margin="normal"
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Country"
+                                    value={country}
+                                    onChange={(event) => setcountry(event.target.value)}
+                                    margin="normal"
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="range"
+                                    value={range}
+                                    onChange={(event) => setRange(event.target.value)}
+                                    margin="normal"
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Url_Image"
+                                    value={img}
+                                    onChange={(event) => setImg(event.target.value)}
+                                    margin="normal"
+                                />
+                                <div style={{ marginTop: '10px' }}>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={handleUpdateProduct}
+                                        style={{ marginRight: '10px' }}
+                                    >
+                                        Update
+                                    </Button>
+                                    <Button
+                                        variant="outlined"
+                                        color="secondary"
+                                        onClick={() => setShowEditProduct(false)}
+                                    >
+                                        Cancel
+                                    </Button>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
+                )}
+                {showEditProduct && (
+                    <div style={{ marginLeft: '10px' }}>
+                        <Card className="edit-voucher" variant="outlined">
+                            <CardContent>
+                                <Typography variant="h4" component="div" gutterBottom>
+                                    Edit Product
+                                </Typography>
+                                <TextField
+                                    fullWidth
+                                    label="Product Name"
+                                    value={proName}
+                                    onChange={(event) => setProName(event.target.value)}
+                                    margin="normal"
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Description"
+                                    value={prodes}
+                                    onChange={(event) => setStock(event.target.value)}
+                                    margin="normal"
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Price"
+                                    type="number"
+                                    value={price}
+                                    onChange={(event) => setPrice(event.target.value)}
+                                    margin="normal"
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Stock"
+                                    type="number"
+                                    value={stock}
+                                    onChange={(event) => setStock(event.target.value)}
+                                    margin="normal"
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Brand ID"
+                                    value={brandID}
+                                    onChange={(event) => setbrandID(event.target.value)}
+                                    margin="normal"
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Country"
+                                    value={country}
+                                    onChange={(event) => setcountry(event.target.value)}
+                                    margin="normal"
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="range"
+                                    value={range}
+                                    onChange={(event) => setRange(event.target.value)}
+                                    margin="normal"
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Url_Image"
+                                    value={img}
+                                    onChange={(event) => setImg(event.target.value)}
+                                    margin="normal"
+                                />
+                                <div style={{ marginTop: '10px' }}>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={handleUpdateProduct}
+                                        style={{ marginRight: '10px' }}
+                                    >
+                                        Update
+                                    </Button>
+                                    <Button
+                                        variant="outlined"
+                                        color="secondary"
+                                        onClick={() => setShowEditProduct(false)}
+                                    >
+                                        Cancel
+                                    </Button>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
+                )}
+            </Box>
+            <Box display="flex" justifyContent="center" mt={9} ml={-35} mr={9}>
+                <TableContainer component={Paper} sx={{ width: '100%', mx: 'auto', mt: 0.5 }}>
+                    <Table sx={{ minWidth: 1000, fontSize: '1.2rem' }} aria-label="custom pagination table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Image</TableCell>
+                                <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Product Name</TableCell>
+                                <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Description</TableCell>
+                                <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Price</TableCell>
+                                <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Stock</TableCell>
+                                <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Brand ID</TableCell>
+                                <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Country ID</TableCell>
+                                <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Age Range</TableCell>
+                                <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Action</TableCell>
                             </TableRow>
-                        ))}
-                        {emptyRows > 0 && (
-                            <TableRow style={{ height: 53 * emptyRows }}>
-                                <TableCell colSpan={7} />
-                            </TableRow>
-                        )}
-                    </TableBody>
-                    <TableFooter>
-                        <TableRow>
-                            <TablePagination
-                                rowsPerPageOptions={[4]}
-                                colSpan={7}
-                                count={productList.length}
-                                rowsPerPage={rowsPerPage}
-                                page={page}
-                                slotProps={{
-                                    select: {
-                                        inputProps: {
-                                            'aria-label': 'rows per page',
+                        </TableHead>
+                        <TableBody>
+                            {(rowsPerPage > 0
+                                ? productList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                : productList
+                            ).map((product, index) => (
+                                <TableRow key={product.product_id}>
+                                    <TableCell style={{ width: 300 }} align="center" sx={{ fontSize: '1.2rem' }}>
+                                        {product.image_url}
+                                    </TableCell>
+                                    <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
+                                        {product.product_name}
+                                    </TableCell>
+                                    <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
+                                        {product.description}
+                                    </TableCell>
+                                    <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
+                                        {product.price}
+                                    </TableCell>
+                                    <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
+                                        {product.stock}
+                                    </TableCell>
+                                    <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
+                                        {product.brand_id}
+                                    </TableCell>
+                                    <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
+                                        {product.country_id}
+                                    </TableCell>
+                                    <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
+                                        {product.age_range}
+                                    </TableCell>
+                                    <TableCell style={{ width: 400 }} align="center" sx={{ fontSize: '1.2rem' }}>
+                                        <Button onClick={() => handleShow(index)}>
+                                            ▪▪▪
+                                        </Button>
+
+                                        {show === index &&
+                                            <Box sx={{ display: 'flex' }}>
+                                                <Button onClick={() => handleEditProductClick(product)}> <ModeEditIcon /></Button>
+                                                <Button onClick={() => handleDelete(product.product_id)}> <DeleteIcon /> </Button>
+                                            </Box>
+                                        }
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                            {emptyRows > 0 && (
+                                <TableRow style={{ height: 53 * emptyRows }}>
+                                    <TableCell colSpan={9} />
+                                </TableRow>
+                            )}
+                        </TableBody>
+                        <TableFooter>
+                            <TableRow>
+                                <TablePagination
+                                    rowsPerPageOptions={[3]}
+                                    colSpan={9}
+                                    count={productList.length}
+                                    rowsPerPage={rowsPerPage}
+                                    page={page}
+                                    slotProps={{
+                                        select: {
+                                            inputProps: {
+                                                'aria-label': 'rows per page',
+                                            },
+                                            native: true,
                                         },
-                                        native: true,
-                                    },
-                                }}
-                                onPageChange={handleChangePage}
-                                onRowsPerPageChange={handleChangeRowsPerPage}
-                                ActionsComponent={TablePaginationActions}
-                            />
-                        </TableRow>
-                    </TableFooter>
-                </Table>
-            </TableContainer>
+                                    }}
+                                    onPageChange={handleChangePage}
+                                    onRowsPerPageChange={handleChangeRowsPerPage}
+                                    ActionsComponent={TablePaginationActions}
+                                />
+                            </TableRow>
+                        </TableFooter>
+                    </Table>
+                </TableContainer>
+            </Box>
         </Box>
     );
 }

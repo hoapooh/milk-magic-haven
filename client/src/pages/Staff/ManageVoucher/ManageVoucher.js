@@ -16,6 +16,7 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
+import { Button, TextField } from '@mui/material';
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -82,20 +83,24 @@ export default function ManageVoucher() {
     const [productList, setProductList] = useState([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [show, setShow] = useState(false)
+    const [exDate, setExDate] = useState('')
+    const [discount, setDiscount] = useState('')
+
+    const fetchData = async () => {
+        try {
+            const response = await fetch('http://localhost:8000/user/get-all-voucher');
+            if (!response.ok) {
+                throw new Error("Failed to fetch data");
+            }
+            const data = await response.json();
+            setProductList(data.data);
+        } catch (error) {
+            console.log(error)
+        }
+    };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('http://localhost:8000/products');
-                if (!response.ok) {
-                    throw new Error("Failed to fetch data");
-                }
-                const data = await response.json();
-                setProductList(data);
-            } catch (error) {
-                console.log(error)
-            }
-        };
         fetchData();
     }, []);
 
@@ -112,81 +117,137 @@ export default function ManageVoucher() {
         setPage(0);
     };
 
+    const handleCreateVoucher = () => {
+        fetch(`http://localhost:8000/staff/create-voucher`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                discount: discount,
+                expiration_date: exDate
+            })
+        })
+            .then(res => {
+                if (!res.ok) throw new Error("Failed to add voucher");
+                return res.json();
+            })
+            .then(data => {
+                console.log(data);
+                fetchData();
+                setShow(false);
+                setExDate('');
+                setDiscount('');
+                console.log('Voucher added successfully');
+            })
+            .catch(error => {
+                console.error("Error adding voucher:", error);
+            });
+    }
+
+    console.log(show)
+
     return (
-        <Box display="flex" justifyContent="center" mt={5} ml={-30} mr={15}>
-            <TableContainer component={Paper} sx={{ width: '100%', mx: 'auto', mt: 0.5 }}>
-                <Table sx={{ minWidth: 1000, fontSize: '1.2rem' }} aria-label="custom pagination table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Product Name</TableCell>
-                            <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Description</TableCell>
-                            <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Price</TableCell>
-                            <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Stock</TableCell>
-                            <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Brand ID</TableCell>
-                            <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Country ID</TableCell>
-                            <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Age Range</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {(rowsPerPage > 0
-                            ? productList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            : productList
-                        ).map((product) => (
-                            <TableRow key={product.product_id}>
-                                <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                    {product.product_name}
-                                </TableCell>
-                                <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                    {product.description}
-                                </TableCell>
-                                <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                    {product.price}
-                                </TableCell>
-                                <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                    {product.stock}
-                                </TableCell>
-                                <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                    {product.brand_id}
-                                </TableCell>
-                                <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                    {product.country_id}
-                                </TableCell>
-                                <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                    {product.age_range}
-                                </TableCell>
+        <>
+            <Box >
+                <Button onClick={() => setShow(!show)} sx={{ border: '1px solid #49A1D7', marginTop: '10%', marginLeft: '30%', fontSize: '13px' }}>
+                    Create New Voucher
+                </Button>
+            </Box>
+            <Box>
+                {show && (
+                    <Box mt={2} display="flex" alignItems="ceter" ml={-10}>
+                        <TextField
+                            label="Expiration Date"
+                            type="date"
+                            name="expiration_date"
+                            onChange={(e) => setExDate(e.target.value)}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            sx={{ mb: 2, width: '300px', mr: 5 }}
+                        />
+                        <TextField
+                            label="Discount"
+                            type="number"
+                            name="discount"
+                            onChange={(e) => setDiscount(e.target.value)}
+                            sx={{ mb: 2, width: '300px', mr: 5 }}
+                        />
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleCreateVoucher}
+                            sx={{ height: '45px', minWidth: '100px', marginTop: '2px' }}
+                        >
+                            Create Voucher
+                        </Button>
+                    </Box>
+                )}
+            </Box>
+            <Box display="flex" justifyContent="center" mt={5} ml={-30} mr={15}>
+                <TableContainer component={Paper} sx={{ width: '100%', mx: 'auto', mt: 0.5 }}>
+                    <Table sx={{ minWidth: 1000, fontSize: '1.2rem' }} aria-label="custom pagination table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Voucher ID</TableCell>
+                                <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Code</TableCell>
+                                <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Discount</TableCell>
+                                <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Expiration Date</TableCell>
                             </TableRow>
-                        ))}
-                        {emptyRows > 0 && (
-                            <TableRow style={{ height: 53 * emptyRows }}>
-                                <TableCell colSpan={7} />
-                            </TableRow>
-                        )}
-                    </TableBody>
-                    <TableFooter>
-                        <TableRow>
-                            <TablePagination
-                                rowsPerPageOptions={[4]}
-                                colSpan={7}
-                                count={productList.length}
-                                rowsPerPage={rowsPerPage}
-                                page={page}
-                                slotProps={{
-                                    select: {
-                                        inputProps: {
-                                            'aria-label': 'rows per page',
+                        </TableHead>
+                        <TableBody>
+                            {(rowsPerPage > 0
+                                ? productList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                : productList
+                            ).map((product) => (
+                                <TableRow key={product.voucher_id}>
+                                    <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
+                                        {product.voucher_id}
+                                    </TableCell>
+                                    <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
+                                        {product.code}
+                                    </TableCell>
+                                    <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
+                                        {product.discount}
+                                    </TableCell>
+                                    <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
+                                        {product.expiration_date}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                            {emptyRows > 0 && (
+                                <TableRow style={{ height: 53 * emptyRows }}>
+                                    <TableCell colSpan={7} />
+                                </TableRow>
+                            )}
+                        </TableBody>
+                        <TableFooter>
+                            <TableRow>
+                                <TablePagination
+                                    rowsPerPageOptions={[4, 7]}
+                                    colSpan={7}
+                                    count={productList.length}
+                                    rowsPerPage={rowsPerPage}
+                                    page={page}
+                                    slotProps={{
+                                        select: {
+                                            inputProps: {
+                                                'aria-label': 'rows per page',
+                                            },
+                                            native: true,
                                         },
-                                        native: true,
-                                    },
-                                }}
-                                onPageChange={handleChangePage}
-                                onRowsPerPageChange={handleChangeRowsPerPage}
-                                ActionsComponent={TablePaginationActions}
-                            />
-                        </TableRow>
-                    </TableFooter>
-                </Table>
-            </TableContainer>
-        </Box>
+                                    }}
+                                    onPageChange={handleChangePage}
+                                    onRowsPerPageChange={handleChangeRowsPerPage}
+                                    ActionsComponent={TablePaginationActions}
+                                />
+                            </TableRow>
+                        </TableFooter>
+                    </Table>
+                </TableContainer>
+            </Box>
+        </>
     );
 }
 
