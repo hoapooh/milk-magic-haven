@@ -14,6 +14,15 @@ export default function SliderStaff() {
                 <li>
                     <a
                         onClick={() => {
+                            nav("/staff/manageorder");
+                        }}
+                    >
+                        Management Order
+                    </a>
+                </li>
+                <li>
+                    <a
+                        onClick={() => {
                             nav("/staff/manageproduct");
                         }}
                     >
@@ -23,14 +32,29 @@ export default function SliderStaff() {
                 <li>
                     <a
                         onClick={() => {
-                            nav("/satff/user");
+                            nav("/staff/managevoucher");
+                        }}
+                    >
+                        Management Voucher
+                    </a>
+                </li>
+                <li>
+                    <a
+                        onClick={() => {
+                            nav("/staff/managepost");
+                        }}
+                    >
+                        Management Post
+                    </a>
+                </li>
+                <li>
+                    <a
+                        onClick={() => {
+                            nav("/staff/manageuser");
                         }}
                     >
                         Management Users
                     </a>
-                </li>
-                <li>
-                    <a href="#settings">Settings</a>
                 </li>
                 <li>
                     <a onClick={handleLogout}>Logout</a>
