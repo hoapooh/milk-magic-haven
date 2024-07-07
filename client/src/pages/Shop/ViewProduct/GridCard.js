@@ -61,9 +61,6 @@ export default function GridCard({ products }) {
 										</Button>
 									</Box>
 									<CardActions>
-										<IconButton aria-label="add to favorites">
-											<FavoriteBorderIcon />
-										</IconButton>
 										<IconButton aria-label="share">
 											<ShoppingCartOutlinedIcon />
 										</IconButton>

@@ -19,7 +19,7 @@ async function getProductById(id) {
 			.request()
 			.input("id", id)
 			.query(
-				"SELECT * FROM Products WHERE product_id = @id AND status = 1"
+				"SELECT product_id, product_name, description, price, stock, Brands.brand_name, Originated_Country.country_name, age_range, image_url, status FROM Products join Brands on Products.brand_id = Brands.brand_id join Originated_Country on Products.country_id = Originated_Country.country_id WHERE product_id = @id AND status = 1"
 			);
 
 		const product = result.recordset[0];
