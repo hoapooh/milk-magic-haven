@@ -38,7 +38,7 @@ export default function ListCard({ products }) {
 
 							<Grid item md={9} xs={12}>
 								<CardContent sx={{ flex: "1 0 auto" }}>
-									<Link to={"/"}>
+									<Link to={`/detail/${product.product_id}`}>
 										<Typography
 											className="productList__title"
 											component="div"
@@ -76,30 +76,6 @@ export default function ListCard({ products }) {
 											"vi-VN"
 										)} VND`}
 									</Typography>
-									{/* == DÙNG ĐỂ HIỂN THỊ GIÁ TIỀN GIẢM GIÁ HOCWJ KO == */}
-									{/* {!product.sale ? (
-										<Typography gutterBottom component="div">
-											{product.price}
-										</Typography>
-									) : (
-										<Box display={"flex"}>
-											<Typography gutterBottom component="div" color={"green"}>
-												{product.salePrice}
-											</Typography>
-											<Typography
-												gutterBottom
-												component="div"
-												fontSize={13}
-												style={{
-													textDecoration: "line-through",
-													marginLeft: 5,
-													color: "gray",
-												}}
-											>
-												{product.originPrice}
-											</Typography>
-										</Box>
-									)} */}
 									<Typography gutterBottom component="div">
 										<Rating
 											name="read-only"
@@ -130,9 +106,6 @@ export default function ListCard({ products }) {
 											<ShoppingCartOutlinedIcon /> Add to
 											cart
 										</Button>
-										<IconButton aria-label="add to favorites">
-											<FavoriteBorderIcon />
-										</IconButton>
 									</Box>
 								</CardContent>
 							</Grid>

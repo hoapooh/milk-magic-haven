@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./ProductDetail.scss";
 import AuthNav from "../../components/AuthNav/AuthNav";
@@ -15,10 +15,29 @@ import {
 	ButtonGroup,
 	Button,
 } from "@mui/material";
+import { MainAPI } from "../../API";
+import { useParams } from "react-router-dom";
 
 export default function ProductPage() {
+	const { id } = useParams();
+	const baseURL = `${MainAPI}/product/get-product-by-id/${id}`;
+	const [product, setProduct] = useState({});
+
+	useEffect(() => {
+		const fetchAPI = () => {
+			fetch(baseURL)
+				.then((response) => response.json())
+				.then((data) => setProduct(data.product))
+				.catch((error) => console.log(error));
+		};
+
+		fetchAPI();
+	}, []);
+
 	// Khởi tạo state với giá trị ban đầu là 1
 	const [quantity, setQuantity] = useState(1);
+	// Khởi tạo state để theo dõi phần tử nào đang được hiển thị
+	const [activeSection, setActiveSection] = useState("description");
 
 	// Hàm xử lý khi bấm nút tăng
 	const handleIncrease = () => {
@@ -32,8 +51,29 @@ export default function ProductPage() {
 		);
 	};
 
-	// Khởi tạo state để theo dõi phần tử nào đang được hiển thị
-	const [activeSection, setActiveSection] = useState("description");
+	// CÁI NÀY DÙNG CHO CART
+
+	// const [quantity, setQuantity] = useState({});
+
+	// const handleIncrease = (id) => {
+	// 	setQuantity((prevQuantities) => ({
+	// 		...prevQuantities,
+	// 		[id]: (prevQuantities[id] || 0) + 1,
+	// 	}));
+	// };
+
+	// const handleDecrease = (id) => {
+	// 	setQuantity((prevQuantities) => ({
+	// 		...prevQuantities,
+	// 		[id]: Math.max((prevQuantities[id] || 0) - 1, 0), // Đảm bảo số lượng không âm
+	// 	}));
+	// };
+
+	// <ButtonGroup variant="outlined" aria-label="Basic button group">
+	//   <Button onClick={() => handleDecrease(product.id)}>-</Button>
+	//   <Button disableRipple>{quantities[product.id] || 0}</Button>
+	//   <Button onClick={() => handleIncrease(product.id)}>+</Button>
+	// </ButtonGroup>
 
 	// Hàm xử lý khi click vào "Mô tả sản phẩm"
 	const handleDescriptionClick = () => {
@@ -42,7 +82,7 @@ export default function ProductPage() {
 		);
 	};
 
-	// Hàm xử lý khi click vào "Đánh giá (29)"
+	// Hàm xử lý khi click vào "Đánh giá"
 	const handleReviewClick = () => {
 		setActiveSection(activeSection === "review" ? null : "review");
 	};
@@ -52,7 +92,7 @@ export default function ProductPage() {
 			<AuthNav />
 			<Header />
 			<div>
-				<Breadcrumb>Chi tiết sản phẩm</Breadcrumb>
+				<Breadcrumb>{product.product_name}</Breadcrumb>
 				<Container maxWidth="xl" className="productDetail__container">
 					<div className="productDetail">
 						<Grid container spacing={2}>
@@ -69,15 +109,17 @@ export default function ProductPage() {
 									}}
 								>
 									<img
-										src="https://firebasestorage.googleapis.com/v0/b/swp391-milkmartsystem.appspot.com/o/images%2Fyokogold%2Fvinamilk-yoko-gold-1-0-1-tuoi-350g.png?alt=media&token=290cc729-d928-4c6f-933d-9ad5f9557bdd"
-										alt=""
+										src={product.image_url}
+										alt={product.product_name}
 									/>
 								</Box>
 							</Grid>
 
 							{/* ======= PRODUCT INFO ======= */}
 							<Grid item xs={12} md={6}>
-								<h1 className="productDetail__title">Sữa</h1>
+								<h1 className="productDetail__title">
+									{product.product_name}
+								</h1>
 								<Typography
 									gutterBottom
 									component="p"
@@ -87,10 +129,9 @@ export default function ProductPage() {
 										fontWeight: "600",
 									}}
 								>
-									100.000 VND
-									{/* {`${product.price.toLocaleString(
-										"vi-VN"
-									)} VND`} */}
+									{`${(
+										Number(product?.price) || 0
+									).toLocaleString("vi-VN")} VND`}
 								</Typography>
 								<Box
 									sx={{
@@ -205,15 +246,15 @@ export default function ProductPage() {
 												fontSize="2rem"
 												component={"p"}
 											>
-												<strong>Thương hiệu:</strong>
-												Vinamilk
+												<strong>Thương hiệu:</strong>{" "}
+												{product.brand_name}
 											</Typography>
 											<Typography
 												fontSize="2rem"
 												component={"p"}
 											>
-												<strong>Xuất xứ:</strong> Việt
-												Nam
+												<strong>Xuất xứ:</strong>{" "}
+												{product.country_name}
 											</Typography>
 										</Box>
 										<Box
@@ -228,8 +269,8 @@ export default function ProductPage() {
 												fontSize="2rem"
 												component={"p"}
 											>
-												<strong>Độ tuổi:</strong> 1-3
-												tuổi
+												<strong>Độ tuổi:</strong>{" "}
+												{product.age_range}
 											</Typography>
 										</Box>
 									</fieldset>
@@ -321,13 +362,12 @@ export default function ProductPage() {
 											: "none",
 								}}
 							>
-								<Typography component={"p"} fontSize={"2rem"}>
-									Lorem ipsum dolor sit amet, consectetur
-									adipiscing elit, sed do eiusmod tempor ut
-									labore et dolore magna aliqua. Ut enim ad
-									minim veniam, quis nostrud exercitation
-									ullamco laboris nisi ut aliquip ex ea
-									commodo consequat.
+								<Typography
+									component={"p"}
+									textAlign={"center"}
+									fontSize={"2rem"}
+								>
+									{product.description}
 								</Typography>
 							</Box>
 							<Box
