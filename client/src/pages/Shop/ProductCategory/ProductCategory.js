@@ -29,10 +29,14 @@ const marks = [
 	},
 ];
 
-export default function ProductCategory() {
+export default function ProductCategory({ onSliderChange }) {
 	const [val, setVal] = useState(MIN);
 	const handleChange = (_, newValue) => {
 		setVal(newValue);
+	};
+
+	const handleSliderValueChange = (event, newValue) => {
+		onSliderChange(newValue);
 	};
 
 	return (
@@ -55,6 +59,8 @@ export default function ProductCategory() {
 				<h3>Filter by price</h3>
 				<Box className="price-range">
 					<Slider
+						defaultValue={MAX}
+						onChangeCommitted={handleSliderValueChange}
 						marks={marks}
 						step={100000}
 						value={val}
@@ -85,14 +91,6 @@ export default function ProductCategory() {
 							{MAX.toLocaleString("vi-VN")} VND
 						</Typography>
 					</Box>
-				</Box>
-				<Box className="btn">
-					<Button
-						variant="contained"
-						style={{ backgroundColor: "#0f83b2" }}
-					>
-						Apply
-					</Button>
 				</Box>
 			</Box>
 			<Box className="popular-product">

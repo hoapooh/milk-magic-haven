@@ -1,4 +1,4 @@
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import FAQ from "./pages/FAQ/FAQ";
 import Blog from "./pages/Blog/Blog";
 import HomePage from "./pages/Home/HomePage";
@@ -23,28 +23,23 @@ function App() {
 	return (
 		<>
 			<ThemeProvider theme={THEME}>
-				<Router>
-					<Routes>
-						{/* ============ USER VIEW ============ */}
-						<Route path="/" element={<HomePage />} />
-						<Route path="/login" element={<Login />} />
-						<Route path="/register" element={<Register />} />
-						<Route path="/faq" element={<FAQ />} />
-						<Route path="/blog" element={<Blog />} />
-						<Route path="/shop" element={<Products />} />
-						<Route path="/contact" element={<Contact />} />
-						<Route path="/detail/:id" element={<ProductDetail />} />
+				<Routes>
+					{/* ============ USER VIEW ============ */}
+					<Route path="/" element={<HomePage />} />
+					<Route path="/login" element={<Login />} />
+					<Route path="/register" element={<Register />} />
+					<Route path="/faq" element={<FAQ />} />
+					<Route path="/blog" element={<Blog />} />
+					<Route path="/shop" element={<Products />} />
+					<Route path="/contact" element={<Contact />} />
+					<Route path="/detail/:id" element={<ProductDetail />} />
 
-						{/* ============ ADMIN VIEW ============ */}
-						<Route path="/admin" element={<AdminPage />} />
-						<Route path="/addAccount" element={<AddAccount />} />
-						<Route path="/update/:id" element={<UpdateAccount />} />
-						<Route
-							path="/admin/statistic"
-							element={<Statistic />}
-						/>
-					</Routes>
-				</Router>
+					{/* ============ ADMIN VIEW ============ */}
+					<Route path="/admin" element={<AdminPage />} />
+					<Route path="/addAccount" element={<AddAccount />} />
+					<Route path="/update/:id" element={<UpdateAccount />} />
+					<Route path="/admin/statistic" element={<Statistic />} />
+				</Routes>
 			</ThemeProvider>
 		</>
 	);
