@@ -1,0 +1,49 @@
+.cart__container {
+	margin-top: 60px;
+	padding-bottom: 50px;
+}
+
+.cart {
+	width: 1280px;
+	margin: 0 auto;
+}
+
+.cart__title {
+	font-size: 3rem;
+	margin-bottom: 40px;
+}
+
+// ============== TABLE ==============
+.cart__productImage__productName {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+
+.cart__productImage {
+	width: 190px;
+	height: 190px;
+	border-radius: 15px;
+	padding: 10px;
+	border: 1px solid #d4d4d4;
+}
+
+.cart__productImage img {
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
+	border-radius: 15px;
+}
+
+.cart__coupon__continueShop {
+	margin-top: 30px;
+}
+
+.cart__coupon__continueShop input {
+	font-size: 1.4rem;
+}
+
+.cart__coupon__continueShop label,
+.cart__coupon__continueShop fieldset span {
+	font-size: 1.8rem;
+}

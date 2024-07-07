@@ -3,7 +3,7 @@ import FAQ from "./pages/FAQ/FAQ";
 import Blog from "./pages/Blog/Blog";
 import HomePage from "./pages/Home/HomePage";
 import Products from "./pages/Shop/Products/Products";
-import Contact from "./pages/contact/Contact";
+import Contact from "./pages/Contact/Contact";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
@@ -13,7 +13,7 @@ import AddAccount from "./pages/admin/addAccount/AddAccount";
 import UpdateAccount from "./pages/admin/updateAccount/UpdateAccount";
 import Statistic from "./pages/admin/statistic/Statistic";
 import Staff from "./pages/Staff/Staff";
-
+import Cart from "./pages/Cart/Cart";
 const THEME = createTheme({
 	typography: {
 		fontFamily: `"Baloo Paaji 2", sans-serif`,
@@ -33,7 +33,8 @@ function App() {
 					<Route path="/blog" element={<Blog />} />
 					<Route path="/shop" element={<Products />} />
 					<Route path="/contact" element={<Contact />} />
-					<Route path="/detail" element={<ProductDetail />} />
+					<Route path="/detail/:id" element={<ProductDetail />} />
+					<Route path="/cart" element={<Cart />} />
 
 					{/* ============ ADMIN VIEW ============ */}
 					<Route path="/admin" element={<AdminPage />} />
