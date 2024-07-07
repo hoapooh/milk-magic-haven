@@ -12,8 +12,8 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import AddAccount from "./pages/admin/addAccount/AddAccount";
 import UpdateAccount from "./pages/admin/updateAccount/UpdateAccount";
 import Statistic from "./pages/admin/statistic/Statistic";
+import Staff from "./pages/Staff/Staff";
 import Cart from "./pages/Cart/Cart";
-
 const THEME = createTheme({
 	typography: {
 		fontFamily: `"Baloo Paaji 2", sans-serif`,
@@ -41,6 +41,9 @@ function App() {
 					<Route path="/addAccount" element={<AddAccount />} />
 					<Route path="/update/:id" element={<UpdateAccount />} />
 					<Route path="/admin/statistic" element={<Statistic />} />
+
+					{/* ================== STAFF VIEW ============== */}
+					<Route path="/staff/*" element={<Staff />} />
 				</Routes>
 			</ThemeProvider>
 		</>
