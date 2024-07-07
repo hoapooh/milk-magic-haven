@@ -8,7 +8,7 @@ import AppPagination from "../Pagination/AppPagination";
 import GridCard from "../ViewProduct/GridCard";
 import ListCard from "../ViewProduct/ListCard";
 
-export default function ProductList() {
+export default function ProductList({ maxPrice }) {
 	const [products, setProducts] = useState([]);
 	const [view, setView] = useState(false);
 	return (
@@ -48,11 +48,7 @@ export default function ProductList() {
 				</>
 			)}
 
-			<AppPagination
-				setProducts={(p) => {
-					setProducts(p);
-				}}
-			/>
+			<AppPagination maxPrice={maxPrice} setProducts={setProducts} />
 		</Box>
 	);
 }

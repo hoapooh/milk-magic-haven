@@ -16,8 +16,8 @@ import listOfProductCategory from "./Category";
 import listOfPopularProduct from "./ListOfPopularProduct";
 import "./ProductCategory.scss";
 
-const MAX = 200;
-const MIN = 20;
+const MAX = 1000000;
+const MIN = 200000;
 const marks = [
 	{
 		value: MIN,
@@ -29,10 +29,14 @@ const marks = [
 	},
 ];
 
-export default function ProductCategory() {
+export default function ProductCategory({ onSliderChange }) {
 	const [val, setVal] = useState(MIN);
 	const handleChange = (_, newValue) => {
 		setVal(newValue);
+	};
+
+	const handleSliderValueChange = (event, newValue) => {
+		onSliderChange(newValue);
 	};
 
 	return (
@@ -55,8 +59,10 @@ export default function ProductCategory() {
 				<h3>Filter by price</h3>
 				<Box className="price-range">
 					<Slider
+						defaultValue={MAX}
+						onChangeCommitted={handleSliderValueChange}
 						marks={marks}
-						step={10}
+						step={100000}
 						value={val}
 						valueLabelDisplay="auto"
 						min={MIN}
@@ -75,24 +81,16 @@ export default function ProductCategory() {
 							onClick={() => setVal(MIN)}
 							sx={{ cursor: "pointer" }}
 						>
-							${MIN}.00
+							{MIN.toLocaleString("vi-VN")} VND
 						</Typography>
 						<Typography
 							variant="body2"
 							onClick={() => setVal(MAX)}
 							sx={{ cursor: "pointer" }}
 						>
-							${MAX}.00
+							{MAX.toLocaleString("vi-VN")} VND
 						</Typography>
 					</Box>
-				</Box>
-				<Box className="btn">
-					<Button
-						variant="contained"
-						style={{ backgroundColor: "#0f83b2" }}
-					>
-						Apply
-					</Button>
 				</Box>
 			</Box>
 			<Box className="popular-product">

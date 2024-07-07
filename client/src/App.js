@@ -1,13 +1,10 @@
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import FAQ from "./pages/FAQ/FAQ";
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
-import AuthNav from "./components/AuthNav/AuthNav";
 import Blog from "./pages/Blog/Blog";
 import HomePage from "./pages/Home/HomePage";
 import Products from "./pages/Shop/Products/Products";
 import Contact from "./pages/contact/Contact";
-// import ProductDetail from "./pages/ProductDetail/ProductDetail";
+import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import AdminPage from "./pages/admin/admin_page/AdminPage";
@@ -15,7 +12,6 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import AddAccount from "./pages/admin/addAccount/AddAccount";
 import UpdateAccount from "./pages/admin/updateAccount/UpdateAccount";
 import Statistic from "./pages/admin/statistic/Statistic";
-import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import Staff from "./pages/Staff/Staff";
 
 const THEME = createTheme({
@@ -28,7 +24,6 @@ function App() {
 	return (
 		<>
 			<ThemeProvider theme={THEME}>
-				{/* <Router> */}
 				<Routes>
 					{/* ============ USER VIEW ============ */}
 					<Route path="/" element={<HomePage />} />
@@ -49,7 +44,6 @@ function App() {
 					{/* ================== STAFF VIEW ============== */}
 					<Route path="/staff/*" element={<Staff />} />
 				</Routes>
-				{/* </Router> */}
 			</ThemeProvider>
 		</>
 	);
