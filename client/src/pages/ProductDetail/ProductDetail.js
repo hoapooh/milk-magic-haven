@@ -32,7 +32,7 @@ export default function ProductPage() {
 		};
 
 		fetchAPI();
-	}, []);
+	}, [baseURL]);
 
 	// Khởi tạo state với giá trị ban đầu là 1
 	const [quantity, setQuantity] = useState(1);
@@ -105,7 +105,7 @@ export default function ProductPage() {
 										padding: "20px 40px",
 										height: "400px",
 										border: "1px solid #E0E0E0",
-										borderRadius: 10,
+										borderRadius: "15px",
 									}}
 								>
 									<img
