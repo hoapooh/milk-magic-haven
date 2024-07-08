@@ -12,10 +12,17 @@ import React from "react";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import "./GridListCard.scss";
 import { Link } from "react-router-dom";
+import { useCart } from "../../../components/Context/CartContext/CartContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ListCard({ products }) {
+	const { addToCart } = useCart();
+	const quantity = 1;
+
 	return (
 		<>
+			<ToastContainer style={{ fontSize: "1.6rem" }} />
 			{products.map((product) => {
 				return (
 					<Card
@@ -99,6 +106,15 @@ export default function ListCard({ products }) {
 												borderRadius: "15px",
 												padding: "10px 20px",
 												fontSize: "1.6rem",
+											}}
+											onClick={() => {
+												addToCart({
+													...product,
+													quantity,
+												});
+												toast.success(
+													"Thêm mới giỏ hàng thành công!"
+												);
 											}}
 										>
 											<ShoppingCartOutlinedIcon /> Add to

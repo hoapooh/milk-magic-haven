@@ -93,3 +93,22 @@
 .header__search__submit:hover {
 	background: #0f6b8b;
 }
+
+.cart__icon__style {
+	position: relative;
+}
+
+.cart__icon__style span {
+	position: absolute;
+	top: -12px;
+	right: -12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	width: 24px;
+	height: 24px;
+	background: tomato;
+	color: #fff;
+	font-size: 1.6rem;
+}
