@@ -24,15 +24,15 @@
 	width: 190px;
 	height: 190px;
 	border-radius: 15px;
+	text-align: center;
 	padding: 10px;
 	border: 1px solid #d4d4d4;
 }
 
 .cart__productImage img {
 	height: 100%;
-	width: 100%;
+	width: auto;
 	object-fit: cover;
-	border-radius: 15px;
 }
 
 .cart__coupon__continueShop {

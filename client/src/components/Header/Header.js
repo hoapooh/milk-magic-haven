@@ -3,11 +3,14 @@ import "./Header.scss";
 import { Container } from "@mui/material";
 import { Link } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { useCart } from "../Context/CartContext/CartContext";
 
 export default function Header() {
 	function handleSubmit(e) {
 		e.preventDefault();
 	}
+
+	const { cartList } = useCart();
 
 	return (
 		<>
@@ -42,7 +45,12 @@ export default function Header() {
 					<div className="header__action">
 						{/* ====== CART ====== */}
 						<Link className="cart__icon" to={"/cart"}>
-							<ShoppingCartIcon />
+							<div className="cart__icon__style">
+								<ShoppingCartIcon />
+								{cartList.length > 0 && (
+									<span>{cartList.length}</span>
+								)}
+							</div>
 						</Link>
 
 						{/* ====== SEARCH BAR ====== */}

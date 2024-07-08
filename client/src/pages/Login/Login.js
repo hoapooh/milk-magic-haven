@@ -118,7 +118,7 @@ export default function Login() {
 								onSubmit={formik.handleSubmit}
 							>
 								<div className="form-textField">
-									<FormControl fullWidth="100%">
+									<FormControl fullWidth>
 										<InputLabel htmlFor="outlined-adornment-Tên_đăng_nhập">
 											Tên đăng nhập
 										</InputLabel>
@@ -130,11 +130,11 @@ export default function Login() {
 													<AccountCircle fontSize="large" />
 												</InputAdornment>
 											}
-											name="Tên_đăng_nhập"
+											name="email"
 											label="Tên_đăng_nhập"
 											value={formik.values.email}
 											onChange={formik.handleChange}
-											fullWidth="100%"
+											fullWidth
 										/>
 									</FormControl>
 									{formik.touched.email &&
@@ -148,7 +148,7 @@ export default function Login() {
 										)}
 								</div>
 								<div className="form-textField">
-									<FormControl fullWidth="100%">
+									<FormControl fullWidth>
 										<InputLabel htmlFor="outlined-adornment-password">
 											Mật khẩu
 										</InputLabel>

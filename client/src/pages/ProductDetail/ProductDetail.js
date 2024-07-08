@@ -17,8 +17,12 @@ import {
 } from "@mui/material";
 import { MainAPI } from "../../API";
 import { useParams } from "react-router-dom";
+import { useCart } from "../../components/Context/CartContext/CartContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ProductPage() {
+	const { addToCart } = useCart();
 	const { id } = useParams();
 	const baseURL = `${MainAPI}/product/get-product-by-id/${id}`;
 	const [product, setProduct] = useState({});
@@ -69,6 +73,7 @@ export default function ProductPage() {
 			<Header />
 			<div>
 				<Breadcrumb>{product.product_name}</Breadcrumb>
+				<ToastContainer style={{ fontSize: "1.6rem" }} />
 				<Container maxWidth="xl" className="productDetail__container">
 					<div className="productDetail">
 						<Grid container spacing={2}>
@@ -199,6 +204,12 @@ export default function ProductPage() {
 											fontSize: "1.6rem",
 											borderRadius: "10px",
 											padding: "5px 20px",
+										}}
+										onClick={() => {
+											addToCart({ ...product, quantity });
+											toast.success(
+												"Thêm mới giỏ hàng thành công!"
+											);
 										}}
 									>
 										<CiShoppingCart />

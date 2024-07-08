@@ -130,7 +130,7 @@ export default function Register() {
 												</InputAdornment>
 											}
 											label="Tên_đăng_nhập"
-											name="Tên_đăng_nhập"
+											name="name"
 											value={formik.values.name}
 											onChange={formik.handleChange}
 											fullWidth="100%"
