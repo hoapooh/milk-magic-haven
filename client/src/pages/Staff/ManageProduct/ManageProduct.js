@@ -97,6 +97,7 @@ export default function ManageProduct() {
     const [range, setRange] = useState('');
     const [img, setImg] = useState('');
     const [editProductId, setEditProductId] = useState(null);
+    const [showAdd, setShowAdd] = useState(false);
 
     const fetchData = () => {
         fetch(`${MainAPI}/product/get-all-product`, {
@@ -163,6 +164,43 @@ export default function ManageProduct() {
         setShowEditProduct(true);
     };
 
+    const handleAddProduct = () => {
+        fetch(`${MainAPI}/product/add-product`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                product_name: proName,
+                product_price: price,
+                product_description: prodes,
+                image_url: img,
+                stock: stock,
+                brand_id: brandID,
+                country_id: country,
+                age_range: range,
+            }),
+        })
+            .then(res => {
+                if (!res.ok) throw new Error("Failed to add product");
+                return res.json();
+            })
+            .then(data => {
+                console.log(data);
+                fetchData();
+                setProName('');
+                setPrice('');
+                setStock('');
+                setcountry('');
+                setRange('');
+                setImg('');
+                setbrandID('');
+                setProdes('');
+                setShowAdd(false);
+            })
+            .catch(error => console.error("Error adding product:", error));
+    };
+
     const handleUpdateProduct = () => {
         if (!editProductId) return;
 
@@ -199,13 +237,19 @@ export default function ManageProduct() {
 
     return (
         <Box>
+
+            <Box >
+                <Button onClick={() => setShowAdd(true)} sx={{ border: '1px solid #49A1D7', marginTop: '10%', marginLeft: '30%', fontSize: '13px' }}>
+                    Add New Product
+                </Button>
+            </Box>
             <Box ml={-30} mr={15} mb={-5}>
-                {showEditProduct && (
+                {showAdd && (
                     <div style={{ marginLeft: '10px' }}>
                         <Card className="edit-voucher" variant="outlined">
                             <CardContent>
                                 <Typography variant="h4" component="div" gutterBottom>
-                                    Edit Product
+                                    Add New Product
                                 </Typography>
                                 <TextField
                                     fullWidth
@@ -218,7 +262,7 @@ export default function ManageProduct() {
                                     fullWidth
                                     label="Description"
                                     value={prodes}
-                                    onChange={(event) => setStock(event.target.value)}
+                                    onChange={(event) => setProdes(event.target.value)}
                                     margin="normal"
                                 />
                                 <TextField
@@ -240,6 +284,7 @@ export default function ManageProduct() {
                                 <TextField
                                     fullWidth
                                     label="Brand ID"
+                                    type="number"
                                     value={brandID}
                                     onChange={(event) => setbrandID(event.target.value)}
                                     margin="normal"
@@ -269,15 +314,15 @@ export default function ManageProduct() {
                                     <Button
                                         variant="contained"
                                         color="primary"
-                                        onClick={handleUpdateProduct}
+                                        onClick={handleAddProduct}
                                         style={{ marginRight: '10px' }}
                                     >
-                                        Update
+                                        Add
                                     </Button>
                                     <Button
                                         variant="outlined"
                                         color="secondary"
-                                        onClick={() => setShowEditProduct(false)}
+                                        onClick={() => setShowAdd(false)}
                                     >
                                         Cancel
                                     </Button>
@@ -304,7 +349,7 @@ export default function ManageProduct() {
                                     fullWidth
                                     label="Description"
                                     value={prodes}
-                                    onChange={(event) => setStock(event.target.value)}
+                                    onChange={(event) => setProdes(event.target.value)}
                                     margin="normal"
                                 />
                                 <TextField
@@ -326,6 +371,7 @@ export default function ManageProduct() {
                                 <TextField
                                     fullWidth
                                     label="Brand ID"
+                                    type="number"
                                     value={brandID}
                                     onChange={(event) => setbrandID(event.target.value)}
                                     margin="normal"
@@ -396,7 +442,7 @@ export default function ManageProduct() {
                             ).map((product, index) => (
                                 <TableRow key={product.product_id}>
                                     <TableCell style={{ width: 300 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                        {product.image_url}
+                                        <img src={product.image_url} alt="product" style={{ width: '70px', height: '90px' }} />
                                     </TableCell>
                                     <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
                                         {product.product_name}
