@@ -11,7 +11,7 @@ import {
 	OutlinedInput,
 	Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Register.scss";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -22,14 +22,23 @@ import AuthNav from "../../components/AuthNav/AuthNav";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { MainAPI } from "../../API";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
 export default function Register() {
+	const baseUrl = `${MainAPI}/admin/get-all-user`;
+	const [users, setUsers] = useState([]);
 	const [showPassword, setShowPassword] = useState(false);
 	const [showPassword1, setShowPassword1] = useState(false);
+
+	useEffect(() => {
+		fetch(baseUrl)
+			.then((res) => res.json())
+			.then((data) => setUsers(data.data))
+			.catch((err) => console.log(err));
+	}, [baseUrl]);
 
 	const nav = useNavigate();
 
@@ -46,28 +55,60 @@ export default function Register() {
 			email: "",
 			password: "",
 			repeatPassword: "",
+			acceptedTerms: false,
 		},
 
 		onSubmit: (values) => {
 			handleRegister(values);
-			console.log(values);
 		},
 
 		validationSchema: Yup.object({
-			name: Yup.string().required("Required."),
+			name: Yup.string()
+				.required("Bắt buộc.")
+				.min(3, "Phải có ít nhất 3 ký tự"),
 			email: Yup.string()
-				.email("Invalid email address")
-				.required("Required."),
+				.email("Địa chỉ email không hợp lệ.")
+				.required("Bắt buộc."),
 			password: Yup.string()
-				.required("Required.")
-				.min(8, "Must be 2 characters or more"),
+				.required("Bắt buộc.")
+				.min(3, "Phải có ít nhất 3 ký tự"),
 			repeatPassword: Yup.string()
-				.required("Required.")
-				.min(8, "Must be 2 characters or more"),
+				.required("Bắt buộc.")
+				.min(3, "Phải có ít nhất 3 ký"),
+			acceptedTerms: Yup.bool()
+				.required(
+					"Bạn phải đồng ý với các điều khoản sử dụng để tiếp tục."
+				)
+				.oneOf(
+					[true],
+					"Bạn phải đồng ý với các điều khoản sử dụng để tiếp tục."
+				),
 		}),
 	});
 
 	const handleRegister = async (values) => {
+		// Kiểm tra xem username hoặc email đã tồn tại trong danh sách users hay không
+		const userExists = users.some(
+			(user) =>
+				user.username === values.name || user.email === values.email
+		);
+
+		if (userExists) {
+			toast.error(
+				"Tên đăng nhập hoặc email đã tồn tại. Vui lòng thử lại với tên đăng nhập hoặc email khác.",
+				{
+					position: "top-right",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				}
+			);
+			return; // Dừng hàm nếu tên đăng nhập hoặc email đã tồn tại
+		}
+
 		try {
 			const data = await fetch(`${MainAPI}/user/register`, {
 				method: "POST",
@@ -78,10 +119,34 @@ export default function Register() {
 			}).then((res) => res.json());
 
 			if (data.status === 200) {
-				toast.success(data.message);
-				nav("/login");
+				toast.success(
+					"Đăng ký tài khoản thành công! Đang chuyển hướng...",
+					{
+						onClose: () => {
+							nav("/login");
+						},
+						position: "top-right",
+						autoClose: 3000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					}
+				);
+				setTimeout(() => {
+					nav("/login");
+				}, 3000);
 			} else {
-				toast.error(data.message);
+				toast.error("Đăng ký tài khoản thất bại! Vui lòng thử lại.", {
+					position: "top-right",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
 			}
 		} catch (err) {
 			console.log(err);
@@ -93,7 +158,6 @@ export default function Register() {
 			<AuthNav />
 			<Header />
 			<div style={{ backgroundColor: "#f8f8f8", padding: "100px 0" }}>
-				<ToastContainer />
 				<Container
 					className="login__container"
 					maxWidth="xl"
@@ -297,11 +361,16 @@ export default function Register() {
 										}}
 									>
 										<Checkbox
+											name="acceptedTerms"
 											sx={{
 												"& .MuiSvgIcon-root": {
 													fontSize: "2.4rem",
 												},
 											}}
+											checked={
+												formik.values.acceptedTerms
+											}
+											onChange={formik.handleChange}
 										/>
 										<span style={{ fontSize: "2rem" }}>
 											Tôi đã đọc và đồng ý với các điều
@@ -309,6 +378,12 @@ export default function Register() {
 										</span>
 									</label>
 								</Box>
+								{formik.touched.acceptedTerms &&
+									formik.errors.acceptedTerms && (
+										<Typography color="error" variant="h4">
+											{formik.errors.acceptedTerms}
+										</Typography>
+									)}
 								<Box sx={{ display: "flex", gap: "10px" }}>
 									<Button
 										type="submit"

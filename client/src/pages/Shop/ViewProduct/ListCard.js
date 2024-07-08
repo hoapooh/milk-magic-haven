@@ -13,16 +13,27 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import "./GridListCard.scss";
 import { Link } from "react-router-dom";
 import { useCart } from "../../../components/Context/CartContext/CartContext";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function ListCard({ products }) {
 	const { addToCart } = useCart();
 	const quantity = 1;
 
+	function handleAddToCart() {
+		toast.success("Thêm mới giỏ hàng thành công!", {
+			position: "top-right",
+			autoClose: 3000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+		});
+	}
+
 	return (
-		<>
-			<ToastContainer style={{ fontSize: "1.6rem" }} />
+		<div>
 			{products.map((product) => {
 				return (
 					<Card
@@ -112,9 +123,7 @@ export default function ListCard({ products }) {
 													...product,
 													quantity,
 												});
-												toast.success(
-													"Thêm mới giỏ hàng thành công!"
-												);
+												handleAddToCart();
 											}}
 										>
 											<ShoppingCartOutlinedIcon /> Add to
@@ -127,6 +136,6 @@ export default function ListCard({ products }) {
 					</Card>
 				);
 			})}
-		</>
+		</div>
 	);
 }

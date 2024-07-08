@@ -14,7 +14,7 @@ import React from "react";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import "./GridListCard.scss";
 import { useCart } from "../../../components/Context/CartContext/CartContext";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function GridCard({ products }) {
@@ -24,7 +24,6 @@ export default function GridCard({ products }) {
 	return (
 		<>
 			<Grid container spacing={2}>
-				<ToastContainer style={{ fontSize: "1.6rem" }} />
 				{products.map((product) => {
 					return (
 						<Grid item xs={6} md={4} key={product.product_id}>
