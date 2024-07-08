@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AuthNav from "../../components/AuthNav/AuthNav";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
@@ -23,26 +23,74 @@ import {
 import "./Cart.scss";
 import { HiMiniXMark } from "react-icons/hi2";
 import LoyaltyIcon from "@mui/icons-material/Loyalty";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useCart } from "../../components/Context/CartContext/CartContext";
+import { toast } from "react-toastify";
 
 export default function Cart() {
+	const { cartList, handleIncrease, handleDecrease, handleDeleteProduct } =
+		useCart();
+	const nav = useNavigate();
+	const [total, setTotal] = useState(0);
+	const [coupon, setCoupon] = useState("");
+
+	const calculateSubtotal = (cartList) => {
+		return cartList.reduce((subtotal, item) => {
+			const itemTotal = item.product.quantity * item.product.price; // Giả sử mỗi item có quantity và price
+			return subtotal + itemTotal;
+		}, 0);
+	};
+
+	const subtotal = calculateSubtotal(cartList);
+
+	// Hàm để cập nhật giá trị mã giảm giá
+	const handleCouponChange = (event) => {
+		setCoupon(event.target.value);
+	};
+
+	// Hàm để áp dụng mã giảm giá và cập nhật subtotal
+	const applyDiscount = (discountCode) => {
+		// Giả sử mã giảm giá "MILK2024" giảm 10%
+		if (discountCode === "MILK2024") {
+			const discountedPrice = subtotal * 0.9; // Giảm giá 10%
+			setTotal(discountedPrice);
+		} else {
+			toast.error("Mã giảm giá không hợp lệ!", {
+				position: "top-right",
+				autoClose: 3000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+		}
+	};
+
+	useEffect(() => {
+		setTotal(calculateSubtotal(cartList));
+	}, [cartList]);
+
+	function handleLinkCheckout() {
+		nav("/checkout");
+	}
 	// CÁI NÀY DÙNG CHO CART
 
-	const [quantity, setQuantity] = useState({});
+	// const [quantity, setQuantity] = useState({});
 
-	const handleIncrease = (id) => {
-		setQuantity((prevQuantities) => ({
-			...prevQuantities,
-			[id]: (prevQuantities[id] || 0) + 1,
-		}));
-	};
+	// const handleIncrease = (id) => {
+	// 	setQuantity((prevQuantities) => ({
+	// 		...prevQuantities,
+	// 		[id]: (prevQuantities[id] || 0) + 1,
+	// 	}));
+	// };
 
-	const handleDecrease = (id) => {
-		setQuantity((prevQuantities) => ({
-			...prevQuantities,
-			[id]: Math.max((prevQuantities[id] || 0) - 1, 0), // Đảm bảo số lượng không âm
-		}));
-	};
+	// const handleDecrease = (id) => {
+	// 	setQuantity((prevQuantities) => ({
+	// 		...prevQuantities,
+	// 		[id]: Math.max((prevQuantities[id] || 0) - 1, 0), // Đảm bảo số lượng không âm
+	// 	}));
+	// };
 
 	return (
 		<>
@@ -85,127 +133,170 @@ export default function Cart() {
 								</TableHead>
 								<TableBody>
 									{/* ========== CART ITEM ========== */}
-									<TableRow>
-										<TableCell
-											sx={{
-												width: "530px",
-												padding: "40px 16px",
-											}}
-										>
-											<div className="cart__productImage__productName">
-												<div className="cart__productImage">
-													<img
-														src="https://images.unsplash.com/photo-1474511320723-9a56873867b5?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-														alt="fox with snow"
-													/>
-												</div>{" "}
-												<Typography
-													component={"p"}
-													sx={{
-														fontSize: "2rem",
-														wordBreak: "break-word",
-														width: "50%",
-													}}
-												>
-													Áo thun nam Áo thun nam Áo
-													thun nam Áo thun nứng
-												</Typography>
-											</div>
-										</TableCell>
-										<TableCell
-											sx={{
-												fontSize: "2rem",
-												padding: "40px 16px",
-											}}
-										>
-											200.000
-										</TableCell>
-										<TableCell
-											sx={{
-												fontSize: "2rem",
-												padding: "40px 16px",
-											}}
-										>
-											<ButtonGroup
-												variant="outlined"
-												aria-label="Basic button group"
-											>
-												<Button
-													onClick={
-														() => handleDecrease(1) //THAY CHỖ NÀY THÀNH product.product_id là được
-													}
-													sx={{
-														border: "1px solid #0F83B2",
-														color: "#000000",
-														fontSize: "1.6rem",
-														borderRadius:
-															"10px 0 0 10px",
-													}}
-												>
-													-
-												</Button>
-												<Button
-													className="productDetail__quantity"
-													disableRipple
-													sx={{
-														border: "1px solid #0F83B2",
-														color: "#000000",
-														fontSize: "1.6rem",
-														width: "40px",
-													}}
-												>
-													{quantity[1] || 1}{" "}
-													{/*THAY CHỖ NÀY THÀNH product.product_id*/}
-												</Button>
-												<Button
-													onClick={
-														() => handleIncrease(1) //THAY CHỖ NÀY THÀNH product.product_id là được
-													}
-													sx={{
-														border: "1px solid #0F83B2",
-														color: "#000000",
-														fontSize: "1.6rem",
-														borderRadius:
-															"0 10px 10px 0",
-													}}
-												>
-													+
-												</Button>
-											</ButtonGroup>
-										</TableCell>
-										<TableCell
-											sx={{
-												fontSize: "2rem",
-												padding: "40px 16px",
-												textAlign: "center",
-											}}
-										>
-											200.000
-										</TableCell>
-										<TableCell
-											sx={{
-												padding: "40px 16px",
-												textAlign: "center",
-											}}
-										>
-											<Button
+									{cartList.map((product, index) => (
+										<TableRow>
+											<TableCell
 												sx={{
-													fontSize: "2.4rem",
-													fontWeight: "bold",
-													color: "#7F7F7F",
-													padding: "10px 20px",
-													minWidth: "auto",
-													"&:hover": {
-														color: "#fff",
-														backgroundColor:
-															"tomato",
-													},
+													width: "530px",
+													padding: "40px 16px",
+												}}
+												key={index}
+											>
+												<div className="cart__productImage__productName">
+													<div className="cart__productImage">
+														<img
+															src={
+																product.product
+																	.image_url
+															}
+															alt={
+																product.product
+																	.product_name
+															}
+														/>
+													</div>{" "}
+													<Typography
+														component={"p"}
+														sx={{
+															fontSize: "2rem",
+															wordBreak:
+																"break-word",
+															width: "50%",
+														}}
+													>
+														{
+															product.product
+																.product_name
+														}
+													</Typography>
+												</div>
+											</TableCell>
+											<TableCell
+												sx={{
+													fontSize: "2rem",
+													padding: "40px 16px",
 												}}
 											>
-												<HiMiniXMark />
-											</Button>
-										</TableCell>
-									</TableRow>
+												{`${(
+													Number(
+														product.product?.price
+													) || 0
+												).toLocaleString("vi-VN")} VND`}
+											</TableCell>
+											<TableCell
+												sx={{
+													fontSize: "2rem",
+													padding: "40px 16px",
+												}}
+											>
+												<ButtonGroup
+													variant="outlined"
+													aria-label="Basic button group"
+												>
+													<Button
+														onClick={
+															() =>
+																handleDecrease(
+																	product
+																		.product
+																		.product_id
+																)
+															//THAY CHỖ NÀY THÀNH product.product_id là được
+														}
+														sx={{
+															border: "1px solid #0F83B2",
+															color: "#000000",
+															fontSize: "1.6rem",
+															borderRadius:
+																"10px 0 0 10px",
+														}}
+													>
+														-
+													</Button>
+													<Button
+														className="productDetail__quantity"
+														disableRipple
+														sx={{
+															border: "1px solid #0F83B2",
+															color: "#000000",
+															fontSize: "1.6rem",
+															width: "40px",
+														}}
+													>
+														{
+															product.product
+																.quantity
+														}
+														{/*THAY CHỖ NÀY THÀNH product.product_id*/}
+													</Button>
+													<Button
+														onClick={
+															() =>
+																handleIncrease(
+																	product
+																		.product
+																		.product_id
+																)
+															//THAY CHỖ NÀY THÀNH product.product_id là được
+														}
+														sx={{
+															border: "1px solid #0F83B2",
+															color: "#000000",
+															fontSize: "1.6rem",
+															borderRadius:
+																"0 10px 10px 0",
+														}}
+													>
+														+
+													</Button>
+												</ButtonGroup>
+											</TableCell>
+											<TableCell
+												sx={{
+													fontSize: "2rem",
+													padding: "40px 16px",
+													textAlign: "center",
+												}}
+											>
+												{`${(
+													Number(
+														product.product?.price *
+															product.product
+																.quantity
+													) || 0
+												).toLocaleString("vi-VN")} VND`}
+											</TableCell>
+											<TableCell
+												sx={{
+													padding: "40px 16px",
+													textAlign: "center",
+												}}
+											>
+												<Button
+													sx={{
+														fontSize: "2.4rem",
+														fontWeight: "bold",
+														color: "#7F7F7F",
+														padding: "10px 20px",
+														minWidth: "auto",
+														"&:hover": {
+															color: "#fff",
+															backgroundColor:
+																"tomato",
+														},
+													}}
+													onClick={() =>
+														handleDeleteProduct(
+															product.product
+																.product_id
+														)
+													}
+												>
+													<HiMiniXMark />
+												</Button>
+											</TableCell>
+										</TableRow>
+									))}
 								</TableBody>
 							</Table>
 						</TableContainer>
@@ -232,6 +323,8 @@ export default function Cart() {
 										}
 										name="mã_giảm_giá"
 										label="mã_giảm_giá"
+										value={coupon}
+										onChange={handleCouponChange}
 									/>
 								</FormControl>
 								<Button
@@ -251,6 +344,7 @@ export default function Cart() {
 											backgroundColor: "#0F83B2",
 										},
 									}}
+									onClick={() => applyDiscount(coupon)}
 								>
 									Áp dụng
 								</Button>
@@ -311,7 +405,7 @@ export default function Cart() {
 								>
 									Subtotal{" "}
 									<span style={{ fontWeight: "bold" }}>
-										200.000 VND
+										{subtotal.toLocaleString("vi-VN")} VND
 									</span>
 								</Typography>
 								<Typography
@@ -325,7 +419,7 @@ export default function Cart() {
 								>
 									Total{" "}
 									<span style={{ fontWeight: "bold" }}>
-										200.000 VND
+										{total.toLocaleString("vi-VN")} VND
 									</span>
 								</Typography>
 								<Button
@@ -344,6 +438,7 @@ export default function Cart() {
 											backgroundColor: "#FFE926",
 										},
 									}}
+									onClick={handleLinkCheckout}
 								>
 									Tiếp tục thanh toán
 								</Button>

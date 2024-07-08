@@ -10,7 +10,7 @@ import {
 	OutlinedInput,
 	Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Login.scss";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -20,14 +20,23 @@ import AuthNav from "../../components/AuthNav/AuthNav";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { MainAPI } from "../../API";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
 export default function Login() {
+	const baseUrl = `${MainAPI}/admin/get-all-user`;
+	const [users, setUsers] = useState([]);
 	const [showPassword, setShowPassword] = React.useState(false);
 	const nav = useNavigate();
+
+	useEffect(() => {
+		fetch(baseUrl)
+			.then((res) => res.json())
+			.then((data) => setUsers(data.data))
+			.catch((err) => console.log(err));
+	}, [baseUrl]);
 
 	const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -41,22 +50,35 @@ export default function Login() {
 			password: "",
 		},
 
-		onSubmit: (values) => {
+		onSubmit: () => {
 			handleLogin();
-			console.log(values);
 		},
 
 		validationSchema: Yup.object({
 			email: Yup.string()
-				.email("Invalid email address")
-				.required("Required."),
+				.required("Bắt buộc.")
+				.test(
+					"is-email-or-username",
+					"Email hoặc tên đăng nhập không hợp lệ.",
+					(value) => {
+						// Kiểm tra xem giá trị có phải là email hợp lệ
+						const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+						if (emailRegex.test(value)) {
+							return true; // Nếu là email hợp lệ
+						}
+						// Thêm bất kỳ quy tắc xác thực nào cho tên đăng nhập ở đây
+						// Ví dụ: không cho phép khoảng trắng, độ dài tối thiểu, v.v.
+						const usernameRegex = /^[^\s]+$/; // Không chứa khoảng trắng
+						return usernameRegex.test(value);
+					}
+				),
 			password: Yup.string()
-				.required("Required.")
-				.min(8, "Must be 2 characters or more"),
+				.required("Bắt buộc.")
+				.min(3, "Phải chứa ít nhất 3 ký tự."),
 		}),
 	});
 
-	const handleLogin = async (e) => {
+	const handleLogin = async () => {
 		try {
 			const data = await fetch(`${MainAPI}/user/login`, {
 				method: "POST",
@@ -70,11 +92,53 @@ export default function Login() {
 			}).then((res) => res.json());
 
 			if (data.status === 200) {
-				toast.success(data.message);
-				localStorage.setItem("username", formik.values.email);
-				nav("/");
+				toast.success("Đăng nhập thành công!", {
+					onClose: () => {
+						nav("/");
+					},
+					position: "top-right",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
+				setTimeout(() => {
+					nav("/");
+				}, 3000);
+
+				const userExists = users.find(
+					(user) =>
+						user.username === formik.values.email ||
+						user.email === formik.values.email
+				);
+
+				// Lưu username và thời gian hiện tại vào localStorage
+				localStorage.setItem("username", userExists.username);
+				localStorage.setItem("sessionStartTime", Date.now().toString());
+
+				// Thiết lập thời gian sống cho session là 30 phút
+				setTimeout(() => {
+					// Xóa thông tin người dùng khỏi localStorage sau 30 phút
+					localStorage.removeItem("username");
+					localStorage.removeItem("sessionStartTime");
+					// Redirect người dùng ra trang đăng nhập hoặc trang chủ
+					nav("/login");
+				}, 1800000); // 1800000 milliseconds = 30 minutes
 			} else {
-				toast.error(data.message);
+				toast.error(
+					"Đăng nhập thất bại! Vui lòng kiểm tra lại thông tin.",
+					{
+						position: "top-right",
+						autoClose: 3000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					}
+				);
 			}
 		} catch (err) {
 			console.log(err);
@@ -86,7 +150,6 @@ export default function Login() {
 			<AuthNav />
 			<Header />
 			<div style={{ backgroundColor: "#f8f8f8", padding: "100px 0" }}>
-				<ToastContainer />
 				<Container
 					className="login__container"
 					maxWidth="xl"
@@ -118,9 +181,9 @@ export default function Login() {
 								onSubmit={formik.handleSubmit}
 							>
 								<div className="form-textField">
-									<FormControl fullWidth="100%">
+									<FormControl fullWidth>
 										<InputLabel htmlFor="outlined-adornment-Tên_đăng_nhập">
-											Tên đăng nhập
+											Tên đăng nhập hoặc Email
 										</InputLabel>
 										<OutlinedInput
 											style={{ borderRadius: "10px" }}
@@ -130,11 +193,11 @@ export default function Login() {
 													<AccountCircle fontSize="large" />
 												</InputAdornment>
 											}
-											name="Tên_đăng_nhập"
-											label="Tên_đăng_nhập"
+											name="email"
+											label="Tên_đăng_nhập_hoặc"
 											value={formik.values.email}
 											onChange={formik.handleChange}
-											fullWidth="100%"
+											fullWidth
 										/>
 									</FormControl>
 									{formik.touched.email &&
@@ -148,7 +211,7 @@ export default function Login() {
 										)}
 								</div>
 								<div className="form-textField">
-									<FormControl fullWidth="100%">
+									<FormControl fullWidth>
 										<InputLabel htmlFor="outlined-adornment-password">
 											Mật khẩu
 										</InputLabel>

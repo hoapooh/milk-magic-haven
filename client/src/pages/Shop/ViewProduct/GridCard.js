@@ -13,8 +13,14 @@ import {
 import React from "react";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import "./GridListCard.scss";
+import { useCart } from "../../../components/Context/CartContext/CartContext";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function GridCard({ products }) {
+	const { addToCart } = useCart();
+	const quantity = 1;
+
 	return (
 		<>
 			<Grid container spacing={2}>
@@ -59,7 +65,17 @@ export default function GridCard({ products }) {
 											Sale
 										</Button>
 									</Box>
-									<CardActions>
+									<CardActions
+										onClick={() => {
+											addToCart({
+												...product,
+												quantity,
+											});
+											toast.success(
+												"Thêm mới giỏ hàng thành công!"
+											);
+										}}
+									>
 										<IconButton aria-label="share">
 											<ShoppingCartOutlinedIcon />
 										</IconButton>
