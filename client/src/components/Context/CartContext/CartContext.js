@@ -12,7 +12,7 @@ function CartProvider({ children }) {
 		if (existingProductIndex !== -1) {
 			// Sản phẩm đã tồn tại, cập nhật số lượng
 			const newCartList = [...cartList];
-			newCartList[existingProductIndex].quantity += quantity;
+			newCartList[existingProductIndex].product.quantity += quantity;
 			setCartList(newCartList);
 		} else {
 			// Thêm sản phẩm mới vào giỏ hàng

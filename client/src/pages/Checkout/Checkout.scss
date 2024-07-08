@@ -1,0 +1,119 @@
+.checkout__container {
+	margin-top: 40px;
+	padding-bottom: 50px;
+}
+
+.checkout {
+	width: 1280px;
+	margin: 0 auto;
+}
+
+.checkout__title {
+	color: #191919;
+	font-size: 3.5rem;
+	font-weight: 700;
+	line-height: 120%; /* 45.6px */
+}
+
+// ========= FORM INFO =========
+.checkout__form {
+	padding: 30px 20px;
+	border-radius: 15px;
+	border: 1px solid #d4d4d4;
+}
+
+.checkout__form__title {
+	color: #191919;
+	font-family: "Chalkboard SE";
+	font-size: 2.8rem;
+	font-weight: 400;
+	line-height: 120%; /* 33.6px */
+}
+
+.checkout__attention {
+	color: tomato;
+	font-size: 2.2rem;
+	font-weight: bold;
+}
+
+.checkout__form__group label {
+	color: var(--Header, #191919);
+	font-size: 2.4rem;
+	font-weight: 500;
+	line-height: 28px; /* 155.556% */
+}
+
+.checkout__form__group label sup {
+	font-weight: bold;
+	color: tomato;
+}
+
+.checkout__form__group input {
+	width: 100%;
+	margin-top: 10px;
+	padding: 8px 10px;
+	border: 1px solid #d4d4d4;
+	border-radius: 5px;
+	font-size: 2rem;
+}
+
+.checkout__form__group {
+	margin-top: 20px;
+}
+
+// ========= FORM ORDER =========
+.checkout__order {
+	padding: 30px 20px;
+	border-radius: 15px;
+	border: 1px solid #d4d4d4;
+}
+
+.checkout__order__title {
+	color: #191919;
+	font-family: "Chalkboard SE";
+	font-size: 2.8rem;
+	font-weight: 400;
+	line-height: 120%; /* 33.6px */
+}
+
+.checkout__order__item {
+	padding: 30px 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid #d4d4d4;
+}
+
+.checkout__orderItem__info {
+	width: 70%;
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+
+.checkout__orderItem__infoImage {
+	width: 96px;
+	height: 96px;
+	border-radius: 15px;
+	text-align: center;
+	padding: 10px;
+	border: 0.953px solid #d4d4d4;
+}
+
+.checkout__orderItem__infoImage img {
+	height: 100%;
+	width: auto;
+	object-fit: cover;
+}
+
+.checkout__order__subTotal {
+	padding: 30px 0;
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	border-bottom: 1px solid #d4d4d4;
+}
+
+.checkout__order__total {
+	padding-top: 20px;
+}
