@@ -6,6 +6,7 @@ const {
   getUserByIdController,
   getDataDashboardController,
   getAllUserController,
+  getAllContactController,
 } = require("../controller/admin.controller");
 
 const adminRouter = express.Router();
@@ -21,5 +22,7 @@ adminRouter.get("/get-user-by-id/:id", getUserByIdController);
 adminRouter.get("/dashboard", getDataDashboardController);
 
 adminRouter.get("/get-all-user", getAllUserController);
+
+adminRouter.get("/get-all-contact", getAllContactController);
 
 module.exports = adminRouter;

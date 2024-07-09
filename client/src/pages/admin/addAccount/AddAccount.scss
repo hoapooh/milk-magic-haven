@@ -49,34 +49,22 @@
     width: 100%;
   }
 
-  .alert-warning {
-    font-size: 1.8rem;
-    background-color: #ff9800;
-    border-color: #e65100;
-    color: #fff;
-  }
-
-  button[type="submit"] {
-    background-color: #007bff;
-    border: none;
-    font-size: 1.6rem;
-    padding: 15px 80px;
-    border-radius: 5px;
-    color: #fff;
-    cursor: pointer;
-    width: 50%;
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  button[type="submit"]:hover {
-    background-color: #0056b3;
-  }
-
   .add_button {
     display: flex;
     justify-content: center;
+  }
+  .submit-button {
+    font-size: 2rem;
+    padding: 5px 20px;
+    background-color: #1376f8;
+    border-radius: 6px;
+    color: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .submit-button:hover {
+    background-color: #4c8ce0;
   }
 }

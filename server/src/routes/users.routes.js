@@ -7,6 +7,7 @@ const {
   getAllPostController,
   getPostByIdController,
   reviewProductController,
+  sendContactController,
 } = require("../controller/users.controller");
 
 const userRouter = express.Router();
@@ -22,5 +23,7 @@ userRouter.get("/get-all-post", getAllPostController);
 userRouter.get("/get-post-by-id/:id", getPostByIdController);
 
 userRouter.post("/review-product", reviewProductController);
+
+userRouter.post("/send-contact", sendContactController);
 
 module.exports = userRouter;

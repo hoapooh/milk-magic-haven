@@ -71,7 +71,7 @@ export default function AddAccount() {
                     <Form.Group className="mb-3">
                       <Form.Control
                         type="text"
-                        placeholder="Username"
+                        placeholder="Tên tài khoản"
                         name="username"
                         value={formik.values.username}
                         onChange={formik.handleChange}
@@ -101,7 +101,7 @@ export default function AddAccount() {
                     <Form.Group className="mb-3">
                       <Form.Control
                         type="password"
-                        placeholder="Password"
+                        placeholder="Mật khẩu"
                         name="password"
                         value={formik.values.password}
                         onChange={formik.handleChange}
@@ -121,7 +121,7 @@ export default function AddAccount() {
                         onChange={formik.handleChange}
                         className="form-select"
                       >
-                        <option value="">Open this select menu</option>
+                        <option value="">Chọn vai trò</option>
                         <option value="admin">Admin</option>
                         <option value="customer">Customer</option>
                         <option value="staff">Staff</option>
@@ -135,7 +135,7 @@ export default function AddAccount() {
                     <div className="add_button">
                       <Form.Group>
                         <Button type="submit" className="submit-button">
-                          Add
+                          Thêm mới tài khoản
                         </Button>
                       </Form.Group>
                     </div>
