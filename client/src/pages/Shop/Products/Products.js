@@ -12,9 +12,20 @@ const MAX = 1000000;
 
 export default function Products() {
 	const [maxPrice, setMaxPrice] = useState(MAX); // Giả sử MAX là giá trị tối đa ban đầu
+	const [selectedCategories, setSelectedCategories] = useState([]);
 
 	const handleSliderChange = (newValue) => {
 		setMaxPrice(newValue);
+	};
+
+	const handleCategoryChange = (categoryId, isChecked) => {
+		if (isChecked) {
+			setSelectedCategories([...selectedCategories, categoryId]);
+		} else {
+			setSelectedCategories(
+				selectedCategories.filter((id) => id !== categoryId)
+			);
+		}
 	};
 
 	return (
@@ -29,10 +40,14 @@ export default function Products() {
 							<Grid item md={3} xs={12}>
 								<ProductCategory
 									onSliderChange={handleSliderChange}
+									onCategoryChange={handleCategoryChange}
 								/>
 							</Grid>
 							<Grid item md={9} xs={12}>
-								<ProductList maxPrice={maxPrice} />
+								<ProductList
+									maxPrice={maxPrice}
+									selectedCategories={selectedCategories}
+								/>
 							</Grid>
 						</Grid>
 					</div>
