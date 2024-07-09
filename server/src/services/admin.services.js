@@ -138,6 +138,16 @@ async function getAllUser() {
   }
 }
 
+async function getAllContact() {
+  try {
+    const pool = await poolPromise;
+    const result = await pool.request().query("SELECT * FROM Contact");
+    return { status: 200, contacts: result.recordsets[0] };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = {
   createUser,
   updateUser,
@@ -145,4 +155,5 @@ module.exports = {
   getUserById,
   getDataDashboard,
   getAllUser,
+  getAllContact,
 };
