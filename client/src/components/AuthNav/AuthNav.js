@@ -2,13 +2,17 @@ import React from "react";
 import "./AuthNav.scss";
 import { Container, CssBaseline } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
+import { useCart } from "../Context/CartContext/CartContext";
 
 export default function AuthNav() {
 	const username = localStorage.getItem("username");
 	const nav = useNavigate();
+	const { handleDeleteAll, handleDeleteCoupon } = useCart();
 
 	const handleLogOut = () => {
 		localStorage.removeItem("username");
+		handleDeleteAll();
+		handleDeleteCoupon();
 		nav("/");
 	};
 

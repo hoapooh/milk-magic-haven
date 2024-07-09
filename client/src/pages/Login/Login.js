@@ -106,7 +106,7 @@ export default function Login() {
 						nav("/");
 					},
 					position: "top-right",
-					autoClose: 3000,
+					autoClose: 1500,
 					hideProgressBar: false,
 					closeOnClick: true,
 					pauseOnHover: true,
@@ -115,7 +115,7 @@ export default function Login() {
 				});
 				setTimeout(() => {
 					nav("/");
-				}, 3000);
+				}, 2000);
 
 				const userExists = users.find(
 					(user) =>
