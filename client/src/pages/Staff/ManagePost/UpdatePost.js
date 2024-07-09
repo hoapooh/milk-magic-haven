@@ -3,11 +3,11 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MainAPI } from "../../../API";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ENDPOINT = "staff/uploads";
 
@@ -43,43 +43,35 @@ function uploadPlugin(editor) {
   };
 }
 
-export default function CreatePost() {
+export default function UpdatePost() {
   const [content, setContent] = useState("");
+  const [post, setPost] = useState({});
+  const { id } = useParams();
   const nav = useNavigate();
   const urlRegex =
     /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
 
-  const formik = useFormik({
-    isDirtyForm: true,
-    initialValues: {
-      title: "",
-      img_thumbnail: "",
-    },
+  useEffect(() => {
+    async function fetchData() {
+      const data = await fetch(`${MainAPI}/user/get-post-by-id/${id}`).then(
+        (res) => res.json()
+      );
+      console.log(data);
+      setPost(data.data);
+    }
+    fetchData();
+  }, []);
 
-    onSubmit: (values) => {
-      handleCreatePost();
-      console.log(values);
-    },
-
-    validationSchema: Yup.object({
-      title: Yup.string()
-        .required("Required.")
-        .min(2, "Must be 2 characters or more"),
-      img_thumbnail: Yup.string()
-        .required("Required.")
-        .matches(urlRegex, "Invalid URL"),
-    }),
-  });
-
-  const handleCreatePost = () => {
+  const handleUpdatePost = (e) => {
+    e.preventDefault();
     const data = {
-      title: formik.values.title,
-      img_thumbnail: formik.values.img_thumbnail,
-      content: content,
+      title: post.title,
+      img_thumbnail: post.img_thumbnail,
+      content: post.content,
     };
 
-    fetch(`${MainAPI}/staff/create-post`, {
-      method: "POST",
+    fetch(`${MainAPI}/staff/update-post/${id}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -91,13 +83,15 @@ export default function CreatePost() {
       })
       .then((data) => {
         console.log(data);
-        toast.success("Create post successfully");
+        toast.success("Update post successfully");
         setTimeout(() => {
           nav("/staff/managepost");
         }, 2000);
       })
       .catch((error) => console.error("Error fetching data:", error));
   };
+
+  console.log(post);
 
   return (
     <>
@@ -108,26 +102,19 @@ export default function CreatePost() {
             Create Post
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={(e) => handleUpdatePost(e)}>
               <TextField
                 hiddenLabel
                 id="filled-hidden-label-normal"
                 variant="filled"
                 name="title"
-                onChange={formik.handleChange}
+                value={post.title}
+                onChange={(e) => {
+                  setPost({ ...post, title: e.target.value });
+                }}
                 placeholder="Title"
                 sx={{ width: "100%", margin: "20px 20px 0 20px" }}
               />
-              {formik.errors.title && formik.touched.title ? (
-                <>
-                  <Alert
-                    sx={{ width: "100%", margin: "0 20px" }}
-                    severity="error"
-                  >
-                    {formik.errors.title}
-                  </Alert>
-                </>
-              ) : null}
 
               <TextField
                 hiddenLabel
@@ -135,19 +122,12 @@ export default function CreatePost() {
                 variant="filled"
                 placeholder="Image thumbnail URL"
                 name="img_thumbnail"
-                onChange={formik.handleChange}
+                value={post.img_thumbnail}
+                onChange={(e) => {
+                  setPost({ ...post, img_thumbnail: e.target.value });
+                }}
                 sx={{ width: "100%", margin: "20px 20px 0 20px" }}
               />
-              {formik.errors.img_thumbnail && formik.touched.img_thumbnail ? (
-                <>
-                  <Alert
-                    sx={{ width: "100%", margin: "0 20px" }}
-                    severity="error"
-                  >
-                    {formik.errors.img_thumbnail}
-                  </Alert>
-                </>
-              ) : null}
 
               <Box sx={{ width: "100%", margin: "20px" }}>
                 <CKEditor
@@ -155,15 +135,14 @@ export default function CreatePost() {
                     extraPlugins: [uploadPlugin],
                   }}
                   editor={ClassicEditor}
-                  data="<p>Insert text here&nbsp;!</p>"
+                  data={post.content}
                   onReady={(editor) => {
                     // You can store the "editor" and use when it is needed.
                     console.log("Editor is ready to use!", editor);
                   }}
                   onChange={(event, editor) => {
                     const data = editor.getData();
-                    setContent(data);
-                    console.log(data);
+                    setPost({ ...post, content: data });
                   }}
                   onBlur={(event, editor) => {
                     // console.log("Blur.", editor);
