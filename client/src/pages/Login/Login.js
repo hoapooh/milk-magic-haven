@@ -26,17 +26,26 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 
 export default function Login() {
-	const baseUrl = `${MainAPI}/admin/get-all-user`;
+	const baseURL = `${MainAPI}/admin/get-all-user`;
 	const [users, setUsers] = useState([]);
 	const [showPassword, setShowPassword] = React.useState(false);
 	const nav = useNavigate();
 
 	useEffect(() => {
-		fetch(baseUrl)
-			.then((res) => res.json())
-			.then((data) => setUsers(data.data))
-			.catch((err) => console.log(err));
-	}, [baseUrl]);
+		const fetchData = async () => {
+			try {
+				const response = await fetch(baseURL);
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
+				const data = await response.json();
+				setUsers(data.data);
+			} catch (error) {
+				console.error("Fetching error: ", error);
+			}
+		};
+		fetchData();
+	}, [baseURL]);
 
 	const handleClickShowPassword = () => setShowPassword((show) => !show);
 
