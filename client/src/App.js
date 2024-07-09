@@ -13,6 +13,8 @@ import AddAccount from "./pages/admin/addAccount/AddAccount";
 import UpdateAccount from "./pages/admin/updateAccount/UpdateAccount";
 import Statistic from "./pages/admin/statistic/Statistic";
 import Staff from "./pages/Staff/Staff";
+import Edit from "./pages/Staff/EditCreate/Edit";
+import Create from "./pages/Staff/EditCreate/Create";
 
 const THEME = createTheme({
 	typography: {
@@ -43,6 +45,8 @@ function App() {
 
 					{/* ================== STAFF VIEW ============== */}
 					<Route path="/staff/*" element={<Staff />} />
+					<Route path='/editproduct/:id' element={<Edit />}></Route>
+					<Route path='/createproduct' element={<Create />}></Route>
 				</Routes>
 			</ThemeProvider>
 		</>
