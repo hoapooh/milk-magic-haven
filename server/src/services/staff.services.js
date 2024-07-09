@@ -40,15 +40,16 @@ function generateVoucherCode() {
   return crypto.randomBytes(8).toString("hex").toUpperCase();
 }
 
-async function createPost({ user_id, content }) {
+async function createPost({ title, content, img_thumbnail }) {
   try {
     const pool = await poolPromise;
     const result = await pool
       .request()
-      .input("user_id", sql.Int, user_id)
+      .input("title", sql.NVarChar, title)
       .input("content", sql.VarChar, content)
-      .query(`INSERT INTO Posts (user_id, content) 
-                VALUES (@user_id, @content)`);
+      .input("img", sql.VarChar, img_thumbnail)
+      .query(`INSERT INTO Posts (title, content, img_thumbnail, user_id) 
+                VALUES (@title, @content, @img, 1)`);
 
     return { message: "Post created successfully" };
   } catch (err) {
@@ -57,16 +58,37 @@ async function createPost({ user_id, content }) {
   }
 }
 
-async function updatePost({ id, content }) {
+async function updatePost({ id, content, img_thumbnail, title }) {
   try {
     const pool = await poolPromise;
-    const result = await pool
-      .request()
-      .input("id", sql.Int, id)
-      .input("content", sql.VarChar, content)
-      .query(`UPDATE Posts SET content = @content WHERE post_id = @id`);
-
-    return { message: "Post updated successfully" };
+    const request = pool.request().input("post_id", id);
+    let updatedFields = [];
+    if (title) {
+      request.input("title", title);
+      updatedFields.push("title = @title");
+    }
+    if (content) {
+      request.input("content", content);
+      updatedFields.push("content = @content");
+    }
+    if (img_thumbnail) {
+      request.input("image_url", img_thumbnail);
+      updatedFields.push("img_thumbnail = @image_url");
+    }
+    if (updatedFields.length === 0) {
+      return { success: false, message: "No fields to update" };
+    }
+    const query = `
+      UPDATE Posts
+      SET ${updatedFields.join(", ")}
+      WHERE post_id = @post_id
+    `;
+    const result = await request.query(query);
+    if (result.rowsAffected && result.rowsAffected[0] > 0) {
+      return { success: true, message: "Post updated successfully" };
+    } else {
+      return { success: false, message: "Failed to update post" };
+    }
   } catch (err) {
     console.error("SQL error", err);
     throw err;
