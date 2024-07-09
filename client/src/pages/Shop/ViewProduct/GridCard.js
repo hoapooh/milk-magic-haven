@@ -1,6 +1,5 @@
 import {
 	Box,
-	Button,
 	Card,
 	CardActions,
 	CardContent,
@@ -11,11 +10,17 @@ import {
 	Typography,
 } from "@mui/material";
 import React from "react";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import "./GridListCard.scss";
+import { useCart } from "../../../components/Context/CartContext/CartContext";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 
 export default function GridCard({ products }) {
+	const { addToCart } = useCart();
+	const quantity = 1;
+
 	return (
 		<>
 			<Grid container spacing={2}>
@@ -31,7 +36,7 @@ export default function GridCard({ products }) {
 								}}
 							>
 								<Box
-									justifyContent={"space-between"}
+									justifyContent={"end"}
 									display={"flex"}
 									sx={{
 										position: "absolute",
@@ -41,7 +46,7 @@ export default function GridCard({ products }) {
 										padding: "0 0 0 8px",
 									}}
 								>
-									<Box
+									{/* <Box
 										display={"flex"}
 										justifyContent={"center"}
 										alignItems={"center"}
@@ -59,11 +64,18 @@ export default function GridCard({ products }) {
 										>
 											Sale
 										</Button>
-									</Box>
-									<CardActions>
-										<IconButton aria-label="add to favorites">
-											<FavoriteBorderIcon />
-										</IconButton>
+									</Box> */}
+									<CardActions
+										onClick={() => {
+											addToCart({
+												...product,
+												quantity,
+											});
+											toast.success(
+												"Thêm mới giỏ hàng thành công!"
+											);
+										}}
+									>
 										<IconButton aria-label="share">
 											<ShoppingCartOutlinedIcon />
 										</IconButton>
@@ -85,18 +97,23 @@ export default function GridCard({ products }) {
 										/>
 									</Box>
 									<CardContent>
-										<Typography
-											gutterBottom
-											component="div"
-											variant="h4"
-											sx={{
-												fontWeight: "700",
-												fontSize: "1.8rem",
-												color: "#191919",
-											}}
+										<Link
+											to={`/detail/${product.product_id}`}
 										>
-											{product.product_name}
-										</Typography>
+											<Typography
+												gutterBottom
+												className="productList__title"
+												component="div"
+												variant="h4"
+												sx={{
+													fontWeight: "700",
+													fontSize: "1.8rem",
+													color: "#191919",
+												}}
+											>
+												{product.product_name}
+											</Typography>
+										</Link>
 										<Typography
 											gutterBottom
 											component="div"
