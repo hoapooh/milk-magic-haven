@@ -5,6 +5,7 @@ const {
   getUserById,
   getDataDashboard,
   getAllUser,
+  getAllContact,
 } = require("../services/admin.services");
 
 const createUserController = async (req, res) => {
@@ -66,6 +67,12 @@ const getAllUserController = async (req, res) => {
   res.json({ data: result.users, status: 200 });
 };
 
+const getAllContactController = async (req, res) => {
+  const result = await getAllContact();
+
+  res.json({ data: result.contacts, status: 200 });
+};
+
 module.exports = {
   createUserController,
   updateUserController,
@@ -73,4 +80,5 @@ module.exports = {
   getUserByIdController,
   getDataDashboardController,
   getAllUserController,
+  getAllContactController,
 };

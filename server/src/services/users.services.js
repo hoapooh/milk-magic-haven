@@ -8,7 +8,7 @@ async function login(email, password) {
       .input("email", sql.VarChar, email)
       .input("password", sql.VarChar, password)
       .query(
-        "SELECT * FROM Users WHERE email = @email AND password = @password"
+        "SELECT * FROM Users WHERE (email = @email OR username = @email) AND password = @password"
       );
 
     const user = result.recordset[0];
@@ -104,7 +104,10 @@ async function reviewProduct({
       );
 
     if (existingReview.recordset.length > 0) {
-      return { message: "You have already reviewed this product", status: 400 };
+      return {
+        message: "You have already reviewed this product",
+        status: 400,
+      };
     }
 
     const result = await pool
@@ -124,6 +127,24 @@ async function reviewProduct({
   }
 }
 
+async function sendContact({ user_id, name, email, message }) {
+  try {
+    const pool = await poolPromise;
+    const result = await pool
+      .request()
+      .input("user_id", sql.Int, user_id)
+      .input("name", sql.NVarChar, name)
+      .input("email", sql.VarChar, email)
+      .input("message", sql.NVarChar, message)
+      .query(
+        "INSERT INTO Contact (user_id, name, email, message_text) VALUES (@user_id, @name, @email, @message)"
+      );
+    return { status: 200, message: "Send successfull" };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = {
   login,
   registerUser,
@@ -131,4 +152,5 @@ module.exports = {
   getAllPost,
   getPostById,
   reviewProduct,
+  sendContact,
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AuthNav from "../../components/AuthNav/AuthNav";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
@@ -23,12 +23,16 @@ import {
 import "./Cart.scss";
 import { HiMiniXMark } from "react-icons/hi2";
 import LoyaltyIcon from "@mui/icons-material/Loyalty";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../../components/Context/CartContext/CartContext";
+import { toast } from "react-toastify";
 
 export default function Cart() {
 	const { cartList, handleIncrease, handleDecrease, handleDeleteProduct } =
 		useCart();
+	const nav = useNavigate();
+	const [total, setTotal] = useState(0);
+	const [coupon, setCoupon] = useState("");
 
 	const calculateSubtotal = (cartList) => {
 		return cartList.reduce((subtotal, item) => {
@@ -38,6 +42,38 @@ export default function Cart() {
 	};
 
 	const subtotal = calculateSubtotal(cartList);
+
+	// Hàm để cập nhật giá trị mã giảm giá
+	const handleCouponChange = (event) => {
+		setCoupon(event.target.value);
+	};
+
+	// Hàm để áp dụng mã giảm giá và cập nhật subtotal
+	const applyDiscount = (discountCode) => {
+		// Giả sử mã giảm giá "MILK2024" giảm 10%
+		if (discountCode === "MILK2024") {
+			const discountedPrice = subtotal * 0.9; // Giảm giá 10%
+			setTotal(discountedPrice);
+		} else {
+			toast.error("Mã giảm giá không hợp lệ!", {
+				position: "top-right",
+				autoClose: 3000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+		}
+	};
+
+	useEffect(() => {
+		setTotal(calculateSubtotal(cartList));
+	}, [cartList]);
+
+	function handleLinkCheckout() {
+		nav("/checkout");
+	}
 	// CÁI NÀY DÙNG CHO CART
 
 	// const [quantity, setQuantity] = useState({});
@@ -113,7 +149,10 @@ export default function Cart() {
 																product.product
 																	.image_url
 															}
-															alt="fox with snow"
+															alt={
+																product.product
+																	.product_name
+															}
 														/>
 													</div>{" "}
 													<Typography
@@ -284,6 +323,8 @@ export default function Cart() {
 										}
 										name="mã_giảm_giá"
 										label="mã_giảm_giá"
+										value={coupon}
+										onChange={handleCouponChange}
 									/>
 								</FormControl>
 								<Button
@@ -303,6 +344,7 @@ export default function Cart() {
 											backgroundColor: "#0F83B2",
 										},
 									}}
+									onClick={() => applyDiscount(coupon)}
 								>
 									Áp dụng
 								</Button>
@@ -377,7 +419,7 @@ export default function Cart() {
 								>
 									Total{" "}
 									<span style={{ fontWeight: "bold" }}>
-										éo có
+										{total.toLocaleString("vi-VN")} VND
 									</span>
 								</Typography>
 								<Button
@@ -396,6 +438,7 @@ export default function Cart() {
 											backgroundColor: "#FFE926",
 										},
 									}}
+									onClick={handleLinkCheckout}
 								>
 									Tiếp tục thanh toán
 								</Button>

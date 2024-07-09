@@ -1,9 +1,14 @@
 import { Box, Pagination } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
+import "./AppPagination.scss";
 
 const pageSize = 6;
 
-export default function AppPagination({ setProducts, maxPrice }) {
+export default function AppPagination({
+	setProducts,
+	maxPrice,
+	selectedCategories,
+}) {
 	const baseURL = "http://localhost:8000/product/get-all-product";
 	const [productsAPI, setProductsAPI] = useState([]);
 
@@ -35,9 +40,17 @@ export default function AppPagination({ setProducts, maxPrice }) {
 	});
 
 	const filteredProducts = useMemo(() => {
-		// Assuming there's a function to filter products based on some criteria
-		return productsAPI.filter((product) => product.price <= maxPrice);
-	}, [maxPrice, productsAPI]); // dependencies that cause filteredProducts to change
+		// Bước 1: Lọc theo selectedCategories nếu có
+		let tempProducts =
+			selectedCategories.length > 0
+				? productsAPI.filter((product) =>
+						selectedCategories.includes(product.brand_id)
+				  )
+				: productsAPI;
+
+		// Bước 2: Lọc theo maxPrice từ kết quả của Bước 1
+		return tempProducts.filter((product) => product.price <= maxPrice);
+	}, [maxPrice, selectedCategories, productsAPI]); // Đảm bảo thêm tất cả phụ thuộc
 
 	// Update products and pagination count when productsAPI or pagination state changes
 	useEffect(() => {
@@ -81,7 +94,10 @@ export default function AppPagination({ setProducts, maxPrice }) {
 			sx={{ margin: "20px 0px" }}
 		>
 			<Pagination
+				className="appPagination"
 				count={Math.ceil(pagination.count / pageSize)}
+				variant="outlined"
+				size="large"
 				color="primary"
 				onChange={handleChange}
 			/>

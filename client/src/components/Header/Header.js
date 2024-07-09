@@ -1,13 +1,33 @@
 import React from "react";
 import "./Header.scss";
 import { Container } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useCart } from "../Context/CartContext/CartContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Header() {
+	const nav = useNavigate();
+
 	function handleSubmit(e) {
 		e.preventDefault();
+	}
+
+	function handleAccessCart() {
+		if (localStorage.getItem("username") === null) {
+			toast.error("Vui lòng đăng nhập trước khi vào giỏ hàng", {
+				position: "top-right",
+				autoClose: 3000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+		} else {
+			nav("/cart");
+		}
 	}
 
 	const { cartList } = useCart();
@@ -15,6 +35,7 @@ export default function Header() {
 	return (
 		<>
 			<Container className="header__container" maxWidth="xl">
+				<ToastContainer style={{ fontSize: "1.6rem" }} />
 				<header className="header">
 					{/* ====== LOGO ====== */}
 					<Link to="/faq">
@@ -44,14 +65,14 @@ export default function Header() {
 					{/* ====== ACTION ====== */}
 					<div className="header__action">
 						{/* ====== CART ====== */}
-						<Link className="cart__icon" to={"/cart"}>
+						<div onClick={handleAccessCart} className="cart__icon">
 							<div className="cart__icon__style">
 								<ShoppingCartIcon />
 								{cartList.length > 0 && (
 									<span>{cartList.length}</span>
 								)}
 							</div>
-						</Link>
+						</div>
 
 						{/* ====== SEARCH BAR ====== */}
 						<form className="header__search">
