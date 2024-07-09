@@ -28,7 +28,7 @@ const marks = [
 	},
 ];
 
-export default function ProductCategory({ onSliderChange }) {
+export default function ProductCategory({ onSliderChange, onCategoryChange }) {
 	const [val, setVal] = useState(MIN);
 	const handleChange = (_, newValue) => {
 		setVal(newValue);
@@ -46,9 +46,18 @@ export default function ProductCategory({ onSliderChange }) {
 					{listOfProductCategory.map((category) => {
 						return (
 							<FormControlLabel
-								key={category}
-								control={<Checkbox />}
-								label={category}
+								key={category.id}
+								control={
+									<Checkbox
+										onChange={(e) => {
+											onCategoryChange(
+												category.id,
+												e.target.checked
+											);
+										}}
+									/>
+								}
+								label={category.name}
 							/>
 						);
 					})}
