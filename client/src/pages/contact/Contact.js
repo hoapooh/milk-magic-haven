@@ -8,37 +8,44 @@ import "./Contact.scss";
 import { Button, Form, Input } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
+import AuthNav from "../../components/AuthNav/AuthNav";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 
 function Contact() {
   return (
     <>
-      <Breadcrumb>Liên hệ</Breadcrumb>
-      <div className="contact">
-        <div className="contact_title">Thông tin liên hệ</div>
-        <div className="contact_info">
-          <div className="contact_card">
-            <PhoneOutlined className="icon" />
-            <div className="contact_details">
-              <h3>Phone number</h3>
-              <p>123-456-7868</p>
+      <AuthNav />
+      <Header />
+      <div>
+        <Breadcrumb>Liên hệ</Breadcrumb>
+        <div className="contact">
+          <div className="contact_title">Thông tin liên hệ</div>
+          <div className="contact_info">
+            <div className="contact_card">
+              <PhoneOutlined className="icon" />
+              <div className="contact_details">
+                <h3>Phone number</h3>
+                <p>123-456-7868</p>
+              </div>
             </div>
-          </div>
-          <div className="contact_card">
-            <MailOutlined className="icon" />
-            <div className="contact_details">
-              <h3>Email</h3>
-              <p>info@example.com</p>
+            <div className="contact_card">
+              <MailOutlined className="icon" />
+              <div className="contact_details">
+                <h3>Email</h3>
+                <p>info@example.com</p>
+              </div>
             </div>
-          </div>
-          <div className="contact_card">
-            <EnvironmentOutlined className="icon" />
-            <div className="contact_details">
-              <h3>Address place</h3>
-              <p>
-                1930 Marigold Lane, Way
-                <br />
-                Miami, Florida USA
-              </p>
+            <div className="contact_card">
+              <EnvironmentOutlined className="icon" />
+              <div className="contact_details">
+                <h3>Address place</h3>
+                <p>
+                  1930 Marigold Lane, Way
+                  <br />
+                  Miami, Florida USA
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -81,6 +88,7 @@ function Contact() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

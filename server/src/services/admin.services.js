@@ -18,9 +18,7 @@ async function createUser({ username, password, email, role_id }) {
       .input("password", sql.VarChar, password)
       .input("email", sql.VarChar, email)
       .input("role_id", sql.VarChar, role_id)
-      .query(
-        "INSERT INTO Users (username, password, email, role_id) VALUES (@username, @password, @email, @role_id)"
-      );
+      .query("INSERT INTO Users (username, password, email, role_id) VALUES (@username, @password, @email, @role_id)");
 
     return { message: "User registered successfully", status: 200 };
   } catch (error) {
@@ -133,9 +131,7 @@ ORDER BY
 async function getAllUser() {
   try {
     const pool = await poolPromise;
-    const result = await pool
-      .request()
-      .query("SELECT * FROM Users WHERE status = 1 ");
+    const result = await pool.request().query("SELECT * FROM Users WHERE status = 1 ");
     return { users: result.recordsets[0] };
   } catch (error) {
     console.log(error);
