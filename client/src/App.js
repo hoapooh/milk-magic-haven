@@ -11,7 +11,8 @@ import AdminPage from "./pages/admin/admin_page/AdminPage";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import AddAccount from "./pages/admin/addAccount/AddAccount";
 import UpdateAccount from "./pages/admin/updateAccount/UpdateAccount";
-import Statistic from "./pages/admin/statistic/Statistic";
+import StatisticAccount from "./pages/admin/statistic/account/StatisticAccount";
+import StatisticProduct from "./pages/admin/statistic/product/StatisticProduct";
 
 const THEME = createTheme({
   typography: {
@@ -38,8 +39,9 @@ function App() {
             {/* ============ ADMIN VIEW ============ */}
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/addAccount" element={<AddAccount />} />
-            <Route path="/update/:id" element={<UpdateAccount />} />
-            <Route path="/admin/statistic" element={<Statistic />} />
+            <Route path="/update/:user_id" element={<UpdateAccount />} />
+            <Route path="/admin/statistic/account" element={<StatisticAccount />} />
+            <Route path="/admin/statistic/product" element={<StatisticProduct />} />
           </Routes>
         </Router>
       </ThemeProvider>

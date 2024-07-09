@@ -10,16 +10,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function AdminPage() {
-  const baseURL = "http://localhost:8000/staff/get-all-user";
+  const baseURL = "http://localhost:8000/admin/get-all-user";
   const [usersAPI, setUsersAPI] = useState([]);
 
   useEffect(() => {
     fetch(baseURL)
       .then((response) => response.json())
-      .then((data) => {
-        console.log("Fetched users data:", data);
-        setUsersAPI(data.data);
-      })
+      .then((data) => setUsersAPI(data.data))
       .catch((error) => console.log(error));
   }, []);
 
@@ -78,7 +75,7 @@ export default function AdminPage() {
                   {usersAPI.map(
                     (user) =>
                       user.status && (
-                        <TableRow key={user.user_id}>
+                        <TableRow>
                           <TableCell>{user.username}</TableCell>
                           <TableCell>{user.password}</TableCell>
                           <TableCell>{user.email}</TableCell>
