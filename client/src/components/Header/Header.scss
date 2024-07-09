@@ -1,49 +1,50 @@
 .header__container {
-	margin-top: 20px;
+  margin-top: 20px;
 }
 
 .header {
-	font-size: 1.6rem;
-	width: 1280px;
-	margin: 0 auto;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+  font-size: 1.6rem;
+  width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .header__logo {
-	width: 144px;
-	height: 70px;
-	object-fit: cover;
-	/* width: 50px;
+  width: 144px;
+  height: 70px;
+  object-fit: cover;
+  /* width: 50px;
 	height: 50px; */
-	border-radius: 10px;
+  border-radius: 10px;
 }
 
 .header__list {
-	display: flex;
-	align-items: center;
-	gap: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .header__list__item a {
-	display: inline-block;
-	color: #191919;
-	font-weight: 600;
-	padding: 10px 20px;
-	border-radius: 10px;
-	transition: all 0.25s ease;
+  display: inline-block;
+  color: #191919;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+  text-decoration: none;
 }
 
 .header__list__item a:hover {
-	background: #0f83b2;
-	color: #f7f7f6;
+  background: #0f83b2;
+  color: #f7f7f6;
 }
 
 .header__action {
-	display: flex;
-	align-items: center;
-	gap: 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
 }
 
 .header__action .cart__icon {
@@ -54,45 +55,45 @@
 }
 
 .header__action .cart__icon svg {
-	width: 30px;
-	height: 30px;
-	color: #191919;
-	transition: all 0.25s ease;
+  width: 30px;
+  height: 30px;
+  color: #191919;
+  transition: all 0.25s ease;
 }
 
 .header__action .cart__icon:hover svg {
-	color: #0f83b2;
+  color: #0f83b2;
 }
 
 .header__search {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	border: 1px solid #d4d4d4;
-	color: #7f7f7f;
-	border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #d4d4d4;
+  color: #7f7f7f;
+  border-radius: 100px;
 }
 
 .header__search__input {
-	margin: 10px 0;
-	margin-left: 20px;
-	border: none;
-	outline: none;
-	font-size: 1.8rem;
+  margin: 10px 0;
+  margin-left: 20px;
+  border: none;
+  outline: none;
+  font-size: 1.8rem;
 }
 
 .header__search__submit {
-	height: 40.8px;
-	aspect-ratio: 1;
-	border: none;
-	border-radius: 50%;
-	color: #f2f2f2;
-	background: #0f83b2;
-	cursor: pointer;
+  height: 40.8px;
+  aspect-ratio: 1;
+  border: none;
+  border-radius: 50%;
+  color: #f2f2f2;
+  background: #0f83b2;
+  cursor: pointer;
 }
 
 .header__search__submit:hover {
-	background: #0f6b8b;
+  background: #0f6b8b;
 }
 
 .cart__icon__style {

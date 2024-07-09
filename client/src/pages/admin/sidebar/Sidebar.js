@@ -15,8 +15,13 @@ export default function Sidebar() {
         </Link>
       </div>
       <div className="sidebar__link">
-        <Link to={"/admin/statistic"}>
-          <BarChartOutlined /> Thống kê số liệu
+        <Link to={"/admin/statistic/account"}>
+          <BarChartOutlined /> Thống kê tài khoản
+        </Link>
+      </div>
+      <div className="sidebar__link">
+        <Link to={"/admin/statistic/product"}>
+          <BarChartOutlined /> Thống kê sản phẩm
         </Link>
       </div>
       <div className="sidebar__link logout">

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import "./Statistic.scss";
-import Sidebar from "../sidebar/Sidebar";
+import "./StatisticAccount.scss";
 import { Grid } from "@mui/material";
+import Sidebar from "../../sidebar/Sidebar";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export default function Statistic() {
+export default function StatisticAccount() {
   const [usersAPI, setUsersAPI] = useState([]);
 
-  const baseURL = "http://localhost:8000/staff/get-all-user";
+  const baseURL = "http://localhost:8000/admin/get-all-user";
 
   useEffect(() => {
     fetch(baseURL)
