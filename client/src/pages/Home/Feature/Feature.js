@@ -64,7 +64,9 @@ export default function Feature() {
 						>
 							Customer care
 						</Typography>
-						<Typography>24h hour follow up</Typography>
+						<Typography fontSize={"1.4rem"}>
+							24h hour follow up
+						</Typography>
 					</Box>
 
 					<Box
@@ -111,7 +113,9 @@ export default function Feature() {
 						>
 							Free ship
 						</Typography>
-						<Typography> Free shipping for 150$ and up</Typography>
+						<Typography fontSize={"1.4rem"}>
+							Free shipping for 150$ and up
+						</Typography>
 					</Box>
 
 					<Box
@@ -157,7 +161,9 @@ export default function Feature() {
 							>
 								Return
 							</Typography>
-							<Typography>Within 7 Days</Typography>
+							<Typography fontSize={"1.4rem"}>
+								Within 7 Days
+							</Typography>
 						</div>
 					</Box>
 				</Stack>

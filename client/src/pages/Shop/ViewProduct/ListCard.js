@@ -20,17 +20,7 @@ export default function ListCard({ products }) {
 	const { addToCart } = useCart();
 	const quantity = 1;
 
-	function handleAddToCart() {
-		toast.success("Thêm mới giỏ hàng thành công!", {
-			position: "top-right",
-			autoClose: 3000,
-			hideProgressBar: false,
-			closeOnClick: true,
-			pauseOnHover: true,
-			draggable: true,
-			progress: undefined,
-		});
-	}
+	const username = localStorage.getItem("username");
 
 	return (
 		<div>
@@ -119,11 +109,40 @@ export default function ListCard({ products }) {
 												fontSize: "1.6rem",
 											}}
 											onClick={() => {
-												addToCart({
-													...product,
-													quantity,
-												});
-												handleAddToCart();
+												if (username === null) {
+													toast.error(
+														"Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!",
+														{
+															position:
+																"top-right",
+															autoClose: 3000,
+															hideProgressBar: false,
+															closeOnClick: true,
+															pauseOnHover: true,
+															draggable: true,
+															progress: undefined,
+														}
+													);
+													return;
+												} else {
+													toast.success(
+														"Thêm mới giỏ hàng thành công!",
+														{
+															position:
+																"top-right",
+															autoClose: 3000,
+															hideProgressBar: false,
+															closeOnClick: true,
+															pauseOnHover: true,
+															draggable: true,
+															progress: undefined,
+														}
+													);
+													addToCart({
+														...product,
+														quantity,
+													});
+												}
 											}}
 										>
 											<ShoppingCartOutlinedIcon /> Add to
