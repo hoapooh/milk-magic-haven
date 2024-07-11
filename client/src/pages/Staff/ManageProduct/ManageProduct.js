@@ -152,6 +152,7 @@ export default function ManageProduct() {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("accessToken"),
       },
     })
       .then((response) => {
