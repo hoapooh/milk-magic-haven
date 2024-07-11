@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 export default function Checkout() {
 	const baseUrl = `${MainAPI}/admin/get-all-user`;
 	const [users, setUsers] = useState([]);
-	const { cartList } = useCart();
+	const { cartList, coupon } = useCart();
 	const nav = useNavigate();
 
 	useEffect(() => {
@@ -40,6 +40,11 @@ export default function Checkout() {
 
 	const subtotal = calculateSubtotal(cartList);
 	const shipping = 20000;
+	let total = 0;
+
+	if (coupon && coupon === "MILK2024") {
+		total = subtotal + shipping - subtotal * 0.1;
+	}
 
 	const formik = useFormik({
 		initialValues: {
@@ -382,6 +387,29 @@ export default function Checkout() {
 												).toLocaleString("vi-VN")} VND`}
 											</Box>
 										</div>
+										<div
+											style={{
+												display: "flex",
+												alignItems: "center",
+												justifyContent: "space-between",
+												fontSize: "1.6rem",
+											}}
+										>
+											Mã giảm giá:{" "}
+											<Box
+												className="checkout__orderItem__price"
+												sx={{
+													fontSize: "1.6rem",
+													width: "29%",
+													textAlign: "right",
+													fontWeight: "bold",
+												}}
+											>
+												{coupon && coupon === "MILK2024"
+													? "-10%"
+													: "0%"}
+											</Box>
+										</div>
 									</Box>
 
 									{/* ========= ORDER TOTAL ========= */}
@@ -405,9 +433,7 @@ export default function Checkout() {
 												}}
 											>
 												{`${(
-													Number(
-														subtotal + shipping
-													) || 0
+													Number(total) || 0
 												).toLocaleString("vi-VN")} VND`}
 											</Box>
 										</div>

@@ -135,7 +135,7 @@ export default function Register() {
 							nav("/login");
 						},
 						position: "top-right",
-						autoClose: 3000,
+						autoClose: 1500,
 						hideProgressBar: false,
 						closeOnClick: true,
 						pauseOnHover: true,
@@ -145,7 +145,7 @@ export default function Register() {
 				);
 				setTimeout(() => {
 					nav("/login");
-				}, 3000);
+				}, 2000);
 			} else {
 				toast.error("Đăng ký tài khoản thất bại! Vui lòng thử lại.", {
 					position: "top-right",

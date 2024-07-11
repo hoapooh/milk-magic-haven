@@ -25,9 +25,9 @@ const createVoucherController = async (req, res) => {
 };
 
 const createPostController = async (req, res) => {
-  const { user_id, content } = req.body;
+  const { title, content, img_thumbnail } = req.body;
   try {
-    const result = await createPost({ user_id, content });
+    const result = await createPost({ title, img_thumbnail, content });
     if (result) {
       return res.status(200).json({
         message: result.message,
@@ -41,9 +41,9 @@ const createPostController = async (req, res) => {
 
 const updatePostController = async (req, res) => {
   const { id } = req.params;
-  const { content } = req.body;
+  const { content, img_thumbnail, title } = req.body;
   try {
-    const result = await updatePost({ id, content });
+    const result = await updatePost({ id, content, img_thumbnail, title });
     if (result) {
       return res.status(200).json({
         message: result.message,
