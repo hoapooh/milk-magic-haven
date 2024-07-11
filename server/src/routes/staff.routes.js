@@ -8,19 +8,41 @@ const {
   getAllCustomerController,
 } = require("../controller/staff.controller");
 
+const authJwt = require("../middleware/authJwt.middlewares");
+
 const multer = require("multer");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
 
 const staffRouter = express.Router();
 
-staffRouter.post("/create-voucher", createVoucherController);
+staffRouter.post(
+  "/create-voucher",
+  authJwt.authenticateToken,
+  authJwt.authorizeRole("staff"),
+  createVoucherController
+);
 
-staffRouter.post("/create-post", createPostController);
+staffRouter.post(
+  "/create-post",
+  authJwt.authenticateToken,
+  authJwt.authorizeRole("staff"),
+  createPostController
+);
 
-staffRouter.put("/update-post/:id", updatePostController);
+staffRouter.put(
+  "/update-post/:id",
+  authJwt.authenticateToken,
+  authJwt.authorizeRole("staff"),
+  updatePostController
+);
 
-staffRouter.delete("/delete-post/:id", deletePostController);
+staffRouter.delete(
+  "/delete-post/:id",
+  authJwt.authenticateToken,
+  authJwt.authorizeRole("staff"),
+  deletePostController
+);
 
 staffRouter.get("/get-all-customer", getAllCustomerController);
 
