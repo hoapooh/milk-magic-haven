@@ -19,6 +19,7 @@ import { Link } from "react-router-dom";
 
 export default function GridCard({ products }) {
 	const { addToCart } = useCart();
+	const username = localStorage.getItem("username");
 	const quantity = 1;
 
 	return (
@@ -46,34 +47,40 @@ export default function GridCard({ products }) {
 										padding: "0 0 0 8px",
 									}}
 								>
-									{/* <Box
-										display={"flex"}
-										justifyContent={"center"}
-										alignItems={"center"}
-									>
-										<Button
-											style={{
-												padding: "2px 10px",
-												backgroundColor: "#F27373",
-												color: "white",
-												borderRadius: 15,
-												fontSize: 12,
-											}}
-											size="small"
-											variant="contained"
-										>
-											Sale
-										</Button>
-									</Box> */}
 									<CardActions
 										onClick={() => {
-											addToCart({
-												...product,
-												quantity,
-											});
-											toast.success(
-												"Thêm mới giỏ hàng thành công!"
-											);
+											if (username === null) {
+												toast.error(
+													"Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!",
+													{
+														position: "top-right",
+														autoClose: 3000,
+														hideProgressBar: false,
+														closeOnClick: true,
+														pauseOnHover: true,
+														draggable: true,
+														progress: undefined,
+													}
+												);
+												return;
+											} else {
+												toast.success(
+													"Thêm mới giỏ hàng thành công!",
+													{
+														position: "top-right",
+														autoClose: 3000,
+														hideProgressBar: false,
+														closeOnClick: true,
+														pauseOnHover: true,
+														draggable: true,
+														progress: undefined,
+													}
+												);
+												addToCart({
+													...product,
+													quantity,
+												});
+											}
 										}}
 									>
 										<IconButton aria-label="share">
