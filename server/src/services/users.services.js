@@ -1,4 +1,5 @@
 const { poolPromise, sql } = require("../../database.services");
+const authJwt = require("../middleware/authJwt.middlewares");
 
 async function login(email, password) {
   try {
@@ -6,21 +7,20 @@ async function login(email, password) {
     const result = await pool
       .request()
       .input("email", sql.VarChar, email)
-      .input("password", sql.VarChar, password)
-      .query(
-        "SELECT * FROM Users WHERE (email = @email OR username = @email) AND password = @password"
-      );
+      .query("SELECT * FROM Users WHERE (email = @email OR username = @email)");
 
     const user = result.recordset[0];
 
-    if (user === undefined) {
-      return { message: "Invalid email or password", status: 401 };
+    if (user) {
+      const isPasswordValid = password === user.password;
+      if (isPasswordValid) {
+        const tokens = await authJwt.generateToken(user.user_id, user.role_id);
+        return { success: true, user, ...tokens, status: 200 };
+      } else {
+        return { message: "Invalid email or password", status: 400 };
+      }
     } else {
-      return {
-        user: result.recordset[0],
-        message: "Login successful",
-        status: 200,
-      };
+      return { message: "User not found", status: 404 };
     }
   } catch (error) {
     console.log(error);

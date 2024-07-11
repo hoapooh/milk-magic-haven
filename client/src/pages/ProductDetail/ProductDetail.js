@@ -18,7 +18,7 @@ import {
 import { MainAPI } from "../../API";
 import { useParams } from "react-router-dom";
 import { useCart } from "../../components/Context/CartContext/CartContext";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function ProductPage() {
@@ -26,6 +26,7 @@ export default function ProductPage() {
 	const { id } = useParams();
 	const baseURL = `${MainAPI}/product/get-product-by-id/${id}`;
 	const [product, setProduct] = useState({});
+	const username = localStorage.getItem("username");
 
 	useEffect(() => {
 		const fetchAPI = () => {
@@ -73,7 +74,6 @@ export default function ProductPage() {
 			<Header />
 			<div>
 				<Breadcrumb>{product.product_name}</Breadcrumb>
-				<ToastContainer style={{ fontSize: "1.6rem" }} />
 				<Container maxWidth="xl" className="productDetail__container">
 					<div className="productDetail">
 						<Grid container spacing={2}>
@@ -206,10 +206,38 @@ export default function ProductPage() {
 											padding: "5px 20px",
 										}}
 										onClick={() => {
-											addToCart({ ...product, quantity });
-											toast.success(
-												"Thêm mới giỏ hàng thành công!"
-											);
+											if (username === null) {
+												toast.error(
+													"Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!",
+													{
+														position: "top-right",
+														autoClose: 3000,
+														hideProgressBar: false,
+														closeOnClick: true,
+														pauseOnHover: true,
+														draggable: true,
+														progress: undefined,
+													}
+												);
+												return;
+											} else {
+												toast.success(
+													"Thêm mới giỏ hàng thành công!",
+													{
+														position: "top-right",
+														autoClose: 3000,
+														hideProgressBar: false,
+														closeOnClick: true,
+														pauseOnHover: true,
+														draggable: true,
+														progress: undefined,
+													}
+												);
+												addToCart({
+													...product,
+													quantity,
+												});
+											}
 										}}
 									>
 										<CiShoppingCart />
