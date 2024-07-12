@@ -23,6 +23,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MainAPI } from "../../../API";
+import axios from "axios";
 
 function TablePaginationActions(props) {
 	const theme = useTheme();
@@ -133,22 +134,21 @@ export default function ManageProduct() {
 	}, []);
 
 	const handleDelete = (id) => {
-		fetch(`${MainAPI}/staff/delete-post/${id}`, {
-			method: "DELETE",
-		})
-			.then((res) => {
-				if (!res.ok)
-					throw new Error("Failed to fetch data delete product");
-				return res.json();
+		axios
+			.delete(`${MainAPI}/staff/delete-post/${id}`, {
+				headers: {
+					"x-access-token": localStorage.getItem("accessToken"),
+				},
 			})
-			.then((data) => {
-				console.log(data);
+			.then((res) => {
+				console.log(res);
 				toast.success("Delete post successfully");
 				fetchData();
 			})
-			.catch((error) =>
-				console.error("Error fetching data product:", error)
-			);
+			.catch((error) => {
+				console.log("Error fetching data product:", error);
+				toast.error(error.response.data.message);
+			});
 	};
 
 	// console.log(productList);
@@ -167,12 +167,16 @@ export default function ManageProduct() {
 		setPage(0);
 	};
 
+
 	return (
 		<Box>
-			<Box>
-				<ToastContainer />
+			<ToastContainer />
+			<Box textAlign={"center"}>
 				<Button
-					variant="contained"
+					sx={{
+						border: "1px solid #49A1D7",
+						fontSize: "13px",
+					}}
 					onClick={() => nav("/staff/managepost/create-post")}
 				>
 					Add new post
@@ -249,7 +253,6 @@ export default function ManageProduct() {
 											width: "100%",
 											height: "100%",
 										}}
-										alt="thumbnail"
 									/>
 								</TableCell>
 								<TableCell

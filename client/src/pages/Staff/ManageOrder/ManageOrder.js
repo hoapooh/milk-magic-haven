@@ -16,6 +16,10 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
+import { Button } from "@mui/material";
+import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
+import CloseIcon from '@mui/icons-material/Close';
+import { convertSQLDate } from "../../../utils/Format";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -89,23 +93,24 @@ TablePaginationActions.propTypes = {
 export default function ManageOrder() {
   const [productList, setProductList] = useState([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(4);
+  const [dataConfirm, setDataConfirm] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:8000/staff/get-all-order"
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const data = await response.json();
-        setProductList(data.data);
-      } catch (error) {
-        console.log(error);
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8000/staff/get-all-order"
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
       }
-    };
+      const data = await response.json();
+      setProductList(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -123,11 +128,71 @@ export default function ManageOrder() {
     setPage(0);
   };
 
+  const checkStatusIsPending = (status) => {
+    if (!status) return false;
+    return status.toLowerCase() === "pending";
+  };
+
+  const handleConfirm = (product) => {
+    fetch("http://localhost:8000/staff/confirm-order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("accessToken"),
+      },
+      body: JSON.stringify({ order_id: product.order_id }),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Failed to confirm order");
+        return response.json();
+      })
+      .then((data) => {
+        setDataConfirm((prevData) =>
+          prevData.map((item) =>
+            item.order_id === product.order_id
+              ? { ...item, status: data.status }
+              : item
+          )
+        );
+        // toast.success("Order confirmed successfully");
+        fetchData();
+      })
+      .catch((error) => console.error("Error confirming order:", error));
+  }
+
+  const handleCancel = (product) => {
+    console.log(product.order_id);
+    fetch("http://localhost:8000/staff/cancel-order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("accessToken"),
+      },
+      body: JSON.stringify({ order_id: product.order_id }),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Failed to cancel order");
+        return response.json();
+      })
+      .then((data) => {
+        setDataConfirm((prevData) =>
+          prevData.map((item) =>
+            item.order_id === product.order_id
+              ? { ...item, status: data.data.status }
+              : item
+          )
+        );
+        // toast.success("Order canceled successfully");
+        fetchData();
+      })
+      .catch((error) => console.error("Error canceling order:", error));
+  }
+
   return (
     <Box display="flex" justifyContent="center">
       <TableContainer
         component={Paper}
-        sx={{ width: "100%", mx: "auto", mt: 0.5 }}
+        sx={{ width: "90%", mx: "auto", mt: 0.5 }}
       >
         <Table
           sx={{ minWidth: 1000, fontSize: "1.2rem" }}
@@ -150,17 +215,20 @@ export default function ManageOrder() {
               <TableCell align="center" sx={{ fontSize: "1.2rem" }}>
                 Total
               </TableCell>
+              <TableCell align="center" sx={{ fontSize: "1.2rem" }}>
+                Action
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {(rowsPerPage > 0
               ? productList.slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage
-                )
+                page * rowsPerPage,
+                page * rowsPerPage + rowsPerPage
+              )
               : productList
             ).map((product) => (
-              <TableRow key={product.product_id}>
+              <TableRow key={product.order_id}>
                 <TableCell
                   style={{ width: 260 }}
                   align="center"
@@ -180,7 +248,7 @@ export default function ManageOrder() {
                   align="center"
                   sx={{ fontSize: "1.2rem" }}
                 >
-                  {product.order_date}
+                  {convertSQLDate(product.order_date)}
                 </TableCell>
                 <TableCell
                   style={{ width: 260 }}
@@ -195,6 +263,20 @@ export default function ManageOrder() {
                   sx={{ fontSize: "1.2rem" }}
                 >
                   {product.total_amount}
+                </TableCell>
+                <TableCell
+                  style={{ width: 260 }}
+                  align="center"
+                  sx={{ fontSize: "1.2rem" }}
+                >
+                  {checkStatusIsPending(product.status) ?
+                    <>
+                      <Button onClick={() => handleConfirm(product)}><DoneOutlineIcon style={{ color: 'green' }} /></Button>
+                      <Button onClick={() => handleCancel(product)}><CloseIcon style={{ color: 'red' }} /></Button>
+                    </>
+                    :
+                    <></>
+                  }
                 </TableCell>
               </TableRow>
             ))}
@@ -228,6 +310,6 @@ export default function ManageOrder() {
           </TableFooter>
         </Table>
       </TableContainer>
-    </Box>
+    </Box >
   );
 }

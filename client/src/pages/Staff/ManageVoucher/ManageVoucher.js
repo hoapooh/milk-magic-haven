@@ -17,6 +17,9 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import { Button, TextField } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { convertSQLDate } from "../../../utils/Format";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -133,6 +136,7 @@ export default function ManageVoucher() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("accessToken"),
       },
       body: JSON.stringify({
         discount: discount,
@@ -149,7 +153,8 @@ export default function ManageVoucher() {
         setShow(false);
         setExDate("");
         setDiscount("");
-        console.log("Voucher added successfully");
+        toast.success("Voucher added successfully");
+        // console.log("Voucher added successfully");
       })
       .catch((error) => {
         console.error("Error adding voucher:", error);
@@ -161,6 +166,7 @@ export default function ManageVoucher() {
   return (
     <>
       <Box>
+        <ToastContainer />
         <Button
           onClick={() => setShow(!show)}
           sx={{ border: "1px solid #49A1D7" }}
@@ -227,9 +233,9 @@ export default function ManageVoucher() {
             <TableBody>
               {(rowsPerPage > 0
                 ? productList.slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
-                  )
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                )
                 : productList
               ).map((product) => (
                 <TableRow key={product.voucher_id}>
@@ -259,7 +265,7 @@ export default function ManageVoucher() {
                     align="center"
                     sx={{ fontSize: "1.2rem" }}
                   >
-                    {product.expiration_date}
+                    {convertSQLDate(product.expiration_date)}
                   </TableCell>
                 </TableRow>
               ))}

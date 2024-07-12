@@ -5,6 +5,8 @@ const {
   deletePost,
   getAllOrder,
   getCustomerUser,
+  cancelOrder,
+  confirmOrder,
 } = require("../services/staff.services");
 
 const createVoucherController = async (req, res) => {
@@ -82,6 +84,24 @@ const getAllOrderController = async (req, res) => {
   res.json({ message: "Success", data: result.orders, status: 200 });
 };
 
+const confirmOrderController = async (req, res) => {
+  const { order_id } = req.body;
+  const result = await confirmOrder(order_id);
+  res.status(result.status).json({
+    message: result.message,
+    status: result.status,
+  });
+};
+
+const cancelOrderController = async (req, res) => {
+  const { order_id } = req.body;
+  const result = await cancelOrder(order_id);
+  res.status(result.status).json({
+    message: result.message,
+    status: result.status,
+  });
+};
+
 module.exports = {
   createVoucherController,
   createPostController,
@@ -89,4 +109,6 @@ module.exports = {
   deletePostController,
   getAllCustomerController,
   getAllOrderController,
+  confirmOrderController,
+  cancelOrderController,
 };

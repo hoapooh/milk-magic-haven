@@ -5,6 +5,7 @@ import { Box, Typography, Button } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { yellow, pink } from "@mui/material/colors";
 import { Container } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export default function Banner() {
 	const theme = createTheme({
@@ -50,9 +51,10 @@ export default function Banner() {
 										color: "#1096B5",
 										fontFamily: "Chalkboard SE",
 										zIndex: "4",
+										textAlign: "center",
 									}}
 								>
-									Discover the <br /> Joy of Play
+									Experience the <br /> Pure Joy of Milk
 								</Typography>
 							</div>
 						</Grid>
@@ -82,7 +84,7 @@ export default function Banner() {
 											fontWeight: "bold",
 										}}
 									>
-										Eco - Friendly Toys
+										Nature's Best Milk"
 									</Typography>
 
 									<Typography
@@ -98,18 +100,20 @@ export default function Banner() {
 									</Typography>
 
 									<Box mt={3}>
-										<Button
-											variant="contained"
-											sx={{
-												padding: "10px 20px",
-												borderRadius: "20px",
-												fontSize: "12px",
-												fontWeight: "bold",
-												color: "black",
-											}}
-										>
-											Shop Now
-										</Button>
+										<Link to={"/shop"}>
+											<Button
+												variant="contained"
+												sx={{
+													padding: "10px 20px",
+													borderRadius: "20px",
+													fontSize: "12px",
+													fontWeight: "bold",
+													color: "black",
+												}}
+											>
+												Mua sắm ngay
+											</Button>
+										</Link>
 									</Box>
 								</Box>
 							</div>

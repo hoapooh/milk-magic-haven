@@ -14,8 +14,10 @@ import { useNavigate } from "react-router-dom";
 
 export default function Checkout() {
 	const username = JSON.parse(localStorage.getItem("username"));
-	const { cartList, coupon } = useCart();
+	const { cartList, coupon, handleDeleteAll } = useCart();
 	const nav = useNavigate();
+
+	console.log(cartList);
 
 	const calculateSubtotal = (cartList) => {
 		return cartList.reduce((subtotal, item) => {
@@ -33,6 +35,16 @@ export default function Checkout() {
 	} else {
 		total = subtotal + shipping;
 	}
+
+	const orderItems = cartList.map((product) => {
+		return {
+			product_id: product.product.product_id,
+			quantity: product.product.quantity,
+			price: product.product.price,
+		};
+	});
+
+	console.log(orderItems);
 
 	const formik = useFormik({
 		initialValues: {
@@ -66,12 +78,17 @@ export default function Checkout() {
 				method: "POST",
 				headers: {
 					"Content-type": "application/json; charset=UTF-8",
+					"x-access-token": localStorage.getItem("accessToken"),
 				},
 				body: JSON.stringify({
-					name: formik.values.name,
-					email: formik.values.email,
-					phone: formik.values.phone,
-					address: formik.values.address,
+					//   name: formik.values.name,
+					//   email: formik.values.email,
+					//   phone: formik.values.phone,
+					//   address: formik.values.address,
+					user_id: JSON.parse(localStorage.getItem("username"))
+						.user_id,
+					total_amount: total,
+					orderItems: orderItems,
 				}),
 			}).then((res) => res.json());
 
@@ -81,7 +98,7 @@ export default function Checkout() {
 						nav("/");
 					},
 					position: "top-right",
-					autoClose: 3000,
+					autoClose: 2000,
 					hideProgressBar: false,
 					closeOnClick: true,
 					pauseOnHover: true,
@@ -89,8 +106,9 @@ export default function Checkout() {
 					progress: undefined,
 				});
 				setTimeout(() => {
-					// nav("/");
-				}, 3000);
+					nav("/");
+				}, 1500);
+				handleDeleteAll();
 			} else {
 				toast.error(
 					"Thanh toán thất bại! Vui lòng kiểm tra lại thông tin.",

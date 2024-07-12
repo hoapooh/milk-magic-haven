@@ -8,6 +8,7 @@ import { MainAPI } from "../../../API";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 const ENDPOINT = "staff/uploads";
 
@@ -70,28 +71,24 @@ export default function UpdatePost() {
       content: post.content,
     };
 
-    fetch(`${MainAPI}/staff/update-post/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch data");
-        return res.json();
+    axios
+      .put(`${MainAPI}/staff/update-post/${id}`, data, {
+        headers: {
+          "x-access-token": localStorage.getItem("accessToken"),
+        },
       })
-      .then((data) => {
-        console.log(data);
+      .then((res) => {
+        console.log(res);
         toast.success("Update post successfully");
         setTimeout(() => {
           nav("/staff/managepost");
         }, 2000);
       })
-      .catch((error) => console.error("Error fetching data:", error));
+      .catch((error) => {
+        // console.error("Error fetching data:", error);
+        toast.error(error.response.data.message);
+      });
   };
-
-  console.log(post);
 
   return (
     <>

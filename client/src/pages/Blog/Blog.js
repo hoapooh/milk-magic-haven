@@ -1,4 +1,4 @@
-import React, { useDebugValue, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Blog.scss";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import { Container, Grid } from "@mui/material";
@@ -45,20 +45,25 @@ export default function Blog() {
 	const displayBlogPosts = blog
 		.slice(pagesVisited, pagesVisited + blogPostsPerPage)
 		.map((post) => (
-			<div className="blog__post__item" key={post.post_id}>
-				<img
-					src={post.img_thumbnail}
-					alt="post item"
-					className="blog__post__item__image"
-				/>
-				<div className="blog__post__item__info">
-					<div className="blog__post__item__calendar">
-						<CalendarTodayIcon /> {convertSQLDate(post.post_date)}
+			<Link to={`/post/${post.post_id}`}>
+				<div className="blog__post__item" key={post.post_id}>
+					<img
+						src={post.img_thumbnail}
+						alt="post item"
+						className="blog__post__item__image"
+					/>
+					<div className="blog__post__item__info">
+						<div className="blog__post__item__calendar">
+							<CalendarTodayIcon />{" "}
+							{convertSQLDate(post.post_date)}
+						</div>
+						<h2 className="blog__post__item__title">
+							{post.title}
+						</h2>
+						{/* <p className="blog__post__item__content">{post.content}</p> */}
 					</div>
-					<h2 className="blog__post__item__title">{post.content}</h2>
-					{/* <p className="blog__post__item__content">{post.content}</p> */}
 				</div>
-			</div>
+			</Link>
 		));
 
 	const pageCount = Math.ceil(blog.length / blogPostsPerPage);
@@ -109,55 +114,6 @@ export default function Blog() {
 										</svg>
 									</button>
 								</form>
-
-								{/* ======== CATEGORY ======== */}
-								<div className="blog__category">
-									<div className="blog__category__title">
-										Danh mục
-									</div>
-									<ul className="blog__category__list">
-										<li className="blog__category__list__item">
-											<Link
-												to={"/blog"}
-												// onClick={() => {
-												// 	setCategory(() => "Education and Development");
-												// }}
-											>
-												<AddIcon />
-												Education and Development
-											</Link>
-										</li>
-										<li className="blog__category__list__item">
-											<Link
-												to={"/blog"}
-												// onClick={() => {
-												// 	setCategory(() => "Toy Safety");
-												// }}
-											>
-												<AddIcon />
-												Toy Safety
-											</Link>
-										</li>
-										<li className="blog__category__list__item">
-											<Link to={"/blog"}>
-												<AddIcon />
-												Toy Trends
-											</Link>
-										</li>
-										<li className="blog__category__list__item">
-											<Link to={"/blog"}>
-												<AddIcon />
-												Customer Stories
-											</Link>
-										</li>
-										<li className="blog__category__list__item">
-											<Link to={"/blog"}>
-												<AddIcon />
-												Events and Promotions
-											</Link>
-										</li>
-									</ul>
-								</div>
 
 								{/* ======== RECENT POST ======== */}
 								<div className="blog__recent__posts">

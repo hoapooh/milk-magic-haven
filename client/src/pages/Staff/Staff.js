@@ -24,8 +24,7 @@ export default function Staff() {
           justifyContent="center"
           alignItems={"center"}
           flexDirection="column"
-          sx={{ width: "90%" }}
-          // height={"100vh"}
+          sx={{ width: "90%", marginTop: "30px" }}
         >
           <Routes>
             <Route path="/manageproduct" element={<ManageProduct />}></Route>
