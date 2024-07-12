@@ -1,147 +1,141 @@
-// import React, { useEffect, useState } from "react";
-// import { Grid } from "@mui/material";
-// import Sidebar from "../sidebar/Sidebar";
-// import { useNavigate, useParams } from "react-router-dom";
-// import { useFormik } from "formik";
-// import * as Yup from "yup";
-// import { notification } from "antd";
-// import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
-// import "./UpdateAccount.scss";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
+import { ToastContainer, toast } from "react-toastify";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+import axios from "axios";
+import { Grid } from "@mui/material";
+import Sidebar from "../sidebar/Sidebar";
+import "./UpdateAccount.scss";
 
-// export default function UpdateAccount() {
-//   const { user_id } = useParams();
-//   const navigate = useNavigate();
-//   const [oldData, setOldData] = useState(null);
+export default function Update() {
+  const { user_id } = useParams();
+  const baseURL = `http://localhost:8000/admin/get-user-by-id/${user_id}`;
+  const navigate = useNavigate();
+  const [data, setData] = useState(null);
 
-//   const baseURL = `http://localhost:8000/staff/get-all-user/${user_id}`;
+  const fetchAccount = async () => {
+    try {
+      const response = await axios.get(baseURL);
+      console.log(response);
+      setData(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-//   useEffect(() => {
-//     fetch(baseURL)
-//       .then((response) => response.json())
-//       .then((data) => {
-//         console.log("Fetched users data:", data);
-//         setOldData(data.data);
-//       })
-//       .catch((error) => console.log(error));
-//   }, []);
-//   const formik = useFormik({
-//     initialValues: {
-//       username: oldData?.username,
-//       email: oldData?.email,
-//       password: oldData?.password,
-//       role_id: oldData?.role_id,
-//     },
-//     onSubmit: (values) => {
-//       fetch(baseURL, {
-//         method: "POST",
-//         body: JSON.stringify(values),
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         credentials: "same-origin",
-//       })
-//         .then((response) => {
-//           if (!response.ok) {
-//             throw new Error(`HTTP Status: ${response.status}`);
-//           }
-//           return response.json();
-//         })
-//         .then(() => {
-//           notification.success({
-//             message: "Successfully",
-//             description: "Add new account successfully",
-//           });
-//           setTimeout(() => {
-//             navigate("/admin");
-//           }, 3000);
-//         });
-//     },
-//     enableReinitialize: true,
-//     validationSchema: Yup.object({
-//       username: Yup.string().required("Required"),
-//       email: Yup.string().email("Invalid email format").required("Required"),
-//       password: Yup.string().required("Required"),
-//       role_id: Yup.string().required("Required"),
-//     }),
-//   });
-//   return (
-//     <div className="UpdateAccount">
-//       <Grid container spacing={2}>
-//         <Grid item md={2}>
-//           <Sidebar />
-//         </Grid>
-//         <Grid item md={10}>
-//           <div className="UpdateAccount__content">
-//             <h1 className="UpdateAccount__title">Update account</h1>
-//             <Container>
-//               <Row>
-//                 <Col md={8} className="mx-auto">
-//                   <Form onSubmit={formik.handleSubmit}>
-//                     <Form.Group className="mb-3">
-//                       <Form.Control
-//                         type="text"
-//                         placeholder="Username"
-//                         name="username"
-//                         value={formik.values.username}
-//                         onChange={formik.handleChange}
-//                       />
-//                       {formik.touched.username && formik.errors.username && (
-//                         <Alert variant="warning">{formik.errors.username}</Alert>
-//                       )}
-//                     </Form.Group>
-//                     <Form.Group className="mb-3">
-//                       <Form.Control
-//                         type="text"
-//                         placeholder="Email"
-//                         name="email"
-//                         value={formik.values.email}
-//                         onChange={formik.handleChange}
-//                       />
-//                       {formik.touched.email && formik.errors.email && (
-//                         <Alert variant="warning">{formik.errors.email}</Alert>
-//                       )}
-//                     </Form.Group>
-//                     <Form.Group className="mb-3">
-//                       <Form.Control
-//                         type="text"
-//                         placeholder="Password"
-//                         name="password"
-//                         value={formik.values.password}
-//                         onChange={formik.handleChange}
-//                       />
-//                       {formik.touched.password && formik.errors.password && (
-//                         <Alert variant="warning">{formik.errors.password}</Alert>
-//                       )}
-//                     </Form.Group>
-//                     <Form.Group className="mb-3">
-//                       <Form.Select
-//                         aria-label="Default select example"
-//                         name="role_id"
-//                         value={formik.values.role_id}
-//                         onChange={formik.handleChange}
-//                         className="form-select"
-//                       >
-//                         <option value="">Open this select menu</option>
-//                         <option value="Admin">Admin</option>
-//                         <option value="Customer">Customer</option>
-//                         <option value="Staff">Staff</option>
-//                       </Form.Select>
-//                       {formik.touched.role_id && formik.errors.role_id && (
-//                         <Alert variant="warning">{formik.errors.role_id}</Alert>
-//                       )}
-//                     </Form.Group>
-//                     <Form.Group>
-//                       <Button type="submit" className="button">
-//                         Update
-//                       </Button>
-//                     </Form.Group>
-//                   </Form>
-//                 </Col>
-//               </Row>
-//             </Container>
-//           </div>
-//         </Grid>
-//       </Grid>
-//     </div>
-//   );
-// }
+  useEffect(() => {
+    fetchAccount();
+  }, []);
+
+  const formik = useFormik({
+    initialValues: {
+      username: data?.username,
+      email: data?.email,
+      password: data?.password,
+      role_id: data?.role_id,
+    },
+    enableReinitialize: true,
+    validationSchema: Yup.object({
+      username: Yup.string().required("Required"),
+      email: Yup.string().email("Invalid email format").required("Required"),
+      password: Yup.string().required("Required"),
+      role_id: Yup.string().required("Required"),
+    }),
+    onSubmit: (values) => {
+      axios
+        .put(`http://localhost:8000/admin/update-user/${user_id}`, values)
+        .then(() => {
+          toast.success("Cập nhật tài khoản thành công", {
+            onClose: () => {
+              navigate("/admin");
+            },
+          });
+        })
+        .catch((error) => console.log(error));
+    },
+  });
+
+  return (
+    <div className="UpdateAccount">
+      <ToastContainer />
+      <Grid container spacing={2}>
+        <Grid item md={2}>
+          <Sidebar />
+        </Grid>
+        <Grid item md={10}>
+          <div className="UpdateAccount__content">
+            <h1 className="UpdateAccount__title">Cập nhật tài khoản</h1>
+            <Container>
+              <Row>
+                <Col md={8} className="mx-auto">
+                  <Form onSubmit={formik.handleSubmit}>
+                    <Form.Group className="mb-3">
+                      <Form.Control
+                        type="text"
+                        placeholder="Username"
+                        name="username"
+                        value={formik.values.username}
+                        onChange={formik.handleChange}
+                      />
+                      {formik.touched.username && formik.errors.username && (
+                        <Alert variant="warning">{formik.errors.username}</Alert>
+                      )}
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Control
+                        type="text"
+                        placeholder="Email"
+                        name="email"
+                        value={formik.values.email}
+                        onChange={formik.handleChange}
+                      />
+                      {formik.touched.email && formik.errors.email && (
+                        <Alert variant="warning">{formik.errors.email}</Alert>
+                      )}
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Control
+                        type="text"
+                        placeholder="Password"
+                        name="password"
+                        value={formik.values.password}
+                        onChange={formik.handleChange}
+                      />
+                      {formik.touched.password && formik.errors.password && (
+                        <Alert variant="warning">{formik.errors.password}</Alert>
+                      )}
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Select
+                        aria-label="Default select example"
+                        name="role_id"
+                        value={formik.values.role_id}
+                        onChange={formik.handleChange}
+                        className="form-select"
+                      >
+                        <option value="">Open this select menu</option>
+                        <option value="admin">Admin</option>
+                        <option value="customer">Customer</option>
+                        <option value="staff">Staff</option>
+                      </Form.Select>
+                      {formik.touched.role_id && formik.errors.role_id && (
+                        <Alert variant="warning">{formik.errors.role_id}</Alert>
+                      )}
+                    </Form.Group>
+                    <Form.Group>
+                      <Button type="submit" className="button">
+                        Update
+                      </Button>
+                    </Form.Group>
+                  </Form>
+                </Col>
+              </Row>
+            </Container>
+          </div>
+        </Grid>
+      </Grid>
+    </div>
+  );
+}

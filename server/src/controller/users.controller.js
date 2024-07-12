@@ -6,6 +6,7 @@ const {
   getAllPost,
   getPostById,
   reviewProduct,
+  sendContact,
 } = require("../services/users.services");
 
 const loginController = async (req, res) => {
@@ -15,6 +16,8 @@ const loginController = async (req, res) => {
   res.status(result.status).json({
     message: result.message,
     data: result.user,
+    accessToken: result.accessToken,
+    refreshToken: result.refreshToken,
     status: result.status,
   });
 };
@@ -68,6 +71,16 @@ const reviewProductController = async (req, res) => {
   });
 };
 
+const sendContactController = async (req, res) => {
+  const { user_id, email, name, message } = req.body;
+  const result = await sendContact({ user_id, email, name, message });
+
+  res.status(result.status).json({
+    message: result.message,
+    status: result.status,
+  });
+};
+
 module.exports = {
   loginController,
   registerController,
@@ -75,4 +88,5 @@ module.exports = {
   getAllPostController,
   getPostByIdController,
   reviewProductController,
+  sendContactController,
 };

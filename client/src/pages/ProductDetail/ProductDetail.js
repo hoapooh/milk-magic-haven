@@ -17,11 +17,16 @@ import {
 } from "@mui/material";
 import { MainAPI } from "../../API";
 import { useParams } from "react-router-dom";
+import { useCart } from "../../components/Context/CartContext/CartContext";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ProductPage() {
+	const { addToCart } = useCart();
 	const { id } = useParams();
 	const baseURL = `${MainAPI}/product/get-product-by-id/${id}`;
 	const [product, setProduct] = useState({});
+	const username = localStorage.getItem("username");
 
 	useEffect(() => {
 		const fetchAPI = () => {
@@ -50,30 +55,6 @@ export default function ProductPage() {
 			prevQuantity > 1 ? prevQuantity - 1 : 1
 		);
 	};
-
-	// CÁI NÀY DÙNG CHO CART
-
-	// const [quantity, setQuantity] = useState({});
-
-	// const handleIncrease = (id) => {
-	// 	setQuantity((prevQuantities) => ({
-	// 		...prevQuantities,
-	// 		[id]: (prevQuantities[id] || 0) + 1,
-	// 	}));
-	// };
-
-	// const handleDecrease = (id) => {
-	// 	setQuantity((prevQuantities) => ({
-	// 		...prevQuantities,
-	// 		[id]: Math.max((prevQuantities[id] || 0) - 1, 0), // Đảm bảo số lượng không âm
-	// 	}));
-	// };
-
-	// <ButtonGroup variant="outlined" aria-label="Basic button group">
-	//   <Button onClick={() => handleDecrease(product.id)}>-</Button>
-	//   <Button disableRipple>{quantities[product.id] || 0}</Button>
-	//   <Button onClick={() => handleIncrease(product.id)}>+</Button>
-	// </ButtonGroup>
 
 	// Hàm xử lý khi click vào "Mô tả sản phẩm"
 	const handleDescriptionClick = () => {
@@ -223,6 +204,40 @@ export default function ProductPage() {
 											fontSize: "1.6rem",
 											borderRadius: "10px",
 											padding: "5px 20px",
+										}}
+										onClick={() => {
+											if (username === null) {
+												toast.error(
+													"Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!",
+													{
+														position: "top-right",
+														autoClose: 3000,
+														hideProgressBar: false,
+														closeOnClick: true,
+														pauseOnHover: true,
+														draggable: true,
+														progress: undefined,
+													}
+												);
+												return;
+											} else {
+												toast.success(
+													"Thêm mới giỏ hàng thành công!",
+													{
+														position: "top-right",
+														autoClose: 3000,
+														hideProgressBar: false,
+														closeOnClick: true,
+														pauseOnHover: true,
+														draggable: true,
+														progress: undefined,
+													}
+												);
+												addToCart({
+													...product,
+													quantity,
+												});
+											}
 										}}
 									>
 										<CiShoppingCart />

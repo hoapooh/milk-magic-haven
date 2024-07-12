@@ -12,10 +12,18 @@ import React from "react";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import "./GridListCard.scss";
 import { Link } from "react-router-dom";
+import { useCart } from "../../../components/Context/CartContext/CartContext";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ListCard({ products }) {
+	const { addToCart } = useCart();
+	const quantity = 1;
+
+	const username = localStorage.getItem("username");
+
 	return (
-		<>
+		<div>
 			{products.map((product) => {
 				return (
 					<Card
@@ -100,6 +108,42 @@ export default function ListCard({ products }) {
 												padding: "10px 20px",
 												fontSize: "1.6rem",
 											}}
+											onClick={() => {
+												if (username === null) {
+													toast.error(
+														"Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!",
+														{
+															position:
+																"top-right",
+															autoClose: 3000,
+															hideProgressBar: false,
+															closeOnClick: true,
+															pauseOnHover: true,
+															draggable: true,
+															progress: undefined,
+														}
+													);
+													return;
+												} else {
+													toast.success(
+														"Thêm mới giỏ hàng thành công!",
+														{
+															position:
+																"top-right",
+															autoClose: 3000,
+															hideProgressBar: false,
+															closeOnClick: true,
+															pauseOnHover: true,
+															draggable: true,
+															progress: undefined,
+														}
+													);
+													addToCart({
+														...product,
+														quantity,
+													});
+												}
+											}}
 										>
 											<ShoppingCartOutlinedIcon /> Add to
 											cart
@@ -111,6 +155,6 @@ export default function ListCard({ products }) {
 					</Card>
 				);
 			})}
-		</>
+		</div>
 	);
 }

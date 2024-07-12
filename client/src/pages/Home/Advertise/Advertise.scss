@@ -1,9 +1,14 @@
-.adv img{
-    width: 100%;
-    max-height: 590px;
-    flex-shrink: 0;
+.adv {
+	position: relative;
+	width: 1280px;
+	margin: 0 auto;
+	margin-top: 50px;
 }
 
-.adv {
-    margin-top: 50px;
+.adv img {
+	width: 100%;
+	max-height: 700px;
+	border-radius: 15px;
+	object-fit: cover;
+	background-position: center;
 }

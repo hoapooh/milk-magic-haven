@@ -1,56 +1,93 @@
-import { createContext, useState } from "react";
+import React, { createContext, useState, useContext } from "react";
 
-const CartContext = createContext()
+const CartContext = createContext();
 
 function CartProvider({ children }) {
-    const [cartList, setCartList] = useState([])
+	const [cartList, setCartList] = useState([]);
+	const [coupon, setCoupon] = useState(""); // Thêm trạng thái cho mã giảm giá
 
-    const handleAddToCart = (product) => {
-        const checkExsit = cartList.find((pro) => pro.product_id === product.product_id);
-        if (checkExsit) {
-            const updateList = cartList.map((item) =>
-                item.product_id === product.product_id ?
-                    { ...item, quantity: item.quantity + 1 }
-                    : item
-            );
-            setCartList(updateList)
-        } else {
-            setCartList([...cartList, { ...product, quantity: 1 }])
-        }
-    };
+	const applyCoupon = (couponCode) => {
+		setCoupon(couponCode); // Cập nhật mã giảm giá
+	};
 
-    const handleDeleteCart = (product) => {
-        const updateList = cartList.filter((item) =>
-            item.product_id !== product.product_id
-        )
-        setCartList(updateList)
-    }
+	const addToCart = (product, quantity = 1) => {
+		const existingProductIndex = cartList.findIndex(
+			(item) => item.product.product_id === product.product_id
+		);
+		if (existingProductIndex !== -1) {
+			// Sản phẩm đã tồn tại, cập nhật số lượng
+			const newCartList = [...cartList];
+			newCartList[existingProductIndex].product.quantity += quantity;
+			setCartList(newCartList);
+		} else {
+			// Thêm sản phẩm mới vào giỏ hàng
+			setCartList([...cartList, { product, quantity }]);
+		}
+	};
 
-    const Increase = (product) => {
-        const updateList = cartList.map((item) =>
-            item.product_id === product.product_id ?
-                { ...item, quantity: item.quantity + 1 }
-                :
-                item
-        )
-        setCartList(updateList)
-    }
+	const handleDeleteProduct = (productId) => {
+		const updatedCartList = cartList.filter(
+			(item) => item.product.product_id !== productId
+		);
+		setCartList(updatedCartList);
+	};
 
-    const Descrease = (product) => {
-        const updateList = cartList.map((item) =>
-            item.product_id === product.product_id ?
-                { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : 1 }
-                :
-                item
-        )
-        setCartList(updateList)
-    }
+	const handleIncrease = (productId) => {
+		const newCartList = cartList.map((item) =>
+			item.product.product_id === productId
+				? {
+						...item,
+						product: {
+							...item.product,
+							quantity: item.product.quantity + 1,
+						},
+				  }
+				: item
+		);
+		setCartList(newCartList);
+	};
 
-    return (
-        <CartContext.Provider value={{ cartList, handleAddToCart, handleDeleteCart, Increase, Descrease }}>
-            {children}
-        </CartContext.Provider>
-    )
+	const handleDecrease = (productId) => {
+		const newCartList = cartList.map((item) =>
+			item.product.product_id === productId
+				? {
+						...item,
+						product: {
+							...item.product,
+							quantity: Math.max(item.product.quantity - 1, 1),
+						},
+				  }
+				: item
+		);
+		setCartList(newCartList);
+	};
+
+	const handleDeleteAll = () => {
+		setCartList([]);
+	};
+
+	const handleDeleteCoupon = () => {
+		setCoupon([]);
+	};
+
+	const value = {
+		cartList,
+		addToCart,
+		handleIncrease,
+		handleDecrease,
+		handleDeleteProduct,
+		handleDeleteAll,
+		coupon,
+		applyCoupon,
+		handleDeleteCoupon,
+	};
+
+	return (
+		<CartContext.Provider value={value}>{children}</CartContext.Provider>
+	);
 }
 
-export { CartContext, CartProvider }
+// Hook để sử dụng context một cách dễ dàng
+export const useCart = () => useContext(CartContext);
+
+export { CartContext, CartProvider };

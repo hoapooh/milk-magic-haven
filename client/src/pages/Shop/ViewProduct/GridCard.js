@@ -1,6 +1,5 @@
 import {
 	Box,
-	Button,
 	Card,
 	CardActions,
 	CardContent,
@@ -13,8 +12,16 @@ import {
 import React from "react";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import "./GridListCard.scss";
+import { useCart } from "../../../components/Context/CartContext/CartContext";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 
 export default function GridCard({ products }) {
+	const { addToCart } = useCart();
+	const username = localStorage.getItem("username");
+	const quantity = 1;
+
 	return (
 		<>
 			<Grid container spacing={2}>
@@ -30,7 +37,7 @@ export default function GridCard({ products }) {
 								}}
 							>
 								<Box
-									justifyContent={"space-between"}
+									justifyContent={"end"}
 									display={"flex"}
 									sx={{
 										position: "absolute",
@@ -40,26 +47,42 @@ export default function GridCard({ products }) {
 										padding: "0 0 0 8px",
 									}}
 								>
-									<Box
-										display={"flex"}
-										justifyContent={"center"}
-										alignItems={"center"}
+									<CardActions
+										onClick={() => {
+											if (username === null) {
+												toast.error(
+													"Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!",
+													{
+														position: "top-right",
+														autoClose: 3000,
+														hideProgressBar: false,
+														closeOnClick: true,
+														pauseOnHover: true,
+														draggable: true,
+														progress: undefined,
+													}
+												);
+												return;
+											} else {
+												toast.success(
+													"Thêm mới giỏ hàng thành công!",
+													{
+														position: "top-right",
+														autoClose: 3000,
+														hideProgressBar: false,
+														closeOnClick: true,
+														pauseOnHover: true,
+														draggable: true,
+														progress: undefined,
+													}
+												);
+												addToCart({
+													...product,
+													quantity,
+												});
+											}
+										}}
 									>
-										<Button
-											style={{
-												padding: "2px 10px",
-												backgroundColor: "#F27373",
-												color: "white",
-												borderRadius: 15,
-												fontSize: 12,
-											}}
-											size="small"
-											variant="contained"
-										>
-											Sale
-										</Button>
-									</Box>
-									<CardActions>
 										<IconButton aria-label="share">
 											<ShoppingCartOutlinedIcon />
 										</IconButton>
@@ -81,18 +104,23 @@ export default function GridCard({ products }) {
 										/>
 									</Box>
 									<CardContent>
-										<Typography
-											gutterBottom
-											component="div"
-											variant="h4"
-											sx={{
-												fontWeight: "700",
-												fontSize: "1.8rem",
-												color: "#191919",
-											}}
+										<Link
+											to={`/detail/${product.product_id}`}
 										>
-											{product.product_name}
-										</Typography>
+											<Typography
+												gutterBottom
+												className="productList__title"
+												component="div"
+												variant="h4"
+												sx={{
+													fontWeight: "700",
+													fontSize: "1.8rem",
+													color: "#191919",
+												}}
+											>
+												{product.product_name}
+											</Typography>
+										</Link>
 										<Typography
 											gutterBottom
 											component="div"

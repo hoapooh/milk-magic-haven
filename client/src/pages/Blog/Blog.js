@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useDebugValue, useEffect, useState } from "react";
 import "./Blog.scss";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import { Container, Grid } from "@mui/material";
@@ -11,53 +11,27 @@ import AuthNav from "../../components/AuthNav/AuthNav";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 
-const blog__item = [
-	{
-		id: "1",
-		image: "/assets/images/blog__item.jpg",
-		title: "Enhancing motor skills through play",
-		content:
-			"Motor skills are divided into two categories: fine motor skills and gross motor skills. Toys play a vital role in the development of both.",
-	},
-	{
-		id: "2",
-		image: "/assets/images/blog__item.jpg",
-		title: "Enhancing motor skills through play",
-		content:
-			"Motor skills are divided into two categories: fine motor skills and gross motor skills. Toys play a vital role in the development of both.",
-	},
-	{
-		id: "3",
-		image: "/assets/images/blog__item.jpg",
-		title: "Enhancing motor skills through play",
-		content:
-			"Motor skills are divided into two categories: fine motor skills and gross motor skills. Toys play a vital role in the development of both.",
-	},
-	{
-		id: "4",
-		image: "/assets/images/blog__item-1.jpg",
-		title: "Fostering problem solving skills",
-		content:
-			"Problem-solving is a critical skill that children begin to develop from a very young age through interactive and engaging play. Toys that challenge children to think and strategize encourage this development.",
-	},
-	{
-		id: "5",
-		image: "/assets/images/blog__item.jpg",
-		title: "Enhancing motor skills through play",
-		content:
-			"Motor skills are divided into two categories: fine motor skills and gross motor skills. Toys play a vital role in the development of both.",
-	},
-	{
-		id: "6",
-		image: "/assets/images/blog__item.jpg",
-		title: "Enhancing motor skills through play",
-		content:
-			"Motor skills are divided into two categories: fine motor skills and gross motor skills. Toys play a vital role in the development of both.",
-	},
-];
+function convertSQLDate(sqlDate) {
+	const date = new Date(sqlDate);
+	const options = { year: "numeric", month: "short", day: "2-digit" };
+	return date.toLocaleDateString("en-US", options);
+}
 
 export default function Blog() {
 	// const [category, setCategory] = useState("Education and Development");
+	const [blog, setBlog] = useState([]);
+
+	const fetchData = async () => {
+		const data = await fetch(
+			"http://localhost:8000/user/get-all-post"
+		).then((res) => res.json());
+		console.log(data.data);
+		setBlog(data.data);
+	};
+
+	useEffect(() => {
+		fetchData();
+	}, []);
 
 	function handleSubmit(e) {
 		e.preventDefault();
@@ -68,26 +42,26 @@ export default function Blog() {
 	const blogPostsPerPage = 3;
 	const pagesVisited = (page - 1) * blogPostsPerPage;
 
-	const displayBlogPosts = blog__item
+	const displayBlogPosts = blog
 		.slice(pagesVisited, pagesVisited + blogPostsPerPage)
 		.map((post) => (
-			<div className="blog__post__item" key={post.id}>
+			<div className="blog__post__item" key={post.post_id}>
 				<img
-					src={post.image}
+					src={post.img_thumbnail}
 					alt="post item"
 					className="blog__post__item__image"
 				/>
 				<div className="blog__post__item__info">
 					<div className="blog__post__item__calendar">
-						<CalendarTodayIcon /> March 24, 2024
+						<CalendarTodayIcon /> {convertSQLDate(post.post_date)}
 					</div>
-					<h2 className="blog__post__item__title">{post.title}</h2>
-					<p className="blog__post__item__content">{post.content}</p>
+					<h2 className="blog__post__item__title">{post.content}</h2>
+					{/* <p className="blog__post__item__content">{post.content}</p> */}
 				</div>
 			</div>
 		));
 
-	const pageCount = Math.ceil(blog__item.length / blogPostsPerPage);
+	const pageCount = Math.ceil(blog.length / blogPostsPerPage);
 
 	const handleChange = (event, value) => {
 		setPage(value);
