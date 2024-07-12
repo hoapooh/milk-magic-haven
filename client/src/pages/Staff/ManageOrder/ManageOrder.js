@@ -16,6 +16,10 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
+import { Button } from "@mui/material";
+import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
+import CloseIcon from '@mui/icons-material/Close';
+import { convertSQLDate } from "../../../utils/Format";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -89,7 +93,7 @@ TablePaginationActions.propTypes = {
 export default function ManageOrder() {
   const [productList, setProductList] = useState([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(4);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -123,6 +127,15 @@ export default function ManageOrder() {
     setPage(0);
   };
 
+  const checkStatusIsPending = (status) => {
+    if (!status) return false;
+    return status.toLowerCase() === "pending";
+  };
+
+  const handleConfirm = () => { }
+
+  const handleCancel = () => { }
+
   return (
     <Box display="flex" justifyContent="center">
       <TableContainer
@@ -150,14 +163,17 @@ export default function ManageOrder() {
               <TableCell align="center" sx={{ fontSize: "1.2rem" }}>
                 Total
               </TableCell>
+              <TableCell align="center" sx={{ fontSize: "1.2rem" }}>
+                Action
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {(rowsPerPage > 0
               ? productList.slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage
-                )
+                page * rowsPerPage,
+                page * rowsPerPage + rowsPerPage
+              )
               : productList
             ).map((product) => (
               <TableRow key={product.product_id}>
@@ -180,7 +196,7 @@ export default function ManageOrder() {
                   align="center"
                   sx={{ fontSize: "1.2rem" }}
                 >
-                  {product.order_date}
+                  {convertSQLDate(product.order_date)}
                 </TableCell>
                 <TableCell
                   style={{ width: 260 }}
@@ -195,6 +211,20 @@ export default function ManageOrder() {
                   sx={{ fontSize: "1.2rem" }}
                 >
                   {product.total_amount}
+                </TableCell>
+                <TableCell
+                  style={{ width: 260 }}
+                  align="center"
+                  sx={{ fontSize: "1.2rem" }}
+                >
+                  {checkStatusIsPending(product.status) ?
+                    <>
+                      <Button onClick={() => handleConfirm()}><DoneOutlineIcon style={{ color: 'green' }} /></Button>
+                      <Button onClick={() => handleCancel()}><CloseIcon style={{ color: 'red' }} /></Button>
+                    </>
+                    :
+                    <></>
+                  }
                 </TableCell>
               </TableRow>
             ))}
@@ -228,6 +258,6 @@ export default function ManageOrder() {
           </TableFooter>
         </Table>
       </TableContainer>
-    </Box>
+    </Box >
   );
 }

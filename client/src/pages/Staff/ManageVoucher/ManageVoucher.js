@@ -19,6 +19,7 @@ import LastPageIcon from "@mui/icons-material/LastPage";
 import { Button, TextField } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { convertSQLDate } from "../../../utils/Format";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -232,9 +233,9 @@ export default function ManageVoucher() {
             <TableBody>
               {(rowsPerPage > 0
                 ? productList.slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
-                  )
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                )
                 : productList
               ).map((product) => (
                 <TableRow key={product.voucher_id}>
@@ -264,7 +265,7 @@ export default function ManageVoucher() {
                     align="center"
                     sx={{ fontSize: "1.2rem" }}
                   >
-                    {product.expiration_date}
+                    {convertSQLDate(product.expiration_date)}
                   </TableCell>
                 </TableRow>
               ))}

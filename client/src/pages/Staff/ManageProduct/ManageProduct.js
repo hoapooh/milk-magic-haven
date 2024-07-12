@@ -104,17 +104,6 @@ export default function ManageProduct() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(3);
   const [show, setshow] = useState(null);
-  const [showEditProduct, setShowEditProduct] = useState(false);
-  const [proName, setProName] = useState("");
-  const [prodes, setProdes] = useState("");
-  const [price, setPrice] = useState("");
-  const [stock, setStock] = useState("");
-  const [brandID, setbrandID] = useState("");
-  const [country, setcountry] = useState("");
-  const [range, setRange] = useState("");
-  const [img, setImg] = useState("");
-  const [editProductId, setEditProductId] = useState(null);
-  const [showAdd, setShowAdd] = useState(false);
   const nav = useNavigate();
 
   const fetchData = () => {
@@ -238,9 +227,9 @@ export default function ManageProduct() {
             <TableBody>
               {(rowsPerPage > 0
                 ? productList.slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
-                  )
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                )
                 : productList
               ).map((product, index) => (
                 <TableRow key={product.product_id}>

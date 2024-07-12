@@ -197,9 +197,9 @@ export default function ManageProduct() {
           <TableBody>
             {(rowsPerPage > 0
               ? productList.slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage
-                )
+                page * rowsPerPage,
+                page * rowsPerPage + rowsPerPage
+              )
               : productList
             ).map((product, index) => (
               <TableRow key={product.post_id}>
