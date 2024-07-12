@@ -26,7 +26,9 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
-
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -98,34 +100,34 @@ TablePaginationActions.propTypes = {
 };
 
 export default function ManageProduct() {
-    const [productList, setProductList] = useState([]);
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(3);
-    const [show, setshow] = useState(null)
-    const [showEditProduct, setShowEditProduct] = useState(false);
-    const [proName, setProName] = useState('');
-    const [prodes, setProdes] = useState('')
-    const [price, setPrice] = useState('');
-    const [stock, setStock] = useState('');
-    const [brandID, setbrandID] = useState('');
-    const [country, setcountry] = useState('');
-    const [range, setRange] = useState('');
-    const [img, setImg] = useState('');
-    const [editProductId, setEditProductId] = useState(null);
-    const [showAdd, setShowAdd] = useState(false);
-    const nav = useNavigate();
+  const [productList, setProductList] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(3);
+  const [show, setshow] = useState(null);
+  const [showEditProduct, setShowEditProduct] = useState(false);
+  const [proName, setProName] = useState("");
+  const [prodes, setProdes] = useState("");
+  const [price, setPrice] = useState("");
+  const [stock, setStock] = useState("");
+  const [brandID, setbrandID] = useState("");
+  const [country, setcountry] = useState("");
+  const [range, setRange] = useState("");
+  const [img, setImg] = useState("");
+  const [editProductId, setEditProductId] = useState(null);
+  const [showAdd, setShowAdd] = useState(false);
+  const nav = useNavigate();
 
-    const fetchData = () => {
-        fetch(`${MainAPI}/product/get-all-product`, {
-            method: "GET",
-        })
-            .then(res => {
-                if (!res.ok) throw new Error("Failed to fetch data get product");
-                return res.json();
-            })
-            .then(data => setProductList(data.data))
-            .catch(error => console.log("Error fetching data product:", error));
-    };
+  const fetchData = () => {
+    fetch(`${MainAPI}/product/get-all-product`, {
+      method: "GET",
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch data get product");
+        return res.json();
+      })
+      .then((data) => setProductList(data.data))
+      .catch((error) => console.log("Error fetching data product:", error));
+  };
 
   useEffect(() => {
     fetchData();
@@ -164,78 +166,150 @@ export default function ManageProduct() {
       })
       .then((data) => {
         console.log(data);
+        toast.success("Delete product successfully");
         fetchData();
       })
       .catch((error) => console.error("Error deleting product:", error));
   };
 
-    const handleEditProductClick = (product) => {
-        console.log(product)
-        nav(`/editproduct/${product.product_id}`)
-    };
+  const handleEditProductClick = (product) => {
+    console.log(product);
+    nav(`/editproduct/${product.product_id}`);
+  };
 
-    const handleAddProduct = () => {
-        nav(`/createproduct`)
-    };
+  const handleAddProduct = () => {
+    nav(`/createproduct`);
+  };
 
-    return (
-        <Box>
-            <Box >
-                <Button onClick={() => handleAddProduct()} sx={{ border: '1px solid #49A1D7', marginTop: '10%', marginLeft: '30%', fontSize: '13px' }}>
-                    Add New Product
-                </Button>
-            </Box>
-
-            <Box display="flex" justifyContent="center" mt={9} ml={-35} mr={9}>
-                <TableContainer component={Paper} sx={{ width: '100%', mx: 'auto', mt: 0.5 }}>
-                    <Table sx={{ minWidth: 1000, fontSize: '1.2rem' }} aria-label="custom pagination table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Image</TableCell>
-                                <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Product Name</TableCell>
-                                <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Description</TableCell>
-                                <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Price</TableCell>
-                                <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Stock</TableCell>
-                                <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Brand ID</TableCell>
-                                <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Country ID</TableCell>
-                                <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Age Range</TableCell>
-                                <TableCell align="center" sx={{ fontSize: '1.2rem' }}>Action</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {(rowsPerPage > 0
-                                ? productList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                : productList
-                            ).map((product, index) => (
-                                <TableRow key={product.product_id}>
-                                    <TableCell style={{ width: 300 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                        <img src={product.image_url} alt="product" style={{ width: '70px', height: '90px' }} />
-                                    </TableCell>
-                                    <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                        {product.product_name}
-                                    </TableCell>
-                                    <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                        {product.description}
-                                    </TableCell>
-                                    <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                        {product.price}
-                                    </TableCell>
-                                    <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                        {product.stock}
-                                    </TableCell>
-                                    <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                        {product.brand_id}
-                                    </TableCell>
-                                    <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                        {product.country_id}
-                                    </TableCell>
-                                    <TableCell style={{ width: 260 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                        {product.age_range}
-                                    </TableCell>
-                                    <TableCell style={{ width: 400 }} align="center" sx={{ fontSize: '1.2rem' }}>
-                                        <Button onClick={() => handleShow(index)}>
-                                            ▪▪▪
-                                        </Button>
+  return (
+    <Box>
+      <ToastContainer />
+      <Box display="flex" justifyContent="center" flexDirection="column">
+        <Box textAlign={"center"}>
+          <Button
+            onClick={() => handleAddProduct()}
+            sx={{
+              border: "1px solid #49A1D7",
+              fontSize: "13px",
+            }}
+          >
+            Add New Product
+          </Button>
+        </Box>
+        <TableContainer
+          component={Paper}
+          sx={{ width: "90%", mx: "auto", mt: 0.5 }}
+        >
+          <Table
+            sx={{ minWidth: 1000, fontSize: "1.2rem" }}
+            aria-label="custom pagination table"
+          >
+            <TableHead>
+              <TableRow>
+                <TableCell align="center" sx={{ fontSize: "1.2rem" }}>
+                  Image
+                </TableCell>
+                <TableCell align="center" sx={{ fontSize: "1.2rem" }}>
+                  Product Name
+                </TableCell>
+                <TableCell align="center" sx={{ fontSize: "1.2rem" }}>
+                  Description
+                </TableCell>
+                <TableCell align="center" sx={{ fontSize: "1.2rem" }}>
+                  Price
+                </TableCell>
+                <TableCell align="center" sx={{ fontSize: "1.2rem" }}>
+                  Stock
+                </TableCell>
+                <TableCell align="center" sx={{ fontSize: "1.2rem" }}>
+                  Brand ID
+                </TableCell>
+                <TableCell align="center" sx={{ fontSize: "1.2rem" }}>
+                  Country ID
+                </TableCell>
+                <TableCell align="center" sx={{ fontSize: "1.2rem" }}>
+                  Age Range
+                </TableCell>
+                <TableCell align="center" sx={{ fontSize: "1.2rem" }}>
+                  Action
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {(rowsPerPage > 0
+                ? productList.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
+                : productList
+              ).map((product, index) => (
+                <TableRow key={product.product_id}>
+                  <TableCell
+                    style={{ width: 300 }}
+                    align="center"
+                    sx={{ fontSize: "1.2rem" }}
+                  >
+                    <img
+                      src={product.image_url}
+                      alt="product"
+                      style={{ width: "70px", height: "90px" }}
+                    />
+                  </TableCell>
+                  <TableCell
+                    style={{ width: 260 }}
+                    align="center"
+                    sx={{ fontSize: "1.2rem" }}
+                  >
+                    {product.product_name}
+                  </TableCell>
+                  <TableCell
+                    style={{ width: 260 }}
+                    align="center"
+                    sx={{ fontSize: "1.2rem" }}
+                  >
+                    {product.description}
+                  </TableCell>
+                  <TableCell
+                    style={{ width: 260 }}
+                    align="center"
+                    sx={{ fontSize: "1.2rem" }}
+                  >
+                    {product.price}
+                  </TableCell>
+                  <TableCell
+                    style={{ width: 260 }}
+                    align="center"
+                    sx={{ fontSize: "1.2rem" }}
+                  >
+                    {product.stock}
+                  </TableCell>
+                  <TableCell
+                    style={{ width: 260 }}
+                    align="center"
+                    sx={{ fontSize: "1.2rem" }}
+                  >
+                    {product.brand_id}
+                  </TableCell>
+                  <TableCell
+                    style={{ width: 260 }}
+                    align="center"
+                    sx={{ fontSize: "1.2rem" }}
+                  >
+                    {product.country_id}
+                  </TableCell>
+                  <TableCell
+                    style={{ width: 260 }}
+                    align="center"
+                    sx={{ fontSize: "1.2rem" }}
+                  >
+                    {product.age_range}
+                  </TableCell>
+                  <TableCell
+                    style={{ width: 400 }}
+                    align="center"
+                    sx={{ fontSize: "1.2rem" }}
+                  >
+                    <Button onClick={() => handleShow(index)}>▪▪▪</Button>
                     {show === index && (
                       <Box sx={{ display: "flex" }}>
                         <Button onClick={() => handleEditProductClick(product)}>

@@ -8,6 +8,7 @@ const {
   getPostByIdController,
   reviewProductController,
   sendContactController,
+  createOrderController,
 } = require("../controller/users.controller");
 
 const authJwt = require("../middleware/authJwt.middlewares");
@@ -36,6 +37,13 @@ userRouter.post(
   authJwt.authenticateToken,
   authJwt.authorizeRole("customer"),
   sendContactController
+);
+
+userRouter.post(
+  "/order",
+  authJwt.authenticateToken,
+  authJwt.authorizeRole("customer"),
+  createOrderController
 );
 
 module.exports = userRouter;

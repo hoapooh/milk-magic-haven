@@ -7,6 +7,7 @@ const {
   getPostById,
   reviewProduct,
   sendContact,
+  readyToCheckout,
 } = require("../services/users.services");
 
 const loginController = async (req, res) => {
@@ -81,6 +82,16 @@ const sendContactController = async (req, res) => {
   });
 };
 
+const createOrderController = async (req, res) => {
+  const { user_id, total_amount, orderItems } = req.body;
+  const result = await readyToCheckout({ user_id, total_amount, orderItems });
+
+  res.status(result.status).json({
+    message: result.message,
+    status: result.status,
+  });
+};
+
 module.exports = {
   loginController,
   registerController,
@@ -89,4 +100,5 @@ module.exports = {
   getPostByIdController,
   reviewProductController,
   sendContactController,
+  createOrderController,
 };

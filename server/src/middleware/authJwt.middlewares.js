@@ -8,7 +8,7 @@ const refreshSecretKey = process.env.REFRESH_SECRET_KEY;
 async function authenticateToken(req, res, next) {
   const token = req.headers["x-access-token"];
   if (!token) {
-    return res.status(401).json({ message: "Token is required" });
+    return res.status(401).json({ message: "Yêu cầu đăng nhập" });
   }
 
   jwt.verify(token, secretKey, (err, user) => {
@@ -81,7 +81,9 @@ async function authenticateRefreshToken(req, res, next) {
 function authorizeRole(...allowedRoles) {
   return (req, res, next) => {
     if (!req.user || !allowedRoles.includes(req.user.role)) {
-      return res.status(403).json({ message: "Forbidden: Access is denied" });
+      return res
+        .status(403)
+        .json({ message: "Bạn không có quyền truy cập!!!" });
     }
     next();
   };
