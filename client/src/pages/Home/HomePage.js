@@ -4,10 +4,12 @@ import Banner from "./Banner/Banner";
 import Rate from "./Rate/Rate";
 import PhotoShoot from "./PhotoShoot/PhotoShoot";
 import Feature from "./Feature/Feature";
-import Category from "./Category/Category";
 import AuthNav from "../../components/AuthNav/AuthNav";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+// Import css files
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 export default function HomePage() {
 	return (
@@ -16,7 +18,6 @@ export default function HomePage() {
 			<Header />
 			<div style={{ paddingBottom: "50px" }}>
 				<Advertise />
-				<Category />
 				<Banner />
 				<Rate />
 				<PhotoShoot />

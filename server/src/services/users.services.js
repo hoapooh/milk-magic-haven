@@ -180,12 +180,12 @@ async function insertOrderItems(order_id, orderItems) {
 }
 
 async function getAllRating(id) {
-  try {
-    const pool = await poolPromise;
-    const result = await pool.request().input("product_id", sql.Int, id)
-      .query(`SELECT 
+	try {
+		const pool = await poolPromise;
+		const result = await pool.request().input("product_id", sql.Int, id)
+			.query(`SELECT 
+			  r.review_id,
               p.product_id,
-              p.product_name,
               u.username,
               r.rating,
               r.review_date
@@ -197,20 +197,35 @@ async function getAllRating(id) {
               Products p ON r.product_id = p.product_id
           WHERE 
               p.product_id = @product_id;`);
-    return { ratings: result.recordsets[0] };
-  } catch (error) {
-    console.log(error);
-  }
+		return { ratings: result.recordsets[0] };
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+async function getAllGoodReview() {
+	try {
+		const pool = await poolPromise;
+		const result = await pool
+			.request()
+			.query(
+				"select top 10 r.review_id, ue.username, p.product_name, r.rating from Reviews r join Users ue on r.user_id = ue.user_id join Products p on r.product_id = p.product_id where rating > 3"
+			);
+		return { goodReviews: result.recordsets[0] };
+	} catch (error) {
+		console.log(error);
+	}
 }
 
 module.exports = {
-  login,
-  registerUser,
-  getVoucher,
-  getAllPost,
-  getPostById,
-  reviewProduct,
-  sendContact,
-  readyToCheckout,
-  getAllRating,
+	login,
+	registerUser,
+	getVoucher,
+	getAllPost,
+	getPostById,
+	reviewProduct,
+	sendContact,
+	readyToCheckout,
+	getAllRating,
+	getAllGoodReview,
 };

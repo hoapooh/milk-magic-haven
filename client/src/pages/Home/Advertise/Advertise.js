@@ -4,6 +4,7 @@ import { Box, Typography, Button } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { yellow, pink } from "@mui/material/colors";
 import { Container } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export default function Advertise() {
 	const theme = createTheme({
@@ -33,7 +34,7 @@ export default function Advertise() {
 						}}
 					>
 						<Typography variant="h2" component="h2">
-							Play, learn, &grow!
+							Drink, Thrive, & Grow!
 						</Typography>
 
 						<Typography
@@ -44,22 +45,24 @@ export default function Advertise() {
 								color: "black",
 							}}
 						>
-							Crafting smiles with every toy, made for learning,
-							fun, and growth.
+							Crafting Health with Every Sip, Made for
+							Nourishment, Joy, and Growth.
 						</Typography>
 
 						<Box mt={3}>
-							<Button
-								variant="contained"
-								sx={{
-									padding: "10px 20px",
-									borderRadius: "20px",
-									fontSize: "12px",
-									fontWeight: "bold",
-								}}
-							>
-								Shop Now
-							</Button>
+							<Link to={"/shop"}>
+								<Button
+									variant="contained"
+									sx={{
+										padding: "10px 20px",
+										borderRadius: "20px",
+										fontSize: "12px",
+										fontWeight: "bold",
+									}}
+								>
+									Mua sắm ngay
+								</Button>
+							</Link>
 						</Box>
 					</Box>
 				</div>
