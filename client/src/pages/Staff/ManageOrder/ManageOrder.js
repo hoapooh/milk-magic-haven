@@ -94,22 +94,23 @@ export default function ManageOrder() {
   const [productList, setProductList] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(4);
+  const [dataConfirm, setDataConfirm] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:8000/staff/get-all-order"
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const data = await response.json();
-        setProductList(data.data);
-      } catch (error) {
-        console.log(error);
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8000/staff/get-all-order"
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
       }
-    };
+      const data = await response.json();
+      setProductList(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -132,9 +133,60 @@ export default function ManageOrder() {
     return status.toLowerCase() === "pending";
   };
 
-  const handleConfirm = () => { }
+  const handleConfirm = (product) => {
+    fetch("http://localhost:8000/staff/confirm-order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("accessToken"),
+      },
+      body: JSON.stringify({ order_id: product.order_id }),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Failed to confirm order");
+        return response.json();
+      })
+      .then((data) => {
+        setDataConfirm((prevData) =>
+          prevData.map((item) =>
+            item.order_id === product.order_id
+              ? { ...item, status: data.status }
+              : item
+          )
+        );
+        // toast.success("Order confirmed successfully");
+        fetchData();
+      })
+      .catch((error) => console.error("Error confirming order:", error));
+  }
 
-  const handleCancel = () => { }
+  const handleCancel = (product) => {
+    console.log(product.order_id);
+    fetch("http://localhost:8000/staff/cancel-order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("accessToken"),
+      },
+      body: JSON.stringify({ order_id: product.order_id }),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Failed to cancel order");
+        return response.json();
+      })
+      .then((data) => {
+        setDataConfirm((prevData) =>
+          prevData.map((item) =>
+            item.order_id === product.order_id
+              ? { ...item, status: data.data.status }
+              : item
+          )
+        );
+        // toast.success("Order canceled successfully");
+        fetchData();
+      })
+      .catch((error) => console.error("Error canceling order:", error));
+  }
 
   return (
     <Box display="flex" justifyContent="center">
@@ -176,7 +228,7 @@ export default function ManageOrder() {
               )
               : productList
             ).map((product) => (
-              <TableRow key={product.product_id}>
+              <TableRow key={product.order_id}>
                 <TableCell
                   style={{ width: 260 }}
                   align="center"
@@ -219,8 +271,8 @@ export default function ManageOrder() {
                 >
                   {checkStatusIsPending(product.status) ?
                     <>
-                      <Button onClick={() => handleConfirm()}><DoneOutlineIcon style={{ color: 'green' }} /></Button>
-                      <Button onClick={() => handleCancel()}><CloseIcon style={{ color: 'red' }} /></Button>
+                      <Button onClick={() => handleConfirm(product)}><DoneOutlineIcon style={{ color: 'green' }} /></Button>
+                      <Button onClick={() => handleCancel(product)}><CloseIcon style={{ color: 'red' }} /></Button>
                     </>
                     :
                     <></>

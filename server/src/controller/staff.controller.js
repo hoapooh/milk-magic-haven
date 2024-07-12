@@ -87,7 +87,6 @@ const getAllOrderController = async (req, res) => {
 const confirmOrderController = async (req, res) => {
   const { order_id } = req.body;
   const result = await confirmOrder(order_id);
-  confirm - order;
   res.status(result.status).json({
     message: result.message,
     status: result.status,
@@ -97,7 +96,6 @@ const confirmOrderController = async (req, res) => {
 const cancelOrderController = async (req, res) => {
   const { order_id } = req.body;
   const result = await cancelOrder(order_id);
-
   res.status(result.status).json({
     message: result.message,
     status: result.status,
