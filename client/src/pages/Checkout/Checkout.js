@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./Checkout.scss";
 import AuthNav from "../../components/AuthNav/AuthNav";
 import Header from "../../components/Header/Header";
@@ -13,23 +13,9 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 
 export default function Checkout() {
-	const baseUrl = `${MainAPI}/admin/get-all-user`;
-	const [users, setUsers] = useState([]);
+	const username = JSON.parse(localStorage.getItem("username"));
 	const { cartList, coupon } = useCart();
 	const nav = useNavigate();
-
-	useEffect(() => {
-		fetch(baseUrl)
-			.then((res) => res.json())
-			.then((data) => setUsers(data.data))
-			.catch((err) => console.log(err));
-	}, [baseUrl]);
-
-	const userExists = users.find(
-		(user) =>
-			user.username === localStorage.getItem("username") ||
-			user.email === localStorage.getItem("username")
-	);
 
 	const calculateSubtotal = (cartList) => {
 		return cartList.reduce((subtotal, item) => {
@@ -42,14 +28,16 @@ export default function Checkout() {
 	const shipping = 20000;
 	let total = 0;
 
-	if (coupon && coupon === "MILK2024") {
-		total = subtotal + shipping - subtotal * 0.1;
+	if (coupon) {
+		total = subtotal + shipping - (subtotal * coupon) / 100;
+	} else {
+		total = subtotal + shipping;
 	}
 
 	const formik = useFormik({
 		initialValues: {
 			name: "",
-			email: userExists?.email || "",
+			email: username.email,
 			phone: "",
 			address: "",
 		},
@@ -405,9 +393,7 @@ export default function Checkout() {
 													fontWeight: "bold",
 												}}
 											>
-												{coupon && coupon === "MILK2024"
-													? "-10%"
-													: "0%"}
+												{coupon ? `-${coupon}%` : "0%"}
 											</Box>
 										</div>
 									</Box>

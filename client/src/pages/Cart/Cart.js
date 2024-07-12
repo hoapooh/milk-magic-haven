@@ -26,6 +26,7 @@ import LoyaltyIcon from "@mui/icons-material/Loyalty";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../../components/Context/CartContext/CartContext";
 import { toast } from "react-toastify";
+import { MainAPI } from "../../API";
 
 export default function Cart() {
 	const {
@@ -38,8 +39,10 @@ export default function Cart() {
 	} = useCart();
 	const nav = useNavigate();
 	const [total, setTotal] = useState(0);
+	const [couponFetch, setCouponFetch] = useState([]);
 	const [couponInput, setCouponInput] = useState("");
 	const [isApplied, setIsApplied] = useState(false);
+	const [disRate, setDisRate] = useState(0);
 
 	const calculateSubtotal = (cartList) => {
 		return cartList.reduce((subtotal, item) => {
@@ -56,12 +59,24 @@ export default function Cart() {
 	};
 
 	useEffect(() => {
+		fetch(`${MainAPI}/user/get-all-voucher`)
+			.then((response) => {
+				if (!response.ok) throw new Error("Failed to delete product");
+				return response.json();
+			})
+			.then((data) => {
+				setCouponFetch(data.data);
+			})
+			.catch((error) => {
+				console.error("Error fetching data product:", error);
+			});
+	}, []);
+
+	useEffect(() => {
 		// Tính toán lại tổng tiền khi cartList hoặc coupon thay đổi
 		if (coupon) {
-			setTotal(subtotal * 0.9);
 			setIsApplied(true);
 		} else {
-			setTotal(subtotal);
 			setIsApplied(false);
 		}
 	}, [cartList, coupon, subtotal]);
@@ -69,11 +84,19 @@ export default function Cart() {
 	// Hàm để áp dụng mã giảm giá và cập nhật subtotal
 	const applyDiscount = (discountCode) => {
 		// Giả sử mã giảm giá "MILK2024" giảm 10%
-		if (discountCode === "MILK2024") {
-			const discountedPrice = subtotal * 0.9; // Giảm giá 10%
+		if (
+			couponFetch.find((co) => {
+				return co.code === discountCode;
+			})
+		) {
+			const discountRate = couponFetch.find((co) => {
+				return co.code === discountCode;
+			}).discount;
+			console.log(discountRate);
+			setDisRate(discountRate);
+			const discountedPrice = subtotal - (subtotal * discountRate) / 100; // Giảm giá 10%
 			setTotal(discountedPrice);
-			applyCoupon(couponInput);
-			console.log(coupon);
+			applyCoupon(discountRate);
 			toast.success("Áp dụng mã giảm giá thành công!", {
 				position: "top-right",
 				autoClose: 3000,
@@ -102,6 +125,7 @@ export default function Cart() {
 
 	function handleLinkCheckout() {
 		nav("/checkout");
+		setIsApplied(false);
 	}
 
 	return (
@@ -526,8 +550,8 @@ export default function Cart() {
 														fontWeight: "bold",
 													}}
 												>
-													{coupon === "MILK2024"
-														? "-10%"
+													{disRate
+														? `-${disRate}%`
 														: "0%"}
 												</span>
 											</Typography>
