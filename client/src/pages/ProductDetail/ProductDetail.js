@@ -19,6 +19,7 @@ import { MainAPI } from "../../API";
 import { useParams } from "react-router-dom";
 import { useCart } from "../../components/Context/CartContext/CartContext";
 import { toast } from "react-toastify";
+import StarRating from "./StarRating";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function ProductPage() {
@@ -26,7 +27,10 @@ export default function ProductPage() {
 	const { id } = useParams();
 	const baseURL = `${MainAPI}/product/get-product-by-id/${id}`;
 	const [product, setProduct] = useState({});
-	const username = localStorage.getItem("username");
+	const username = JSON.parse(localStorage.getItem("username"));
+	const [rating, setRating] = useState(0);
+
+	console.log(product);
 
 	useEffect(() => {
 		const fetchAPI = () => {
@@ -67,6 +71,123 @@ export default function ProductPage() {
 	const handleReviewClick = () => {
 		setActiveSection(activeSection === "review" ? null : "review");
 	};
+
+	const Star = ({ rating }) => {
+		let comment = "";
+		if (rating === 1) {
+			comment = "Rất tệ";
+		} else if (rating === 2) {
+			comment = "Tệ";
+		} else if (rating === 3) {
+			comment = "Ổn";
+		} else if (rating === 4) {
+			comment = "Tốt";
+		} else if (rating === 5) {
+			comment = "Tuyệt vời";
+		}
+
+		// Tạo một mảng từ 0 đến 4 (đại diện cho 5 ngôi sao)
+		const stars = Array.from({ length: 5 }, (_, index) => {
+			// Nếu index nhỏ hơn rating, ngôi sao sẽ có màu, ngược lại sẽ không có màu
+			const fill = index < rating ? "#fcc419" : "none";
+			// Render SVG hoặc một component tương tự cho mỗi ngôi sao
+			return (
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 20 20"
+					key={index}
+					// Change only fill property is enough to change the color of the star
+					fill={fill}
+					stroke={"#fcc419"}
+					style={{
+						width: "30px",
+						height: "30px",
+					}}
+				>
+					<path
+						strokeLinecap="round"
+						strokeLinejoin="round"
+						strokeWidth="{2}"
+						d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+					/>
+				</svg>
+			);
+		});
+		return (
+			<div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+				<span>{stars}</span>{" "}
+				<span style={{ fontSize: "2rem", color: "#fcc419" }}>
+					{comment}
+				</span>
+			</div>
+		);
+	};
+
+	async function handleReview() {
+		// Địa chỉ của API endpoint
+		const apiUrl = `${MainAPI}/user/review-product`;
+
+		if (rating === 0) {
+			toast.warn("Vui lòng đánh giá ít nhất 1 sao!", {
+				position: "top-right",
+				autoClose: 1500,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+			return;
+		}
+
+		try {
+			// Thực hiện fetch request
+			const response = await fetch(apiUrl, {
+				method: "POST", // Phương thức HTTP
+				headers: {
+					"Content-Type": "application/json",
+					"x-access-token": localStorage.getItem("accessToken"),
+				},
+				body: JSON.stringify({
+					user_id: username.user_id,
+					product_id: product.product_id,
+					rating: rating,
+				}), // Dữ liệu được gửi trong request
+			});
+
+			// Chuyển đổi response sang dạng JSON
+			const result = await response.json();
+			console.log(result);
+
+			// Xử lý kết quả
+			if (response.ok) {
+				toast.success("Đánh giá thành công!", {
+					position: "top-right",
+					autoClose: 1500,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
+			} else {
+				toast.error("Đánh giá thất bại! Vui lòng thử lại.", {
+					position: "top-right",
+					autoClose: 1500,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
+				console.error("Failed to add review:", result.message);
+			}
+		} catch (error) {
+			console.error("Error during fetch:", error);
+		}
+	}
+
+	console.log(product.product_id);
 
 	return (
 		<>
@@ -395,19 +516,64 @@ export default function ProductPage() {
 											: "none",
 								}}
 							>
-								<Typography component={"p"} fontSize={"2rem"}>
-									Lorem ipsum dolor sit amet, consectetur
-									adipiscing elit, sed do eiusmod tempor ut
-									labore et dolore magna aliqua. Ut enim ad
-									minim veniam, quis nostrud exercitation
-									ullamco laboris nisi ut aliquip ex ea
-									commodo consequat. Lorem ipsum dolor sit
-									amet, consectetur adipiscing elit, sed do
-									eiusmod tempor ut labore et dolore magna
-									aliqua. Ut enim ad minim veniam, quis
-									nostrud exercitation ullamco laboris nisi ut
-									aliquip ex ea commodo consequat.
+								<Typography
+									component={"div"}
+									fontSize={"2rem"}
+									sx={{
+										display: "flex",
+										alignItems: "center",
+										justifyContent: "center",
+										gap: "10px",
+										padding: "20px 0",
+										borderRadius: "15px",
+										boxShadow:
+											"0 0 10px 0 rgba(0, 0, 0, 0.1)",
+									}}
+								>
+									<StarRating
+										maxRating={5}
+										messages={[
+											"Rất tệ",
+											"Tệ",
+											"Ổn",
+											"Tốt",
+											"Tuyệt vời",
+										]}
+										rating={rating}
+										setRating={setRating}
+									/>
+									<Button
+										type="submit"
+										variant="contained"
+										size="large"
+										style={{
+											backgroundColor: "#0f83b2",
+											fontSize: "2rem",
+											padding: "10px 20px",
+											borderRadius: "10px",
+										}}
+										onClick={handleReview}
+									>
+										Gửi đánh giá
+									</Button>
 								</Typography>
+								<Box
+									sx={{
+										marginTop: "20px",
+										borderBottom: "1px solid #EAEAEA",
+										padding: "10px 0",
+									}}
+								>
+									<Typography
+										component={"p"}
+										fontSize={"2.4rem"}
+										color={"#0F83B2"}
+										fontWeight={"bold"}
+									>
+										hehe
+									</Typography>
+									<Star rating={2} />
+								</Box>
 							</Box>
 						</Box>
 					</div>

@@ -36,8 +36,9 @@ export default function ListCard({ products }) {
 									<CardMedia
 										component="img"
 										image={product.image_url}
-										alt="Milk product"
+										alt={product.product_name}
 										style={{ width: "120px" }}
+										loading="lazy"
 									/>
 								</Box>
 							</Grid>
