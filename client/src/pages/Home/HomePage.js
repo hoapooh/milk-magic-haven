@@ -1,6 +1,5 @@
 import React from "react";
 import Advertise from "./Advertise/Advertise";
-import Product from "./Product/Product";
 import Banner from "./Banner/Banner";
 import Rate from "./Rate/Rate";
 import PhotoShoot from "./PhotoShoot/PhotoShoot";
@@ -18,7 +17,6 @@ export default function HomePage() {
 			<div style={{ paddingBottom: "50px" }}>
 				<Advertise />
 				<Category />
-				<Product />
 				<Banner />
 				<Rate />
 				<PhotoShoot />
