@@ -6,6 +6,8 @@ const {
   deletePostController,
   getAllOrderController,
   getAllCustomerController,
+  cancelOrderController,
+  confirmOrderController,
 } = require("../controller/staff.controller");
 
 const authJwt = require("../middleware/authJwt.middlewares");
@@ -67,6 +69,20 @@ staffRouter.post(
     // console.log(JSON.stringify(req.file))
     res.json({ url: req.file.path });
   }
+);
+
+staffRouter.post(
+  "/confirm-order",
+  authJwt.authenticateToken,
+  authJwt.authorizeRole("staff"),
+  confirmOrderController
+);
+
+staffRouter.post(
+  "/cancel-order",
+  authJwt.authenticateToken,
+  authJwt.authorizeRole("staff"),
+  cancelOrderController
 );
 
 module.exports = staffRouter;
