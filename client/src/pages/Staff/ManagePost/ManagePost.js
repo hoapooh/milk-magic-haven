@@ -167,6 +167,7 @@ export default function ManageProduct() {
 		setPage(0);
 	};
 
+
 	return (
 		<Box>
 			<ToastContainer />
