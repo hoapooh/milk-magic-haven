@@ -12,7 +12,7 @@ import AuthNav from "../../components/AuthNav/AuthNav";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 
-function Contact() {
+export default function Contact() {
 	return (
 		<>
 			<AuthNav />
@@ -96,4 +96,3 @@ function Contact() {
 	);
 }
 
-export default Contact;
