@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 export default function SliderStaff() {
   const nav = useNavigate();
 
-  useEffect(() => {
-    nav('/staff/manageorder');
-  }, []);
+  // useEffect(() => {
+  //   nav('/staff/manageorder');
+  // }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("username");
