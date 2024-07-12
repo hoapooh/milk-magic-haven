@@ -145,6 +145,59 @@ async function sendContact({ user_id, name, email, message }) {
   }
 }
 
+async function readyToCheckout({ user_id, total_amount, orderItems }) {
+  console.log(user_id);
+  console.log(total_amount);
+  console.log(orderItems);
+  try {
+    if (orderItems.length === 0) {
+      return {
+        success: false,
+        message: "Order cannot be processed without items",
+      };
+    }
+    const pool = await poolPromise;
+    const result = await pool
+      .request()
+      .input("user_id", sql.Int, user_id)
+      .input("order_date", sql.DateTime, new Date())
+      .input("status", sql.VarChar, "pending")
+      .input("total_amount", sql.Decimal, total_amount)
+      .query(
+        `INSERT INTO Orders (user_id, order_date, status, total_amount) OUTPUT INSERTED.order_id 
+        VALUES (@user_id, @order_date, @status, @total_amount)`
+      );
+    const order_id = result.recordset[0].order_id;
+
+    // insert order_items
+    await insertOrderItems(order_id, orderItems);
+    return {
+      status: 200,
+      order_id: order_id,
+      message: "Đặt hàng thành công",
+    };
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function insertOrderItems(order_id, orderItems) {
+  const pool = await poolPromise;
+
+  for (const item of orderItems) {
+    await pool
+      .request()
+      .input("order_id", sql.Int, order_id)
+      .input("product_id", sql.Int, item.product_id)
+      .input("quantity", sql.Int, item.quantity)
+      .input("price", sql.Decimal, item.price)
+      .query(
+        `INSERT INTO Order_Items (order_id, product_id, quantity, price) 
+        VALUES (@order_id, @product_id, @quantity, @price)`
+      );
+  }
+}
+
 module.exports = {
   login,
   registerUser,
@@ -153,4 +206,5 @@ module.exports = {
   getPostById,
   reviewProduct,
   sendContact,
+  readyToCheckout,
 };

@@ -127,7 +127,7 @@ export default function ManageOrder() {
     <Box display="flex" justifyContent="center">
       <TableContainer
         component={Paper}
-        sx={{ width: "100%", mx: "auto", mt: 0.5 }}
+        sx={{ width: "90%", mx: "auto", mt: 0.5 }}
       >
         <Table
           sx={{ minWidth: 1000, fontSize: "1.2rem" }}
