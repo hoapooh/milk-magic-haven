@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./SliderBar.css";
 import { useNavigate } from "react-router-dom";
 
 export default function SliderStaff() {
   const nav = useNavigate();
+
+  // useEffect(() => {
+  //   nav('/staff/manageorder');
+  // }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("username");

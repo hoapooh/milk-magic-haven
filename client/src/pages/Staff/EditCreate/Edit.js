@@ -16,6 +16,8 @@ import {
 } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 export default function Edit() {
   const { id } = useParams();
@@ -29,6 +31,44 @@ export default function Edit() {
   const [country, setCountry] = useState("");
   const [range, setRange] = useState("");
   const [img, setImg] = useState("");
+
+  const urlRegex =
+    /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+
+  const formik = useFormik({
+    isDirtyForm: true,
+    initialValues: {
+      proName: proName,
+      prodes: prodes,
+      price: price,
+      stock: stock,
+      brandname: brandname,
+      country: country,
+      range: range,
+      img: img,
+    },
+
+    onSubmit: (values) => {
+      handleUpdateProduct();
+      console.log(values);
+    },
+
+    validationSchema: Yup.object({
+      proName: Yup.string()
+        .required("Required.")
+        .min(2, "Must be 2 characters or more"),
+      prodes: Yup.string()
+        .required("Required.")
+        .min(2, "Must be 2 characters or more"),
+      price: Yup.number().required("Required."),
+      stock: Yup.number().required("Required."),
+      brandname: Yup.number().required("Required."),
+      country: Yup.string()
+        .required("Required.")
+        .min(2, "Must be 2 characters or more"),
+      img: Yup.string().required("Required.").matches(urlRegex, "Invalid URL"),
+    }),
+  });
 
   const fetchData = async () => {
     try {
@@ -65,16 +105,17 @@ export default function Edit() {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          "x-access-token": localStorage.getItem("accessToken"),
         },
         body: JSON.stringify({
-          product_name: proName,
-          product_price: price,
-          product_description: prodes,
-          image_url: img,
-          stock: stock,
-          brand_id: brandname,
-          country_id: country,
-          age_range: range,
+          product_name: formik.values.proName,
+          product_price: formik.values.price,
+          product_description: formik.values.prodes,
+          image_url: formik.values.img,
+          stock: formik.values.stock,
+          brand_id: formik.values.brandname,
+          country_id: formik.values.country,
+          age_range: formik.values.range,
         }),
       });
       if (!response.ok) throw new Error("Failed to update product");
@@ -103,57 +144,94 @@ export default function Edit() {
     <Container>
       <ToastContainer />
       <Box mt="3%">
-        {
-          <div style={{ marginLeft: "10px" }}>
-            <Card className="edit-voucher" variant="outlined">
-              <CardContent>
-                <Typography variant="h4" component="div" gutterBottom>
-                  Edit Product
-                </Typography>
+        <div style={{ marginLeft: "10px" }}>
+          <Card className="edit-voucher" variant="outlined">
+            <CardContent>
+              <Typography variant="h4" component="div" gutterBottom>
+                Edit Product
+              </Typography>
+              <form onSubmit={formik.handleSubmit}>
                 <TextField
                   fullWidth
                   label="Product Name"
-                  value={proName}
-                  onChange={(event) => setProName(event.target.value)}
+                  value={formik.proName}
+                  name="proName"
+                  onChange={formik.handleChange}
                   margin="normal"
                 />
+                {formik.touched.proName && formik.errors.proName && (
+                  <Typography color="error" variant="h4">
+                    {formik.errors.proName}
+                  </Typography>
+                )}
                 <TextField
                   fullWidth
                   label="Description"
-                  value={prodes}
-                  onChange={(event) => setProdes(event.target.value)}
+                  value={formik.prodes}
+                  name="prodes"
+                  onChange={formik.handleChange}
                   margin="normal"
                 />
+                {formik.touched.prodes && formik.errors.prodes && (
+                  <Typography color="error" variant="h4">
+                    {formik.errors.prodes}
+                  </Typography>
+                )}
                 <TextField
                   fullWidth
                   label="Price"
                   type="number"
-                  value={price}
-                  onChange={(event) => setPrice(event.target.value)}
+                  value={formik.price}
+                  name="price"
+                  onChange={formik.handleChange}
                   margin="normal"
                 />
+                {formik.touched.price && formik.errors.price && (
+                  <Typography color="error" variant="h4">
+                    {formik.errors.price}
+                  </Typography>
+                )}
                 <TextField
                   fullWidth
                   label="Stock"
                   type="number"
-                  value={stock}
-                  onChange={(event) => setStock(event.target.value)}
+                  value={formik.stock}
+                  name="stock"
+                  onChange={formik.handleChange}
                   margin="normal"
                 />
+                {formik.touched.stock && formik.errors.stock && (
+                  <Typography color="error" variant="h4">
+                    {formik.errors.stock}
+                  </Typography>
+                )}
                 <TextField
                   fullWidth
-                  label="Brand Name"
-                  value={brandname}
-                  onChange={(event) => setBrandName(event.target.value)}
+                  label="Brand ID"
+                  type="number"
+                  value={formik.brandname}
+                  name="brandname"
+                  onChange={formik.handleChange}
                   margin="normal"
                 />
+                {formik.touched.brandname && formik.errors.brandname && (
+                  <Typography color="error" variant="h4">
+                    {formik.errors.brandname}
+                  </Typography>
+                )}
                 <TextField
                   fullWidth
                   label="Country"
-                  value={country}
-                  onChange={(event) => setCountry(event.target.value)}
+                  value={formik.country}
+                  name="country"
+                  onChange={formik.handleChange}
                   margin="normal"
                 />
+                {formik.touched.country && formik.errors.country && (
+                  <Typography color="error" variant="h4">
+                    {formik.errors.country}
+                  </Typography>
+                )}
                 <Box
                   sx={{
                     minWidth: 120,
@@ -168,9 +246,10 @@ export default function Edit() {
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
-                      defaultValue={range}
-                      label="range"
-                      onChange={handleChange}
+                      value={formik.range}
+                      name="range"
+                      label="Age Range"
+                      onChange={formik.handleChange}
                     >
                       <MenuItem value={"> 2 years old"}>
                         &gt; 2 years old
@@ -182,19 +261,24 @@ export default function Edit() {
                     </Select>
                   </FormControl>
                 </Box>
-
                 <TextField
                   fullWidth
-                  label="Image URL"
-                  value={img}
-                  onChange={(event) => setImg(event.target.value)}
+                  label="Url_Image"
+                  value={formik.img}
+                  name="img"
+                  onChange={formik.handleChange}
                   margin="normal"
                 />
+                {formik.touched.img && formik.errors.img && (
+                  <Typography color="error" variant="h4">
+                    {formik.errors.img}
+                  </Typography>
+                )}
                 <div style={{ marginTop: "10px" }}>
                   <Button
                     variant="contained"
+                    type="submit"
                     color="primary"
-                    onClick={handleUpdateProduct}
                     style={{ marginRight: "10px" }}
                   >
                     Update
@@ -202,15 +286,15 @@ export default function Edit() {
                   <Button
                     variant="outlined"
                     color="secondary"
-                    onClick={() => handleCancel()}
+                    onClick={handleCancel}
                   >
                     Cancel
                   </Button>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
-        }
+              </form>
+            </CardContent>
+          </Card>
+        </div>
       </Box>
     </Container>
   );

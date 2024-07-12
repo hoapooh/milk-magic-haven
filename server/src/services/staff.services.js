@@ -132,6 +132,36 @@ async function getAllOrder() {
   }
 }
 
+async function confirmOrder(order_id) {
+  try {
+    const pool = await poolPromise;
+    const result = await pool
+      .request()
+      .input("order_id", sql.Int, order_id)
+      .query(
+        "UPDATE Orders SET status = 'Confirmed' WHERE order_id = @order_id"
+      );
+    return { status: 200, message: "Order confirmed" };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function cancelOrder(order_id) {
+  try {
+    const pool = await poolPromise;
+    const result = await pool
+      .request()
+      .input("order_id", sql.Int, order_id)
+      .query(
+        "UPDATE Orders SET status = 'Cancelled' WHERE order_id = @order_id"
+      );
+    return { status: 200, message: "Order cancelled" };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = {
   createVoucher,
   createPost,
@@ -139,4 +169,6 @@ module.exports = {
   deletePost,
   getCustomerUser,
   getAllOrder,
+  cancelOrder,
+  confirmOrder,
 };
