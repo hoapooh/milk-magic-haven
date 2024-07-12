@@ -9,6 +9,7 @@ const {
   reviewProductController,
   sendContactController,
   createOrderController,
+  getAllRatingController,
 } = require("../controller/users.controller");
 
 const authJwt = require("../middleware/authJwt.middlewares");
@@ -45,5 +46,7 @@ userRouter.post(
   authJwt.authorizeRole("customer"),
   createOrderController
 );
+
+userRouter.get("/get-all-rating/:id", getAllRatingController);
 
 module.exports = userRouter;

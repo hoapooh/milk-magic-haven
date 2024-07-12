@@ -8,6 +8,7 @@ const {
   reviewProduct,
   sendContact,
   readyToCheckout,
+  getAllRating,
 } = require("../services/users.services");
 
 const loginController = async (req, res) => {
@@ -57,13 +58,11 @@ const getPostByIdController = async (req, res) => {
 };
 
 const reviewProductController = async (req, res) => {
-  const { user_id, product_id, order_id, rating, comment } = req.body;
+  const { user_id, product_id, rating } = req.body;
   const result = await reviewProduct({
     user_id,
     product_id,
-    order_id,
     rating,
-    comment,
   });
 
   res.status(result.status).json({
@@ -92,6 +91,13 @@ const createOrderController = async (req, res) => {
   });
 };
 
+const getAllRatingController = async (req, res) => {
+  const { id } = req.params;
+  const result = await getAllRating(id);
+
+  res.json({ data: result.ratings, status: 200 });
+};
+
 module.exports = {
   loginController,
   registerController,
@@ -101,4 +107,5 @@ module.exports = {
   reviewProductController,
   sendContactController,
   createOrderController,
+  getAllRatingController,
 };

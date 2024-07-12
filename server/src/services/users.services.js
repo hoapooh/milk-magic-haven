@@ -84,16 +84,9 @@ async function getPostById(id) {
   }
 }
 
-async function reviewProduct({
-  product_id,
-  order_id,
-  user_id,
-  rating,
-  comment,
-}) {
+async function reviewProduct({ product_id, user_id, rating }) {
   try {
     const pool = await poolPromise;
-
     const existingReview = await pool
       .request()
       .input("product_id", sql.Int, product_id)
@@ -198,6 +191,30 @@ async function insertOrderItems(order_id, orderItems) {
   }
 }
 
+async function getAllRating(id) {
+  try {
+    const pool = await poolPromise;
+    const result = await pool.request().input("product_id", sql.Int, id)
+      .query(`SELECT 
+              p.product_id,
+              p.product_name,
+              u.username,
+              r.rating,
+              r.review_date
+          FROM 
+              Reviews r
+          JOIN 
+              Users u ON r.user_id = u.user_id
+          JOIN
+              Products p ON r.product_id = p.product_id
+          WHERE 
+              p.product_id = @product_id;`);
+    return { ratings: result.recordsets[0] };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = {
   login,
   registerUser,
@@ -207,4 +224,5 @@ module.exports = {
   reviewProduct,
   sendContact,
   readyToCheckout,
+  getAllRating,
 };
