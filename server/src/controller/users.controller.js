@@ -1,13 +1,14 @@
 const { poolPromise } = require("../../database.services");
 const {
-	login,
-	registerUser,
-	getVoucher,
-	getAllPost,
-	getPostById,
-	reviewProduct,
-	sendContact,
-	readyToCheckout,
+  login,
+  registerUser,
+  getVoucher,
+  getAllPost,
+  getPostById,
+  reviewProduct,
+  sendContact,
+  readyToCheckout,
+  getAllRating,
 } = require("../services/users.services");
 
 const loginController = async (req, res) => {
@@ -59,18 +60,17 @@ const getPostByIdController = async (req, res) => {
 };
 
 const reviewProductController = async (req, res) => {
-	const { user_id, product_id, rating } = req.body;
-	console.log(product_id);
-	const result = await reviewProduct({
-		user_id,
-		product_id,
-		rating,
-	});
+  const { user_id, product_id, rating } = req.body;
+  const result = await reviewProduct({
+    user_id,
+    product_id,
+    rating,
+  });
 
-	res.status(result.status).json({
-		message: result.message,
-		status: result.status,
-	});
+  res.status(result.status).json({
+    message: result.message,
+    status: result.status,
+  });
 };
 
 const sendContactController = async (req, res) => {
@@ -93,13 +93,21 @@ const createOrderController = async (req, res) => {
 	});
 };
 
+const getAllRatingController = async (req, res) => {
+  const { id } = req.params;
+  const result = await getAllRating(id);
+
+  res.json({ data: result.ratings, status: 200 });
+};
+
 module.exports = {
-	loginController,
-	registerController,
-	getVoucherController,
-	getAllPostController,
-	getPostByIdController,
-	reviewProductController,
-	sendContactController,
-	createOrderController,
+  loginController,
+  registerController,
+  getVoucherController,
+  getAllPostController,
+  getPostByIdController,
+  reviewProductController,
+  sendContactController,
+  createOrderController,
+  getAllRatingController,
 };

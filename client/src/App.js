@@ -18,6 +18,7 @@ import Cart from "./pages/Cart/Cart";
 import Checkout from "./pages/Checkout/Checkout";
 import StatisticAccount from "./pages/admin/statistic/account/StatisticAccount";
 import StatisticProduct from "./pages/admin/statistic/product/StatisticProduct";
+import Post from "./pages/Post/Post";
 
 const THEME = createTheme({
   typography: {
@@ -39,6 +40,7 @@ function App() {
           <Route path="/shop" element={<Products />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/detail/:id" element={<ProductDetail />} />
+          <Route path="/post/:id" element={<Post />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
 
@@ -46,18 +48,23 @@ function App() {
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/addAccount" element={<AddAccount />} />
           <Route path="/update/:user_id" element={<UpdateAccount />} />
-          <Route path="/admin/statistic/account" element={<StatisticAccount />} />
-          <Route path="/admin/statistic/product" element={<StatisticProduct />} />
+          <Route
+            path="/admin/statistic/account"
+            element={<StatisticAccount />}
+          />
+          <Route
+            path="/admin/statistic/product"
+            element={<StatisticProduct />}
+          />
 
-					{/* ================== STAFF VIEW ============== */}
-					<Route path="/staff/*" element={<Staff />} />
-					<Route path='/editproduct/:id' element={<Edit />}></Route>
-					<Route path='/createproduct' element={<Create />}></Route>
-				</Routes>
-			</ThemeProvider>
-		</>
-	);
-
+          {/* ================== STAFF VIEW ============== */}
+          <Route path="/staff/*" element={<Staff />} />
+          <Route path="/editproduct/:id" element={<Edit />}></Route>
+          <Route path="/createproduct" element={<Create />}></Route>
+        </Routes>
+      </ThemeProvider>
+    </>
+  );
 }
 
 export default App;

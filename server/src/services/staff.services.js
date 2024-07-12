@@ -46,7 +46,7 @@ async function createPost({ title, content, img_thumbnail }) {
     const result = await pool
       .request()
       .input("title", sql.NVarChar, title)
-      .input("content", sql.VarChar, content)
+      .input("content", sql.NVarChar, content)
       .input("img", sql.VarChar, img_thumbnail)
       .query(`INSERT INTO Posts (title, content, img_thumbnail, user_id) 
                 VALUES (@title, @content, @img, 1)`);

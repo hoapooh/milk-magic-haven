@@ -179,13 +179,38 @@ async function insertOrderItems(order_id, orderItems) {
 	}
 }
 
+async function getAllRating(id) {
+  try {
+    const pool = await poolPromise;
+    const result = await pool.request().input("product_id", sql.Int, id)
+      .query(`SELECT 
+              p.product_id,
+              p.product_name,
+              u.username,
+              r.rating,
+              r.review_date
+          FROM 
+              Reviews r
+          JOIN 
+              Users u ON r.user_id = u.user_id
+          JOIN
+              Products p ON r.product_id = p.product_id
+          WHERE 
+              p.product_id = @product_id;`);
+    return { ratings: result.recordsets[0] };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = {
-	login,
-	registerUser,
-	getVoucher,
-	getAllPost,
-	getPostById,
-	reviewProduct,
-	sendContact,
-	readyToCheckout,
+  login,
+  registerUser,
+  getVoucher,
+  getAllPost,
+  getPostById,
+  reviewProduct,
+  sendContact,
+  readyToCheckout,
+  getAllRating,
 };
