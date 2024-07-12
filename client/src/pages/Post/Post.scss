@@ -1,0 +1,14 @@
+.post-container {
+  margin-top: 50px;
+  font-size: 1.6rem;
+  figure {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    align-items: center;
+  }
+
+  figure + p {
+    text-align: center;
+  }
+}
