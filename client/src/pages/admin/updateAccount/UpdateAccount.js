@@ -42,7 +42,9 @@ export default function Update() {
 			email: Yup.string()
 				.email("Invalid email format")
 				.required("Required"),
-			password: Yup.string().required("Required"),
+			password: Yup.string()
+				.required("Required")
+				.min(3, "Ít nhất 3 kí tự"),
 			role_id: Yup.string().required("Required"),
 		}),
 		onSubmit: (values) => {
