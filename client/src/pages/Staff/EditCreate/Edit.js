@@ -23,36 +23,24 @@ export default function Edit() {
   const { id } = useParams();
   const [edit, setEdit] = useState({});
   const nav = useNavigate();
-  const [proName, setProName] = useState("");
-  const [prodes, setProdes] = useState("");
-  const [price, setPrice] = useState("");
-  const [stock, setStock] = useState("");
-  const [brandname, setBrandName] = useState("");
-  const [country, setCountry] = useState("");
-  const [range, setRange] = useState("");
-  const [img, setImg] = useState("");
 
   const urlRegex =
     /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
 
   const formik = useFormik({
-    isDirtyForm: true,
     initialValues: {
-      proName: proName,
-      prodes: prodes,
-      price: price,
-      stock: stock,
-      brandname: brandname,
-      country: country,
-      range: range,
-      img: img,
+      proName: "",
+      prodes: "",
+      price: "",
+      stock: "",
+      brandname: "",
+      country: "",
+      range: "",
+      img: "",
     },
-
     onSubmit: (values) => {
       handleUpdateProduct();
-      console.log(values);
     },
-
     validationSchema: Yup.object({
       proName: Yup.string()
         .required("Required.")
@@ -62,7 +50,7 @@ export default function Edit() {
         .min(2, "Must be 2 characters or more"),
       price: Yup.number().required("Required."),
       stock: Yup.number().required("Required."),
-      brandname: Yup.number().required("Required."),
+      brandname: Yup.string().required("Required."),
       country: Yup.string()
         .required("Required.")
         .min(2, "Must be 2 characters or more"),
@@ -82,14 +70,16 @@ export default function Edit() {
       const data = await response.json();
       const product = data.product;
       setEdit(product);
-      setProName(product.product_name);
-      setProdes(product.description);
-      setPrice(product.price);
-      setStock(product.stock);
-      setBrandName(product.brand_name);
-      setCountry(product.country_name);
-      setRange(product.age_range);
-      setImg(product.image_url);
+      formik.setValues({
+        proName: product.product_name,
+        prodes: product.description,
+        price: product.price,
+        stock: product.stock,
+        brandname: product.brand_name,
+        country: product.country_name,
+        range: product.age_range,
+        img: product.image_url,
+      });
     } catch (error) {
       console.log("Error fetching product data:", error);
     }
@@ -98,6 +88,8 @@ export default function Edit() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  console.log(edit);
 
   const handleUpdateProduct = async () => {
     try {
@@ -130,14 +122,10 @@ export default function Edit() {
     }
   };
 
-  console.log(edit);
+  console.log(formik.values)
 
   const handleCancel = () => {
     nav("/staff/manageproduct");
-  };
-
-  const handleChange = (event) => {
-    setRange(event.target.value);
   };
 
   return (
@@ -154,7 +142,7 @@ export default function Edit() {
                 <TextField
                   fullWidth
                   label="Product Name"
-                  value={formik.proName}
+                  value={formik.values.proName}
                   name="proName"
                   onChange={formik.handleChange}
                   margin="normal"
@@ -167,7 +155,7 @@ export default function Edit() {
                 <TextField
                   fullWidth
                   label="Description"
-                  value={formik.prodes}
+                  value={formik.values.prodes}
                   name="prodes"
                   onChange={formik.handleChange}
                   margin="normal"
@@ -181,7 +169,7 @@ export default function Edit() {
                   fullWidth
                   label="Price"
                   type="number"
-                  value={formik.price}
+                  value={formik.values.price}
                   name="price"
                   onChange={formik.handleChange}
                   margin="normal"
@@ -195,7 +183,7 @@ export default function Edit() {
                   fullWidth
                   label="Stock"
                   type="number"
-                  value={formik.stock}
+                  value={formik.values.stock}
                   name="stock"
                   onChange={formik.handleChange}
                   margin="normal"
@@ -208,8 +196,8 @@ export default function Edit() {
                 <TextField
                   fullWidth
                   label="Brand ID"
-                  type="number"
-                  value={formik.brandname}
+                  // type="number"
+                  value={formik.values.brandname}
                   name="brandname"
                   onChange={formik.handleChange}
                   margin="normal"
@@ -219,10 +207,10 @@ export default function Edit() {
                     {formik.errors.brandname}
                   </Typography>
                 )}
-                <TextField
+                {/* <TextField
                   fullWidth
                   label="Country"
-                  value={formik.country}
+                  value={formik.values.country}
                   name="country"
                   onChange={formik.handleChange}
                   margin="normal"
@@ -231,7 +219,35 @@ export default function Edit() {
                   <Typography color="error" variant="h4">
                     {formik.errors.country}
                   </Typography>
-                )}
+                )} */}
+
+                <Box
+                  sx={{
+                    minWidth: 120,
+                    marginTop: "15px",
+                    marginBottom: "10px",
+                  }}
+                >
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">
+                      Country ID
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={formik.values.country}
+                      name="country"
+                      label="Country Name"
+                      onChange={formik.handleChange}
+                    >
+                      <MenuItem value={"VNA"}>Việt Nam</MenuItem>
+                      <MenuItem value={"NED"}>Hà Lan</MenuItem>
+                      <MenuItem value={"KOR"}>Hàn Quốc</MenuItem>
+                      <MenuItem value={"SWE"}>Thụy Điển</MenuItem>
+                      <MenuItem value={"USA"}>Mỹ</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Box>
                 <Box
                   sx={{
                     minWidth: 120,
@@ -246,7 +262,7 @@ export default function Edit() {
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
-                      value={formik.range}
+                      value={formik.values.range}
                       name="range"
                       label="Age Range"
                       onChange={formik.handleChange}
@@ -264,7 +280,7 @@ export default function Edit() {
                 <TextField
                   fullWidth
                   label="Url_Image"
-                  value={formik.img}
+                  value={formik.values.img}
                   name="img"
                   onChange={formik.handleChange}
                   margin="normal"

@@ -90,11 +90,22 @@ async function updateProduct({
       .input("product_description", sql.VarChar, product_description)
       .input("product_image", sql.VarChar, image_url)
       .input("stock", sql.Int, stock)
-      .input("brand_id", sql.Int, brand_id)
+      .input("brand_id", sql.NVarChar, brand_id)
       .input("country_id", sql.VarChar, country_id)
       .input("age_range", sql.VarChar, age_range)
       .query(
-        `UPDATE Products SET product_name = @product_name, description = @product_description, price = @product_price, stock = @stock, brand_id = @brand_id, country_id = @country_id, age_range = @age_range, image_url = @product_image WHERE product_id = @product_id`
+        `UPDATE Products
+        SET 
+            product_name = @product_name,
+            description = @product_description,
+            price = @product_price,
+            stock = @stock,
+            brand_id = (SELECT brand_id FROM Brands WHERE brand_name = @brand_id),
+            country_id = @country_id,
+            age_range = @age_range,
+            image_url = @product_image,
+            status = 1
+        WHERE product_id = @product_id;`
       );
 
     if (result.rowsAffected[0] !== 1) {
