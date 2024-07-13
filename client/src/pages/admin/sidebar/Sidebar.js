@@ -24,6 +24,11 @@ export default function Sidebar() {
           <BarChartOutlined /> Thống kê sản phẩm
         </Link>
       </div>
+      <div className="sidebar__link">
+        <Link to={"/admin/view/contact"}>
+          <BarChartOutlined /> Xem nhận xét
+        </Link>
+      </div>
       <div className="sidebar__link logout">
         Admin <LogoutOutlined />
       </div>

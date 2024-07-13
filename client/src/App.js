@@ -16,6 +16,7 @@ import Cart from "./pages/Cart/Cart";
 import Checkout from "./pages/Checkout/Checkout";
 import StatisticAccount from "./pages/admin/statistic/account/StatisticAccount";
 import StatisticProduct from "./pages/admin/statistic/product/StatisticProduct";
+import ViewContact from "./pages/view_contact/ViewContact";
 const THEME = createTheme({
   typography: {
     fontFamily: `"Baloo Paaji 2", sans-serif`,
@@ -45,6 +46,7 @@ function App() {
           <Route path="/update/:user_id" element={<UpdateAccount />} />
           <Route path="/admin/statistic/account" element={<StatisticAccount />} />
           <Route path="/admin/statistic/product" element={<StatisticProduct />} />
+          <Route path="/admin/view/contact" element={<ViewContact />} />
 
           {/* ================== STAFF VIEW ============== */}
           <Route path="/staff/*" element={<Staff />} />
