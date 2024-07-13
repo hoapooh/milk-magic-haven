@@ -25,23 +25,29 @@ import "react-toastify/dist/ReactToastify.css";
 export default function ProductPage() {
 	const { addToCart } = useCart();
 	const { id } = useParams();
-	const baseURL = `${MainAPI}/product/get-product-by-id/${id}`;
 	const [product, setProduct] = useState({});
 	const username = JSON.parse(localStorage.getItem("username"));
 	const [rating, setRating] = useState(0);
+	const [reviews, setReviews] = useState([]);
+	const baseURL = `${MainAPI}/product/get-product-by-id/${id}`;
+	const reviewUrl = `${MainAPI}/user/get-all-rating/${id}`;
 
-	console.log(product);
-
+	// Lấy thông tin sản phẩm từ API
 	useEffect(() => {
-		const fetchAPI = () => {
-			fetch(baseURL)
+		const fetchAPI = async () => {
+			await fetch(baseURL, {
+				method: "GET", // Phương thức HTTP
+				headers: {
+					"Content-Type": "application/json",
+				},
+			})
 				.then((response) => response.json())
 				.then((data) => setProduct(data.product))
 				.catch((error) => console.log(error));
 		};
 
 		fetchAPI();
-	}, [baseURL]);
+	}, [baseURL, id]);
 
 	// Khởi tạo state với giá trị ban đầu là 1
 	const [quantity, setQuantity] = useState(1);
@@ -72,6 +78,7 @@ export default function ProductPage() {
 		setActiveSection(activeSection === "review" ? null : "review");
 	};
 
+	// Hiển thị số sao
 	const Star = ({ rating }) => {
 		let comment = "";
 		if (rating === 1) {
@@ -123,6 +130,7 @@ export default function ProductPage() {
 		);
 	};
 
+	// Hàm xử lý khi click vào nút "Gửi đánh giá"
 	async function handleReview() {
 		// Địa chỉ của API endpoint
 		const apiUrl = `${MainAPI}/user/review-product`;
@@ -157,7 +165,6 @@ export default function ProductPage() {
 
 			// Chuyển đổi response sang dạng JSON
 			const result = await response.json();
-			console.log(result);
 
 			// Xử lý kết quả
 			if (response.ok) {
@@ -170,6 +177,8 @@ export default function ProductPage() {
 					draggable: true,
 					progress: undefined,
 				});
+				setRating(0);
+				fetchReviewsAPI();
 			} else {
 				toast.error("Đánh giá thất bại! Vui lòng thử lại.", {
 					position: "top-right",
@@ -187,7 +196,38 @@ export default function ProductPage() {
 		}
 	}
 
-	console.log(product.product_id);
+	function calculateAverageRating(reviews) {
+		if (!reviews || reviews.length === 0) {
+			return 0;
+		}
+		const totalStars = reviews.reduce(
+			(acc, review) => acc + review.rating,
+			0
+		);
+		const averageRating = totalStars / reviews.length;
+		return Math.round(averageRating * 2) / 2;
+	}
+
+	// Hàm lấy tất cả đánh giá của sản phẩm
+	const fetchReviewsAPI = () => {
+		fetch(reviewUrl, {
+			method: "GET", // Phương thức HTTP
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then((response) => {
+				if (!response.ok)
+					throw new Error("Failed to fetch data get product");
+				return response.json();
+			})
+			.then((data) => setReviews(data.data))
+			.catch((error) => console.log(error));
+	};
+
+	useEffect(() => {
+		fetchReviewsAPI();
+	}, []);
 
 	return (
 		<>
@@ -205,7 +245,7 @@ export default function ProductPage() {
 									sx={{
 										textAlign: "center",
 										padding: "20px 40px",
-										height: "400px",
+										height: "395px",
 										border: "1px solid #E0E0E0",
 										borderRadius: "15px",
 									}}
@@ -244,7 +284,7 @@ export default function ProductPage() {
 								>
 									<Rating
 										name="read-only"
-										value={5}
+										value={calculateAverageRating(reviews)}
 										readOnly
 										sx={{
 											fontSize: "2.4rem",
@@ -255,7 +295,7 @@ export default function ProductPage() {
 										component="span"
 										fontSize={"1.6rem"}
 									>
-										(5 đánh giá)
+										({reviews.length} đánh giá)
 									</Typography>
 								</Box>
 								<Typography
@@ -485,7 +525,7 @@ export default function ProductPage() {
 									}}
 									onClick={handleReviewClick}
 								>
-									Đánh giá (29)
+									Đánh giá ({reviews.length})
 								</Typography>
 							</Box>
 							<Box
@@ -516,64 +556,85 @@ export default function ProductPage() {
 											: "none",
 								}}
 							>
-								<Typography
-									component={"div"}
-									fontSize={"2rem"}
-									sx={{
-										display: "flex",
-										alignItems: "center",
-										justifyContent: "center",
-										gap: "10px",
-										padding: "20px 0",
-										borderRadius: "15px",
-										boxShadow:
-											"0 0 10px 0 rgba(0, 0, 0, 0.1)",
-									}}
-								>
-									<StarRating
-										maxRating={5}
-										messages={[
-											"Rất tệ",
-											"Tệ",
-											"Ổn",
-											"Tốt",
-											"Tuyệt vời",
-										]}
-										rating={rating}
-										setRating={setRating}
-									/>
-									<Button
-										type="submit"
-										variant="contained"
-										size="large"
-										style={{
-											backgroundColor: "#0f83b2",
-											fontSize: "2rem",
-											padding: "10px 20px",
-											borderRadius: "10px",
+								{username ? (
+									<Typography
+										component={"div"}
+										fontSize={"2rem"}
+										sx={{
+											display: "flex",
+											alignItems: "center",
+											justifyContent: "center",
+											gap: "10px",
+											padding: "20px 0",
+											borderRadius: "15px",
+											boxShadow:
+												"0 0 10px 0 rgba(0, 0, 0, 0.1)",
 										}}
-										onClick={handleReview}
 									>
-										Gửi đánh giá
-									</Button>
-								</Typography>
-								<Box
-									sx={{
-										marginTop: "20px",
-										borderBottom: "1px solid #EAEAEA",
-										padding: "10px 0",
-									}}
-								>
+										<StarRating
+											maxRating={5}
+											messages={[
+												"Rất tệ",
+												"Tệ",
+												"Ổn",
+												"Tốt",
+												"Tuyệt vời",
+											]}
+											rating={rating}
+											setRating={setRating}
+										/>
+										<Button
+											type="submit"
+											variant="contained"
+											size="large"
+											style={{
+												backgroundColor: "#0f83b2",
+												fontSize: "2rem",
+												padding: "10px 20px",
+												borderRadius: "10px",
+											}}
+											onClick={handleReview}
+										>
+											Gửi đánh giá
+										</Button>
+									</Typography>
+								) : (
+									""
+								)}
+								{reviews.length !== 0 ? (
+									reviews.map((review) => (
+										<Box
+											key={review.review_id}
+											sx={{
+												marginTop: "20px",
+												borderBottom:
+													"1px solid #EAEAEA",
+												padding: "10px 0",
+											}}
+										>
+											<Typography
+												component={"p"}
+												fontSize={"2.4rem"}
+												color={"#0F83B2"}
+												fontWeight={"bold"}
+											>
+												{review.username}
+											</Typography>
+											<Star rating={review.rating} />
+										</Box>
+									))
+								) : (
 									<Typography
 										component={"p"}
-										fontSize={"2.4rem"}
+										fontSize={"3.6rem"}
 										color={"#0F83B2"}
 										fontWeight={"bold"}
+										textAlign={"center"}
+										marginTop={4}
 									>
-										hehe
+										Sản phẩm này chưa có đánh giá nào
 									</Typography>
-									<Star rating={2} />
-								</Box>
+								)}
 							</Box>
 						</Box>
 					</div>

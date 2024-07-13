@@ -5,7 +5,9 @@ async function getAllProduct() {
     const pool = await poolPromise;
     const result = await pool
       .request()
-      .query("SELECT * FROM Products WHERE status = 1");
+      .query(
+        "SELECT p.product_id, p.product_name, p.age_range, p.brand_id, p.country_id, p.description, p.image_url, p.price, p.stock, p.status, FLOOR(AVG(r.rating + 0.5)) AS average_rating FROM Products p LEFT JOIN Reviews r ON p.product_id = r.product_id WHERE p.status = 1 GROUP BY p.product_id, p.product_name, p.age_range, p.brand_id, p.country_id, p.description, p.image_url, p.price, p.stock, p.status;"
+      );
     return { products: result.recordsets[0] };
   } catch (error) {
     console.log(error);
@@ -124,7 +126,9 @@ async function deleteProduct(id) {
     const result = await pool
       .request()
       .input("product_id", sql.Int, id)
-      .query("UPDATE Products SET status = 0 WHERE product_id = @product_id");
+      .query(
+        "UPDATE Products SET status = 0 WHERE product_id = @product_id"
+      );
 
     if (result.rowsAffected[0] !== 1) {
       return { message: "Product is not available", status: 400 };
